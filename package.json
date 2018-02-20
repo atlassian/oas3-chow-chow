@@ -1,0 +1,11 @@
+{
+  "name": "oas3-chow-chow",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "<tli@atlassian.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^6.1.1",
+    "openapi3-ts": "^0.7.0"
+  }
+}
