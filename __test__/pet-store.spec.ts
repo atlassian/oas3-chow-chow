@@ -127,7 +127,7 @@ describe('Pet Store', () => {
       }).not.toThrowError();
     })
   })
-  describe.only('RequestBody', () => {
+  describe('RequestBody', () => {
     test('It should fail validation if payload is invalid', () => {
       expect(() => {
         chowchow.validateRequest('/pets', {
