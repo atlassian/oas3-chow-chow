@@ -1,6 +1,6 @@
 {
   "name": "oas3-chow-chow",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "index.js",
   "author": "<tli@atlassian.com>",
   "license": "MIT",
