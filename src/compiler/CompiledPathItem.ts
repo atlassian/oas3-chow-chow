@@ -9,18 +9,20 @@ export default class CompiledPathItem {
   } = {};
 
   constructor(pathItemObject: PathItemObject) {
-    this.compiledOperations = this.supportedMethod.reduce((compiled: any, method) => {
-      if (pathItemObject[method]) { 
-        compiled[method] = new CompiledOperation(pathItemObject[method]);
+    this.compiledOperations = this.supportedMethod.reduce((compiled: any, method: string) => {
+      const m = method.toLowerCase();
+      if (pathItemObject[m]) { 
+        compiled[m] = new CompiledOperation(pathItemObject[m]);
       }
       return compiled;
     }, {})
   }
 
   public validate(request: RequestMeta) {
-    const compiledOperation = this.compiledOperations[request.method];
+    const method = request.method.toLowerCase();
+    const compiledOperation = this.compiledOperations[method];
     if (!compiledOperation) {
-      throw new Error(`Invalid request method - ${request.method}`)
+      throw new Error(`Invalid request method - ${method}`)
     }
 
     return compiledOperation.validate(request);
