@@ -5,7 +5,8 @@
   "author": "<tli@atlassian.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "prepublishOnly": "tsc"
   },
   "jest": {
     "transform": {
