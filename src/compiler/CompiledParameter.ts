@@ -1,5 +1,6 @@
 import { ParameterObject } from 'openapi3-ts';
 import CompiledSchema from './CompiledSchema';
+import ChowError from '../error';
 
 export default class CompiledParameter {
   private name: string;
@@ -17,7 +18,7 @@ export default class CompiledParameter {
     this.in = parameter.in;
     this.required = !!parameter.required;
     if (parameter.in === 'header' && this.ignoreHeaders.includes(parameter.name)) {
-      this.compiledSchema = new CompiledSchema(null);
+      this.compiledSchema = new CompiledSchema();
     } else {
       this.compiledSchema = new CompiledSchema(parameter.schema);
     }
@@ -25,8 +26,13 @@ export default class CompiledParameter {
 
   public validate(value: any) {
     if (!value && this.required) {
-      throw new Error(`Missing required parameter - ${this.name} in ${this.in}`)
+      throw new ChowError(this.in, this.name, 'Missing required parameter');
+    } else if (value) {
+      try {
+        this.compiledSchema.validate(value);
+      } catch(e) {
+        throw new ChowError(this.in, this.name, e[0].error);
+      }
     }
-    return this.compiledSchema.validate(value);
   }
 }

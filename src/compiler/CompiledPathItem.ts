@@ -9,8 +9,10 @@ export default class CompiledPathItem {
   } = {};
 
   constructor(pathItemObject: PathItemObject) {
-    this.compiledOperations = this.supportedMethod.reduce((compiled, method) => {
-      compiled[method] = new CompiledOperation(pathItemObject[method]);
+    this.compiledOperations = this.supportedMethod.reduce((compiled: any, method) => {
+      if (pathItemObject[method]) { 
+        compiled[method] = new CompiledOperation(pathItemObject[method]);
+      }
       return compiled;
     }, {})
   }
