@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --coverage",
-    "prepublishOnly": "rm -rf lib && ./node_modules/.bin/tsc"
+    "prepublishOnly": "rm -rf lib && tsc"
   },
   "jest": {
     "transform": {
