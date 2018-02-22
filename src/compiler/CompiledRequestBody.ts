@@ -30,7 +30,7 @@ export default class CompiledRequestBody {
     try {
       this.compiledSchemas[mediaType].validate(value);
     } catch(e) {
-      throw new ChowError('requestBody', undefined, e[0].error);
+      throw new ChowError('requestBody', undefined, e[0] && e[0].error || 'failed schema validation');
     }
   }
 }
