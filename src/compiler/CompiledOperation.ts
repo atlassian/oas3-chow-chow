@@ -74,7 +74,7 @@ export default class CompiledOperation {
     }
 
     if (this.body) {
-      this.body.validate(request.header && request.header['accept'], request.body);
+      this.body.validate(request.header && request.header['content-type'], request.body);
     }
   }
 }

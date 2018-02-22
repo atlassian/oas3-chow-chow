@@ -136,7 +136,7 @@ describe('Pet Store', () => {
             name: 'plum'
           },
           header: {
-            accept: 'application/json'
+            'content-type': 'application/json'
           }
         })
       }).toThrowError('In requestBody Required property id is missing')
@@ -151,7 +151,7 @@ describe('Pet Store', () => {
             name: 'plum'
           },
           header: {
-            accept: 'application/awsome'
+            'content-type': 'application/awsome'
           }
         })
       }).toThrowError('Unsupported mediaType: application/awsome')
@@ -162,7 +162,7 @@ describe('Pet Store', () => {
         chowchow.validateRequest('/pets', {
           method: 'post',
           header: {
-            accept: 'application/json'
+            'content-type': 'application/json'
           }
         })
       }).toThrowError('Missing required Request Body')
@@ -177,7 +177,7 @@ describe('Pet Store', () => {
             name: 'plum'
           },
           header: {
-            accept: 'application/json'
+            'content-type': 'application/json'
           }
         })
       }).not.toThrowError() 
