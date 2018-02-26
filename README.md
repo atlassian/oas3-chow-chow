@@ -5,6 +5,11 @@
 [![Build Status](https://travis-ci.org/supertong/oas3-chow-chow.svg?branch=master)](https://travis-ci.org/supertong/oas3-chow-chow)
 [![npm](https://img.shields.io/npm/v/oas3-chow-chow.svg?style=flat)](https://www.npmjs.com/package/oas3-chow-chow)
 
+## Notes
+If you are looking for framework specific middleware, you might want to look at following libraries that use oas3-chow-chow under the hood.
+
+[koa-oas3](https://github.com/supertong/koa-oas3)
+
 ## Installation
 ```bash
 $ yarn add oas3-chow-chow
