@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --coverage",
+    "test:watch": "jest --coverage --watch",
     "prepublishOnly": "rm -rf lib && tsc"
   },
   "jest": {

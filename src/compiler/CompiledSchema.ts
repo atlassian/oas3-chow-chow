@@ -20,7 +20,12 @@ export default class CompiledSchema {
     const valid = this.validator(value);
     if (!valid) {
       const errors = betterAjvErrors(this.schemaObject, value || '', this.validator.errors!, { format: 'js', indent: 2 });
-      throw errors;
+      /**
+       * In the case where betterAjvErrors accidently return 0 errors
+       * we return raw errors
+       */
+      if (Array.isArray(errors) && errors.length > 0) { throw errors };
+      throw this.validator.errors;
     }
   }
 }

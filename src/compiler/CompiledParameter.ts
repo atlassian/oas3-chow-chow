@@ -26,12 +26,12 @@ export default class CompiledParameter {
 
   public validate(value: any) {
     if (!value && this.required) {
-      throw new ChowError(this.in, this.name, 'Missing required parameter');
+      throw new ChowError('Missing required parameter', { in: this.in, name: this.name });
     } else if (value) {
       try {
         this.compiledSchema.validate(value);
       } catch(e) {
-        throw new ChowError(this.in, this.name, e[0].error);
+        throw new ChowError('Schema validation error', { in: this.in, name: this.name, rawErrors: e });
       }
     }
   }

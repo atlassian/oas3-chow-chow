@@ -1,6 +1,7 @@
 import { OpenAPIObject } from 'openapi3-ts';
 import compile, { RequestMeta } from './compiler';
 import CompiledPath from './compiler/CompiledPath';
+import ChowError from './error';
 
 export default class ChowChow {
   private compiledPaths: CompiledPath[];
@@ -16,9 +17,9 @@ export default class ChowChow {
     
     switch(true) {
       case matches.length > 1:
-        throw new Error(`More than 1 matcher found for given path - ${path}`);
+        throw new ChowError(`More than 1 matcher found for given path - ${path}`, { in: 'paths', name: '' });
       case matches.length < 1:
-        throw new Error(`No matches found for given path - ${path}`);
+        throw new ChowError(`No matches found for given path - ${path}`, {in: 'paths', name: ''});
     }
 
     const compiledPath = matches[0];

@@ -1,20 +1,28 @@
-export default class ChowError extends Error {
-  private where?: string;
-  private key?: string;
+export interface ChowErrorLocation {
+  in: string;
+  name: string;
+  rawErrors?: string[];
+}
 
-  constructor(where?: string, key?: string, message?: string) {
+export default class ChowError extends Error {
+  private meta: ChowErrorLocation;
+
+  constructor(message: string, meta: ChowErrorLocation) {
     // Pass remaining arguments (including vendor specific ones) to parent constructor
-    super();
+    super(message);
 
     // Custom debugging information
-    this.where = where;
-    this.key = key;
-    if (where && key) {
-      this.message = `Parameter [${key}] in ${where} ${message}`;
-    } else if (where) {
-      this.message = `In ${where} ${message}`;
-    } else {
-      this.message = message || 'Unknown error';
+    this.meta = meta;
+  }
+
+  public toJSON() {
+    return {
+      location: {
+        in: this.meta.in,
+        name: this.meta.name
+      },
+      message: this.message,
+      rawErrors: this.meta.rawErrors || []
     }
   }
 }

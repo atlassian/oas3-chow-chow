@@ -1,4 +1,5 @@
 import ChowChow from '../src';
+import ChowError from '../src/error';
 const fixture = require('./fixtures/pet-store.json');
 
 describe('Pet Store', () => {
@@ -13,7 +14,7 @@ describe('Pet Store', () => {
       chowchow.validateRequest('/undefined', {
         method: 'get'
       });
-    }).toThrowError('No matches found for given path - /undefined');
+    }).toThrowError(ChowError);
   });
 
   test('It should successfully throw an error if a method is undefined', () => {
@@ -21,7 +22,7 @@ describe('Pet Store', () => {
       chowchow.validateRequest('/pets', {
         method: 'put'
       })
-    }).toThrowError('Invalid request method - put');
+    }).toThrowError(ChowError);
   })
 
   describe('Path', () => {
@@ -33,7 +34,7 @@ describe('Pet Store', () => {
             petId: 'chow'
           }
         });
-      }).toThrowError('Parameter [petId] in path : type should be integer');
+      }).toThrowError(ChowError);
     })
 
     test('It should pass validation if provided path parameter is correct', () => {
@@ -57,7 +58,7 @@ describe('Pet Store', () => {
             limit: 'xyz'
           }
         });
-      }).toThrowError('Parameter [limit] in query : type should be integer');
+      }).toThrowError(ChowError);
     })
 
     test('It should pass validation if provided path parameter is correct', () => {
@@ -79,7 +80,7 @@ describe('Pet Store', () => {
             breed: 'chowchow'
           }
         })
-      }).toThrowError('Parameter [breed] in query : type should be array');
+      }).toThrowError(ChowError);
     })
 
     test('It should pass validation if an array is passed to parameter which should be an array', () => {
@@ -101,7 +102,7 @@ describe('Pet Store', () => {
             breed: ['nice dog']
           }
         })
-      }).toThrowError('Parameter [breed] in query /0 should be equal to one of the allowed values: bichon, chowchow, jack russel');
+      }).toThrowError(ChowError);
     })
 
     test('It should fail validation if number of items exceeds the limit', () => {
@@ -112,7 +113,7 @@ describe('Pet Store', () => {
             breed: ['chowchow', 'bichon', 'jack russell', 'labrador']
           }
         })
-      }).toThrowError('Parameter [breed] in query : maxItems should NOT have more than 3 items');
+      }).toThrowError(ChowError);
     })
 
     test('It should pass validation for valid array parameter', () => {
@@ -138,7 +139,7 @@ describe('Pet Store', () => {
             'content-type': 'application/json'
           }
         })
-      }).toThrowError('In requestBody Required property id is missing')
+      }).toThrowError(ChowError)
     })
 
     test('It should fail validation if invalid mediaType is asked', () => {
@@ -153,7 +154,7 @@ describe('Pet Store', () => {
             'content-type': 'application/awsome'
           }
         })
-      }).toThrowError('Unsupported mediaType: application/awsome')
+      }).toThrowError(ChowError)
     })
 
     test('It should fail validation if requestBody is required but missing', () => {
@@ -164,7 +165,7 @@ describe('Pet Store', () => {
             'content-type': 'application/json'
           }
         })
-      }).toThrowError('Missing required Request Body')
+      }).toThrowError(ChowError)
     })
 
     test('It should pass validation if valid requestBody is passed', () => {

@@ -10,7 +10,7 @@ export default class CompiledPath {
   constructor(path: string, regex: RegExp, pathItemObject: PathItemObject) {
     this.path = path;
     this.regex = regex;
-    this.compiledPathItem = new CompiledPathItem(pathItemObject);
+    this.compiledPathItem = new CompiledPathItem(pathItemObject, path);
   }
 
   public match(path: string): boolean {
