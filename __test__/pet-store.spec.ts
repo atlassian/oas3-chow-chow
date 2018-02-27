@@ -1,6 +1,5 @@
 import ChowChow from '../src';
-import ChowChowError from '../src/error';
-import * as fixture from './fixtures/pet-store.json';
+const fixture = require('./fixtures/pet-store.json');
 
 describe('Pet Store', () => {
   let chowchow: ChowChow;
