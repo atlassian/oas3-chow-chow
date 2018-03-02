@@ -14,12 +14,9 @@ export default class ChowChow {
     const matches = this.compiledPaths.filter((compiledPath: CompiledPath) => {
       return compiledPath.match(path);
     });
-    
-    switch(true) {
-      case matches.length > 1:
-        throw new ChowError(`More than 1 matcher found for given path - ${path}`, { in: 'paths', name: '' });
-      case matches.length < 1:
-        throw new ChowError(`No matches found for given path - ${path}`, {in: 'paths', name: ''});
+
+    if (matches.length !== 1) {
+      throw new ChowError(`No matches or multiple matches found for given path - ${path}`, {in: 'paths', name: ''});
     }
 
     const compiledPath = matches[0];

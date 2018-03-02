@@ -6,6 +6,7 @@ export default class CompiledParameter {
   private name: string;
   private in: string;
   private required: boolean;
+  private ignored: boolean;
   private compiledSchema: CompiledSchema;
   /**
    * If in is "header" and the name field is "Accept", "Content-Type" or "Authorization",
@@ -17,22 +18,21 @@ export default class CompiledParameter {
     this.name = parameter.name;
     this.in = parameter.in;
     this.required = !!parameter.required;
-    if (parameter.in === 'header' && this.ignoreHeaders.includes(parameter.name)) {
-      this.compiledSchema = new CompiledSchema();
-    } else {
-      this.compiledSchema = new CompiledSchema(parameter.schema);
-    }
+    this.ignored = parameter.in === 'header' && this.ignoreHeaders.includes(parameter.name)
+    this.compiledSchema = new CompiledSchema(parameter.schema);
   }
 
   public validate(value: any) {
-    if (!value && this.required) {
-      throw new ChowError('Missing required parameter', { in: this.in, name: this.name });
+    if (this.ignored) {
+      return
     } else if (value) {
       try {
         this.compiledSchema.validate(value);
       } catch(e) {
         throw new ChowError('Schema validation error', { in: this.in, name: this.name, rawErrors: e });
       }
+    } else if (this.required) {
+      throw new ChowError('Missing required parameter', { in: this.in, name: this.name });
     }
   }
 }

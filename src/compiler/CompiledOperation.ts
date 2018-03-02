@@ -2,6 +2,7 @@ import { OperationObject, ParameterObject, RequestBodyObject } from 'openapi3-ts
 import CompiledParameter from './CompiledParameter';
 import CompiledRequestBody from './CompiledRequestBody'
 import { RequestMeta } from '.';
+import ChowError from '../error';
 
 export default class CompiledOperation {
   private header: {
@@ -47,7 +48,7 @@ export default class CompiledOperation {
           };
           break;
         default:
-          throw new Error(`Unsupported Paramter Location: ${parameter.in}`)
+          throw new ChowError(`Unsupported Paramter Location`, { in: parameter.in, name: ''})
       } 
     }
 

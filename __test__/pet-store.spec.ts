@@ -168,6 +168,21 @@ describe('Pet Store', () => {
       }).toThrowError(ChowError)
     })
 
+    test('It is ok to ignore body if it is not required', () => {
+      expect(() => {
+        chowchow.validateRequest('/pets/123', {
+          method: 'post',
+          path: {
+            petId: 123
+          },
+          header: {
+            'content-type': 'application/json'
+          }
+        })
+      }).not.toThrowError()
+
+    })
+
     test('It should pass validation if valid requestBody is passed', () => {
       expect(() => {
         chowchow.validateRequest('/pets', {
@@ -181,6 +196,87 @@ describe('Pet Store', () => {
           }
         })
       }).not.toThrowError() 
+    })
+  })
+
+  describe('Header', () => {
+    test('It should fail validation if a required header is missing', () => {
+      expect(() => {
+        chowchow.validateRequest('/test/header', {
+          method: 'get',
+          header: {
+            'content-type': 'application/json'
+          }
+        })
+      }).toThrowError(ChowError)
+    })
+
+    test('It should fail validation if a header fails schema validation', () => {
+      expect(() => {
+        chowchow.validateRequest('/test/header', {
+          method: 'get',
+          header: {
+            version: 'awsome version'
+          }
+        })
+      }).toThrowError(ChowError)
+    })
+
+    test('It should pass validation if headers are satisfied', () => {
+      expect(() => {
+        chowchow.validateRequest('/test/header', {
+          method: 'get',
+          header: {
+            version: 123
+          }
+        })
+      }).not.toThrowError()
+    })
+  })
+
+  describe('Cookie', () => {
+    test('It should fail validation if a required cookie is missing', () => {
+      expect(() => {
+        chowchow.validateRequest('/test/cookie', {
+          method: 'get',
+          cookie: {}
+        })
+      }).toThrowError(ChowError)
+    })
+
+    test('It should fail validation if a cookie fails schema validation', () => {
+      expect(() => {
+        chowchow.validateRequest('/test/cookie', {
+          method: 'get',
+          cookie: {
+            count: 'many'
+          }
+        })
+      }).toThrowError(ChowError)
+    })
+
+    test('It should pass validation if cookies are satisfied', () => {
+      expect(() => {
+        chowchow.validateRequest('/test/cookie', {
+          method: 'get',
+          cookie: {
+            count: 123
+          }
+        })
+      }).not.toThrowError()
+    })
+  })
+
+  describe('Schema', () => {
+    test('It is ok to not give a schema', () => {
+      expect(() => {
+        chowchow.validateRequest('/test/schema', {
+          method: 'get',
+          cookie: {
+            count: 123
+          }
+        })
+      }).not.toThrowError()
     })
   })
 });

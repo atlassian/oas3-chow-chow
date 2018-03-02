@@ -111,6 +111,102 @@
         }
       }
     },
+    "/test/header": {
+      "get": {
+        "summary": "For testing header validation",
+        "operationId": "testHeader",
+        "tags": ["test"],
+        "parameters":[
+          {
+            "name": "version",
+            "in": "header",
+            "required": true,
+            "description": "This is a required header",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "description": "This should be ignored",
+            "schema": {
+              "type": "string"
+            } 
+          }
+        ],
+        "responses":{
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/test/cookie": {
+      "get": {
+        "summary": "For testing cookie validation",
+        "operationId": "testCookie",
+        "tags": ["test"],
+        "parameters":[
+          {
+            "name": "count",
+            "in": "cookie",
+            "required": true,
+            "description": "This is a required cookie",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses":{
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/test/schema": {
+      "get": {
+        "summary": "For testing schema",
+        "operationId": "testSchema",
+        "tags": ["test"],
+        "parameters":[
+          {
+            "name": "count",
+            "in": "cookie",
+            "required": true,
+            "description": "This is a required cookie"
+          }
+        ],
+        "responses":{
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/pets/{petId}": {
       "get": {
         "summary": "Info for a specific pet",
@@ -139,6 +235,49 @@
                 }
               }
             }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Update a pet",
+        "operationId": "updatePets",
+        "tags": [
+          "pets"
+        ],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The pet information",
+          "content": {
+            "application/json":{
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Null response"
           },
           "default": {
             "description": "unexpected error",
