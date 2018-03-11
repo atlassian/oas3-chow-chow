@@ -11,6 +11,13 @@ export interface RequestMeta {
   body?: any;
 }
 
+export interface ResponseMeta {
+  method: string;
+  status: number;
+  header?: any;
+  body?: any;
+}
+
 export default function compile(oas: OpenAPIObject): CompiledPath[] {
   // TODO: Shall I deref the document here?
   const document: OpenAPIObject = deref(oas);

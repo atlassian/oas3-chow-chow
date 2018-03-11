@@ -1,7 +1,8 @@
 import { OperationObject, ParameterObject, RequestBodyObject } from 'openapi3-ts';
 import CompiledParameter from './CompiledParameter';
 import CompiledRequestBody from './CompiledRequestBody'
-import { RequestMeta } from '.';
+import CompiledResponse from './CompiledResponse';
+import { RequestMeta, ResponseMeta } from '.';
 import ChowError from '../error';
 
 export default class CompiledOperation {
@@ -18,6 +19,9 @@ export default class CompiledOperation {
     [key: string]: CompiledParameter;
   } = {};
   private body?: CompiledRequestBody;
+  private response: {
+    [key: string]: CompiledResponse;
+  } = {};
 
   constructor(operation: OperationObject) {
     const parameters = !!operation.parameters ? [...operation.parameters] : []
@@ -55,9 +59,14 @@ export default class CompiledOperation {
     if (operation.requestBody) {
       this.body = new CompiledRequestBody(operation.requestBody as RequestBodyObject);
     }
+
+    this.response = Object.keys(operation.responses).reduce((compiled: any, status: string) => {
+      compiled[status] = new CompiledResponse(operation.responses[status]);
+      return compiled;
+    }, {});
   }
 
-  public validate(request: RequestMeta) {
+  public validateRequest(request: RequestMeta) {
     for (const key in this.header) {
       this.header[key].validate(request.header && request.header[key]);
     }
@@ -76,6 +85,15 @@ export default class CompiledOperation {
 
     if (this.body) {
       this.body.validate(request.header && request.header['content-type'], request.body);
+    }
+  }
+
+  public validateResponse(response: ResponseMeta) {
+    const compiledResponse = this.response[response.status] || this.response['default'];
+    if (compiledResponse) {
+      compiledResponse.validate(response);
+    } else {
+      throw new ChowError('Unsupported Response Status Code', { in: 'Response', name: '' });
     }
   }
 }

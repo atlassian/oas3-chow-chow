@@ -1,6 +1,6 @@
 import { PathItemObject } from 'openapi3-ts';
 import CompiledPathItem from './CompiledPathItem';
-import { RequestMeta } from '.';
+import { RequestMeta, ResponseMeta } from '.';
 
 export default class CompiledPath {
   private path: string;
@@ -17,7 +17,11 @@ export default class CompiledPath {
     return this.regex.test(path);
   }
 
-  public validate(request: RequestMeta) {
-    return this.compiledPathItem.validate(request);
+  public validateRequest(request: RequestMeta) {
+    return this.compiledPathItem.validateRequest(request);
+  }
+
+  public validateResponse(response: ResponseMeta) {
+    return this.compiledPathItem.validateResponse(response);
   }
 }

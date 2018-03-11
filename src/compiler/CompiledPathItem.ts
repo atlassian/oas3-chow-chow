@@ -1,6 +1,6 @@
 import { PathItemObject } from 'openapi3-ts';
 import CompiledOperation from './CompiledOperation';
-import { RequestMeta } from '.';
+import { RequestMeta, ResponseMeta } from '.';
 import ChowError from '../error';
 
 export default class CompiledPathItem {
@@ -21,13 +21,23 @@ export default class CompiledPathItem {
     this.path = path;
   }
 
-  public validate(request: RequestMeta) {
+  public validateRequest(request: RequestMeta) {
     const method = request.method.toLowerCase();
     const compiledOperation = this.compiledOperations[method];
     if (!compiledOperation) {
       throw new ChowError(`Invalid request method - ${method}`, { in: 'path', name: this.path })
     }
 
-    return compiledOperation.validate(request);
+    return compiledOperation.validateRequest(request);
+  }
+
+  public validateResponse(response: ResponseMeta) {
+    const method = response.method.toLowerCase();
+    const compiledOperation = this.compiledOperations[method];
+    if (!compiledOperation) {
+      throw new ChowError(`Invalid request method - ${method}`, { in: 'path', name: this.path })
+    }
+
+    return compiledOperation.validateResponse(response);
   }
 }
