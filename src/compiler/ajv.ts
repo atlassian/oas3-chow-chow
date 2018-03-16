@@ -7,6 +7,7 @@ const options: Ajv.Options = {
    */
   unknownFormats: [ 'int32', 'int64', 'float', 'double', 'byte', 'binary', 'password' ],
   jsonPointers: true,
+  coerceTypes: true
 }
 
 const ajv = new Ajv(options);

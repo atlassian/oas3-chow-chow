@@ -19,7 +19,6 @@ export interface ResponseMeta {
 }
 
 export default function compile(oas: OpenAPIObject): CompiledPath[] {
-  // TODO: Shall I deref the document here?
   const document: OpenAPIObject = deref(oas);
 
   return Object.keys(document.paths).map((path: string) => {
@@ -28,7 +27,6 @@ export default function compile(oas: OpenAPIObject): CompiledPath[] {
     // TODO: support for base path
     return new CompiledPath(
       path,
-      new RegExp('^'+  path.replace(/\{[^}]*}/g, '[^/]+') + '/?$'),
       pathItemObject
     );
   });

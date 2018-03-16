@@ -12,7 +12,7 @@ export default class ChowChow {
 
   validateRequest(path: string, request: RequestMeta) {
     const compiledPath = this.identifyCompiledPath(path);
-    return compiledPath.validateRequest(request);
+    return compiledPath.validateRequest(path, request);
   }
 
   validateResponse(path: string, response: ResponseMeta) {
@@ -21,14 +21,14 @@ export default class ChowChow {
   }
 
   private identifyCompiledPath(path: string) {
-    const matches = this.compiledPaths.filter((compiledPath: CompiledPath) => {
-      return compiledPath.match(path);
+    const compiledPath = this.compiledPaths.find((cp: CompiledPath) => {
+      return cp.test(path);
     });
 
-    if (matches.length !== 1) {
+    if (!compiledPath) {
       throw new ChowError(`No matches or multiple matches found for given path - ${path}`, {in: 'paths', name: ''});
     }
 
-    return matches[0]; 
+    return compiledPath;
   }
 }
