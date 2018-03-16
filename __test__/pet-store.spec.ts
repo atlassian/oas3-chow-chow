@@ -72,17 +72,6 @@ describe('Pet Store', () => {
       }).not.toThrowError(); 
     })
 
-    test('It should fail validation if a non-array is passed to parameter which should be an array', () => {
-      expect(() => {
-        chowchow.validateRequest('/pets', {
-          method: 'get',
-          query: {
-            breed: 'chowchow'
-          }
-        })
-      }).toThrowError(ChowError);
-    })
-
     test('It should pass validation if an array is passed to parameter which should be an array', () => {
       expect(() => {
         chowchow.validateRequest('/pets', {

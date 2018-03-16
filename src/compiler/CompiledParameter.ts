@@ -19,7 +19,17 @@ export default class CompiledParameter {
     this.in = parameter.in;
     this.required = !!parameter.required;
     this.ignored = parameter.in === 'header' && this.ignoreHeaders.includes(parameter.name)
-    this.compiledSchema = new CompiledSchema(parameter.schema);
+    switch(parameter.in) {
+      case 'query':
+        // We want to coerce params to array if needed
+        this.compiledSchema = new CompiledSchema(parameter.schema, { coerceTypes: 'array' });
+        break;
+      case 'path':
+        this.compiledSchema = new CompiledSchema(parameter.schema, { coerceTypes: true });
+        break;
+      default:
+        this.compiledSchema = new CompiledSchema(parameter.schema);
+    }
   }
 
   public validate(value: any) {

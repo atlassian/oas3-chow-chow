@@ -6,9 +6,12 @@ const options: Ajv.Options = {
    * TODO: Add custom format supports for following formats.
    */
   unknownFormats: [ 'int32', 'int64', 'float', 'double', 'byte', 'binary', 'password' ],
-  jsonPointers: true,
-  coerceTypes: true
+  jsonPointers: true
 }
 
-const ajv = new Ajv(options);
-export default ajv;
+export default function ajv(opts: Ajv.Options = {}) {
+  return new Ajv({
+    ...options,
+    ...opts
+  })
+}
