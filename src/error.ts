@@ -1,13 +1,14 @@
-export interface ChowErrorLocation {
+export interface ChowErrorMeta {
   in: string;
   name: string;
   rawErrors?: string[];
+  code?: number;
 }
 
 export default class ChowError extends Error {
-  private meta: ChowErrorLocation;
+  private meta: ChowErrorMeta;
 
-  constructor(message: string, meta: ChowErrorLocation) {
+  constructor(message: string, meta: ChowErrorMeta) {
     // Pass remaining arguments (including vendor specific ones) to parent constructor
     super(message);
 
@@ -17,6 +18,7 @@ export default class ChowError extends Error {
 
   public toJSON() {
     return {
+      code: this.meta.code || 400,
       location: {
         in: this.meta.in,
         name: this.meta.name

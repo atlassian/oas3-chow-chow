@@ -3,6 +3,8 @@ import compile, { RequestMeta, ResponseMeta } from './compiler';
 import CompiledPath from './compiler/CompiledPath';
 import ChowError from './error';
 
+export { default as ChowError } from './error';
+
 export default class ChowChow {
   private compiledPaths: CompiledPath[];
 
@@ -26,7 +28,7 @@ export default class ChowChow {
     });
 
     if (!compiledPath) {
-      throw new ChowError(`No matches or multiple matches found for given path - ${path}`, {in: 'paths', name: ''});
+      throw new ChowError(`No matches found for the given path - ${path}`, {in: 'paths', name: '', code: 404});
     }
 
     return compiledPath;

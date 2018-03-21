@@ -8,6 +8,7 @@ describe('ChowError', () => {
   it('should be able to output JSON format of the error', () => {
     const chowError = new ChowError('An error', { in: 'test', name: 'test' });
     expect(chowError.toJSON()).toEqual({
+      code: 400,
       location: {
         in: 'test',
         name: 'test',
