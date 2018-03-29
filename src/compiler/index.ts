@@ -1,6 +1,11 @@
-import { OpenAPIObject, PathObject, PathItemObject, OperationObject } from 'openapi3-ts';
-import CompiledPath from './CompiledPath';
-import * as deref from 'json-schema-deref-sync';
+import {
+  OpenAPIObject,
+  PathObject,
+  PathItemObject,
+  OperationObject
+} from "openapi3-ts";
+import CompiledPath from "./CompiledPath";
+import * as deref from "json-schema-deref-sync";
 
 export interface RequestMeta {
   method: string;
@@ -14,7 +19,10 @@ export interface RequestMeta {
 export interface ResponseMeta {
   method: string;
   status: number;
-  header?: any;
+  header: {
+    "content-type": string;
+    [key: string]: string;
+  };
   body?: any;
 }
 
@@ -25,9 +33,6 @@ export default function compile(oas: OpenAPIObject): CompiledPath[] {
     const pathItemObject: PathItemObject = document.paths[path];
 
     // TODO: support for base path
-    return new CompiledPath(
-      path,
-      pathItemObject
-    );
+    return new CompiledPath(path, pathItemObject);
   });
 }
