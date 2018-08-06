@@ -2,7 +2,7 @@
 
 > Request and response validator against OpenAPI Specification
 
-[![Build Status](https://travis-ci.org/supertong/oas3-chow-chow.svg?branch=master)](https://travis-ci.org/supertong/oas3-chow-chow)
+[![Build Status](https://travis-ci.org/atlassian/oas3-chow-chow.svg?branch=master)](https://travis-ci.org/supertong/oas3-chow-chow)
 [![npm](https://img.shields.io/npm/v/oas3-chow-chow.svg?style=flat)](https://www.npmjs.com/package/oas3-chow-chow)
 
 ## Notes
