@@ -1,8 +1,6 @@
 import {
   OpenAPIObject,
-  PathObject,
   PathItemObject,
-  OperationObject
 } from "openapi3-ts";
 import CompiledPath from "./CompiledPath";
 import * as deref from "json-schema-deref-sync";
