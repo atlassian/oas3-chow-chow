@@ -9,7 +9,7 @@ describe('Query', () => {
     chowchow = new ChowChow(fixture);
   })
 
-  test('It should coerce query parameter to arry', () => {
+  test('It should coerce query parameter to an array', () => {
     expect(() => {
       chowchow.validateRequest('/pets', {
         method: 'get',

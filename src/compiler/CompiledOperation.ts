@@ -4,11 +4,11 @@ import CompiledRequestBody from './CompiledRequestBody'
 import CompiledResponse from './CompiledResponse';
 import { RequestMeta, ResponseMeta } from '.';
 import ChowError from '../error';
+import CompiledParameterHeader from './CompiledParameterHeader';
 
 export default class CompiledOperation {
-  private header: {
-    [key: string]: CompiledParameter;
-  } = {};
+  private header: ParameterObject[] = [];
+  private compiledHeader: CompiledParameterHeader;
   private query: {
     [key: string]: CompiledParameter;
   } = {};
@@ -28,10 +28,7 @@ export default class CompiledOperation {
     for (const parameter of parameters as ParameterObject[]) {
       switch(parameter.in) {
         case 'header':
-          this.header = {
-            ...this.header,
-            [parameter.name]: new CompiledParameter(parameter)
-          };
+          this.header.push(parameter);
           break;
         case 'query':
           this.query = {
@@ -55,6 +52,7 @@ export default class CompiledOperation {
           throw new ChowError(`Unsupported Paramter Location`, { in: parameter.in, name: ''})
       } 
     }
+    this.compiledHeader = new CompiledParameterHeader(this.header);
 
     if (operation.requestBody) {
       this.body = new CompiledRequestBody(operation.requestBody as RequestBodyObject);
@@ -67,9 +65,7 @@ export default class CompiledOperation {
   }
 
   public validateRequest(request: RequestMeta) {
-    for (const key in this.header) {
-      this.header[key].validate(request.header && request.header[key]);
-    }
+    this.compiledHeader.validate(request.header);
 
     for (const key in this.query) {
       this.query[key].validate(request.query && request.query[key]);
