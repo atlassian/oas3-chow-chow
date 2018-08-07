@@ -5,13 +5,13 @@ import CompiledResponse from './CompiledResponse';
 import { RequestMeta, ResponseMeta } from '.';
 import ChowError from '../error';
 import CompiledParameterHeader from './CompiledParameterHeader';
+import CompiledParameterQuery from './CompiledParameterQuery';
 
 export default class CompiledOperation {
   private header: ParameterObject[] = [];
   private compiledHeader: CompiledParameterHeader;
-  private query: {
-    [key: string]: CompiledParameter;
-  } = {};
+  private query: ParameterObject[] = [];
+  private compiledQuery: CompiledParameterQuery;
   private path: {
     [key: string]: CompiledParameter;
   } = {};
@@ -31,10 +31,7 @@ export default class CompiledOperation {
           this.header.push(parameter);
           break;
         case 'query':
-          this.query = {
-            ...this.query,
-            [parameter.name]: new CompiledParameter(parameter)
-          };
+          this.query.push(parameter);
           break;
         case 'path':
           this.path = {
@@ -53,6 +50,7 @@ export default class CompiledOperation {
       } 
     }
     this.compiledHeader = new CompiledParameterHeader(this.header);
+    this.compiledQuery = new CompiledParameterQuery(this.query);
 
     if (operation.requestBody) {
       this.body = new CompiledRequestBody(operation.requestBody as RequestBodyObject);
@@ -66,10 +64,7 @@ export default class CompiledOperation {
 
   public validateRequest(request: RequestMeta) {
     this.compiledHeader.validate(request.header);
-
-    for (const key in this.query) {
-      this.query[key].validate(request.query && request.query[key]);
-    }
+    this.compiledQuery.validate(request.query);
 
     for (const key in this.path) {
       this.path[key].validate(request.path && request.path[key]);
