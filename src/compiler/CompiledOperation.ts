@@ -6,15 +6,15 @@ import { RequestMeta, ResponseMeta } from '.';
 import ChowError from '../error';
 import CompiledParameterHeader from './CompiledParameterHeader';
 import CompiledParameterQuery from './CompiledParameterQuery';
+import CompiledParameterPath from './CompiledParameterPath';
 
 export default class CompiledOperation {
   private header: ParameterObject[] = [];
   private compiledHeader: CompiledParameterHeader;
   private query: ParameterObject[] = [];
   private compiledQuery: CompiledParameterQuery;
-  private path: {
-    [key: string]: CompiledParameter;
-  } = {};
+  private path: ParameterObject[] = [];
+  private compiledPath: CompiledParameterPath;
   private cookie: {
     [key: string]: CompiledParameter;
   } = {};
@@ -34,10 +34,7 @@ export default class CompiledOperation {
           this.query.push(parameter);
           break;
         case 'path':
-          this.path = {
-            ...this.path,
-            [parameter.name]: new CompiledParameter(parameter)
-          };
+          this.path.push(parameter);
           break;
         case 'cookie':
           this.cookie = {
@@ -51,6 +48,7 @@ export default class CompiledOperation {
     }
     this.compiledHeader = new CompiledParameterHeader(this.header);
     this.compiledQuery = new CompiledParameterQuery(this.query);
+    this.compiledPath = new CompiledParameterPath(this.path);
 
     if (operation.requestBody) {
       this.body = new CompiledRequestBody(operation.requestBody as RequestBodyObject);
@@ -65,10 +63,7 @@ export default class CompiledOperation {
   public validateRequest(request: RequestMeta) {
     this.compiledHeader.validate(request.header);
     this.compiledQuery.validate(request.query);
-
-    for (const key in this.path) {
-      this.path[key].validate(request.path && request.path[key]);
-    }
+    this.compiledPath.validate(request.path);
 
     for (const key in this.cookie) {
       this.cookie[key].validate(request.cookie && request.cookie[key]);

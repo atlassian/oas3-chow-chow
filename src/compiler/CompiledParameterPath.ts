@@ -2,9 +2,9 @@ import { ParameterObject, SchemaObject } from 'openapi3-ts';
 import CompiledSchema from './CompiledSchema';
 import ChowError from '../error';
 
-export default class CompiledParameterQuery {
+export default class CompiledParameterPath {
   private compiledSchema: CompiledSchema;
-  private querySchema: SchemaObject = {
+  private pathSchema: SchemaObject = {
     type: 'object',
     properties: {},
     required: []
@@ -13,19 +13,19 @@ export default class CompiledParameterQuery {
   constructor(parameters: ParameterObject[]) {
     for (const parameter of parameters) {
       if (parameter.schema) {
-        this.querySchema.properties![parameter.name] = parameter.schema;
+        this.pathSchema.properties![parameter.name] = parameter.schema;
       }
       if (parameter.required) {
-        this.querySchema.required!.push(parameter.name);
+        this.pathSchema.required!.push(parameter.name);
       }
     }
 
     /**
-     * We want path to coerce type in general
+     * We want query to coerce to array if needed
      * For example:
-     *   `?query=x` will be valid against a schema with type=array
+     *   `/pets/123` will be valid against a schema with type=number even if `123` is string
      */
-    this.compiledSchema = new CompiledSchema(this.querySchema, { coerceTypes: 'array' });
+    this.compiledSchema = new CompiledSchema(this.pathSchema, { coerceTypes: true });
   }
 
   /**
@@ -35,7 +35,7 @@ export default class CompiledParameterQuery {
     try {
       this.compiledSchema.validate(value);
     } catch(e) {
-      throw new ChowError('Schema validation error', { in: 'query', rawErrors: e });
+      throw new ChowError('Schema validation error', { in: 'path', rawErrors: e });
     }
   }
 }
