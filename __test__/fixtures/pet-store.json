@@ -32,6 +32,12 @@
             }
           },
           {
+            "name": "sex",
+            "in": "query",
+            "description": "Male or female",
+            "required": false
+          },
+          {
             "name": "breed",
             "in": "query",
             "description": "Filter result with specified breed",
@@ -134,6 +140,21 @@
             "schema": {
               "type": "string"
             } 
+          },
+          {
+            "name": "no-required",
+            "in": "header",
+            "required": false,
+            "description": "This is not required",
+            "schema": {
+              "type": "string"
+            } 
+          },
+          {
+            "name": "no-schema",
+            "in": "header",
+            "required": false,
+            "description": "This is not required"
           }
         ],
         "responses":{
@@ -164,9 +185,57 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "not-required",
+            "in": "cookie",
+            "required": false,
+            "description": "This is not a required cookie",
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses":{
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/test/path/{id}": {
+      "get": {
+        "summary": "test for path",
+        "operationId": "showPetById",
+        "tags": [
+          "pets"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pets"
+                }
+              }
+            }
+          },
           "default": {
             "description": "unexpected error",
             "content": {

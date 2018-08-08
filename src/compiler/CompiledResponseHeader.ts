@@ -19,9 +19,6 @@ export default class CompiledResponseHeader {
       if (this.ignoreHeaders.includes(name)) {
         continue;
       }
-      if (!headers.hasOwnProperty(name)) {
-        continue;
-      }
       const header = headers[name] as HeaderObject;
 
       if (header.schema) {

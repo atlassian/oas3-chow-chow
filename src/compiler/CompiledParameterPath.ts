@@ -12,12 +12,11 @@ export default class CompiledParameterPath {
 
   constructor(parameters: ParameterObject[]) {
     for (const parameter of parameters) {
-      if (parameter.schema) {
-        this.pathSchema.properties![parameter.name] = parameter.schema;
-      }
-      if (parameter.required) {
-        this.pathSchema.required!.push(parameter.name);
-      }
+      this.pathSchema.properties![parameter.name] = parameter.schema || {};
+      /**
+       * All path parameters are required
+       */
+      this.pathSchema.required!.push(parameter.name);
     }
 
     /**
@@ -29,9 +28,9 @@ export default class CompiledParameterPath {
   }
 
   /**
-   * If there is no query passed in, we make it an empty object
+   * If there is no path passed in, we make it an empty object
    */
-  public validate(value: any = {}) {
+  public validate(value: any) {
     try {
       this.compiledSchema.validate(value);
     } catch(e) {

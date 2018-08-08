@@ -38,8 +38,6 @@ export default class CompiledOperation {
         case 'cookie':
           this.cookie.push(parameter);
           break;
-        default:
-          throw new ChowError(`Unsupported Paramter Location`, { in: parameter.in, name: ''})
       } 
     }
     this.compiledHeader = new CompiledParameterHeader(this.header);
@@ -73,7 +71,7 @@ export default class CompiledOperation {
     if (compiledResponse) {
       compiledResponse.validate(response);
     } else {
-      throw new ChowError('Unsupported Response Status Code', { in: 'Response', name: '' });
+      throw new ChowError('Unsupported Response Status Code', { in: 'response' });
     }
   }
 }

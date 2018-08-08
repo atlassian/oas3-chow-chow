@@ -23,9 +23,8 @@ export default class CompiledParameterHeader {
         continue;
       }
 
-      if (parameter.schema) {
-        this.headerSchema.properties![parameter.name] = parameter.schema;
-      }
+      this.headerSchema.properties![parameter.name] = parameter.schema || {};
+
       if (parameter.required) {
         this.headerSchema.required!.push(parameter.name);
       }

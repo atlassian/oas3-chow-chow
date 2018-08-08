@@ -12,9 +12,7 @@ export default class CompiledParameterCookie {
 
   constructor(parameters: ParameterObject[]) {
     for (const parameter of parameters) {
-      if (parameter.schema) {
-        this.cookieSchema.properties![parameter.name] = parameter.schema;
-      }
+      this.cookieSchema.properties![parameter.name] = parameter.schema || {};
       if (parameter.required) {
         this.cookieSchema.required!.push(parameter.name);
       }

@@ -52,6 +52,75 @@
           }
         }
       }
+    },
+    "/no-default": {
+      "get": {
+        "summary": "Info for a specific pet",
+        "operationId": "showPetById",
+        "tags": ["pets"],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pets"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/header": {
+      "get": {
+        "summary": "Info for a specific pet",
+        "operationId": "showPetById",
+        "tags": ["pets"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "headers": {
+              "Content-Type": {
+                "description": "The returned content type",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Version": {
+                "description": "The version of API",
+                "schema": {
+                  "type": "string"
+                },
+                "required": true
+              },
+              "Any": {
+                "description": "It matches anything",
+                "required": false
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pets"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

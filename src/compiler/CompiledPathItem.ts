@@ -25,7 +25,7 @@ export default class CompiledPathItem {
     const method = request.method.toLowerCase();
     const compiledOperation = this.compiledOperations[method];
     if (!compiledOperation) {
-      throw new ChowError(`Invalid request method - ${method}`, { in: 'path', name: this.path })
+      throw new ChowError(`Invalid request method - ${method}`, { in: 'path' })
     }
 
     return compiledOperation.validateRequest(request);
@@ -35,7 +35,7 @@ export default class CompiledPathItem {
     const method = response.method.toLowerCase();
     const compiledOperation = this.compiledOperations[method];
     if (!compiledOperation) {
-      throw new ChowError(`Invalid request method - ${method}`, { in: 'path', name: this.path })
+      throw new ChowError(`Invalid request method - ${method}`, { in: 'path' })
     }
 
     return compiledOperation.validateResponse(response);

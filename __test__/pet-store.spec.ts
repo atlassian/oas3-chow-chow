@@ -221,6 +221,18 @@ describe('Pet Store', () => {
         })
       }).not.toThrowError()
     })
+
+    test('It should pass for header without schema', () => {
+      expect(() => {
+        chowchow.validateRequest('/test/header', {
+          method: 'get',
+          header: {
+            version: 123,
+            'no-schema': 123
+          }
+        })
+      }).not.toThrowError()
+    })
   })
 
   describe('Cookie', () => {

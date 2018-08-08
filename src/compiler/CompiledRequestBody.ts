@@ -18,19 +18,19 @@ export default class CompiledRequestBody {
 
   public validate(mediaType: string, value: any) {
     if (this.required && !value) {
-      throw new ChowError('Missing required body', { in: 'Request Body', name: '' });
+      throw new ChowError('Missing required body', { in: 'request-body' });
     }
     if (!this.required && !value) {
       return;
     }
     if (!this.compiledSchemas[mediaType]) {
-      throw new ChowError(`Unsupported mediaType: ${mediaType}`, { in: 'Request Body', name: 'media types'});
+      throw new ChowError(`Unsupported mediaType: ${mediaType}`, { in: 'request-body' });
     }
 
     try {
       this.compiledSchemas[mediaType].validate(value);
     } catch(e) {
-      throw new ChowError('Schema validation error', { in: 'RequestBody', rawErrors: e });
+      throw new ChowError('Schema validation error', { in: 'request-body', rawErrors: e });
     }
   }
 }

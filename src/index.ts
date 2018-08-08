@@ -28,7 +28,7 @@ export default class ChowChow {
     });
 
     if (!compiledPath) {
-      throw new ChowError(`No matches found for the given path - ${path}`, {in: 'paths', name: '', code: 404});
+      throw new ChowError(`No matches found for the given path - ${path}`, {in: 'paths', code: 404});
     }
 
     return compiledPath;

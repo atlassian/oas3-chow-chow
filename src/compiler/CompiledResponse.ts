@@ -1,7 +1,7 @@
 import { ResponseObject, HeaderObject, MediaTypeObject } from 'openapi3-ts';
 import ChowError from '../error';
 import CompiledResponseHeader from './CompiledResponseHeader';
-import compile, { ResponseMeta } from '.';
+import { ResponseMeta } from '.';
 import CompiledMediaType from './CompiledMediaType';
 
 export default class CompiledResponse {
@@ -27,7 +27,7 @@ export default class CompiledResponse {
     if (this.content[response.header['content-type']]) {
       this.content[response.header['content-type']].validate(response.body);
     } else {
-      throw new ChowError('Unsupported Response Media Type', { in: 'Response', name: '' })
+      throw new ChowError('Unsupported Response Media Type', { in: 'response' })
     }
   }
 }

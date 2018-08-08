@@ -17,10 +17,7 @@ export interface RequestMeta {
 export interface ResponseMeta {
   method: string;
   status: number;
-  header: {
-    "content-type": string;
-    [key: string]: string;
-  };
+  header?: any;
   body?: any;
 }
 

@@ -12,9 +12,7 @@ export default class CompiledParameterQuery {
 
   constructor(parameters: ParameterObject[]) {
     for (const parameter of parameters) {
-      if (parameter.schema) {
-        this.querySchema.properties![parameter.name] = parameter.schema;
-      }
+      this.querySchema.properties![parameter.name] = parameter.schema || {};
       if (parameter.required) {
         this.querySchema.required!.push(parameter.name);
       }

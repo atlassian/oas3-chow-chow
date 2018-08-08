@@ -3,17 +3,13 @@ import * as Ajv from 'ajv';
 import * as betterAjvErrors from 'better-ajv-errors';
 import ajv from './ajv';
 
-const noop: Ajv.ValidateFunction = (data: any) => {
-  return true;
-}
-
 export default class CompiledSchema {
   private schemaObject?: SchemaObject;
   private validator: Ajv.ValidateFunction;
 
-  constructor(schema?: SchemaObject, opts?: Ajv.Options) {
+  constructor(schema: SchemaObject, opts?: Ajv.Options) {
     this.schemaObject = schema;
-    this.validator = schema ? ajv(opts).compile(schema) : noop;
+    this.validator = ajv(opts).compile(schema);
   }
 
   public validate(value: any) {
