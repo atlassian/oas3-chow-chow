@@ -7,6 +7,7 @@ import CompiledParameterHeader from './CompiledParameterHeader';
 import CompiledParameterQuery from './CompiledParameterQuery';
 import CompiledParameterPath from './CompiledParameterPath';
 import CompiledParameterCookie from './CompiledParameterCookie';
+import CompiledMediaType from './CompiledMediaType';
 
 export default class CompiledOperation {
   private header: ParameterObject[] = [];
@@ -62,7 +63,8 @@ export default class CompiledOperation {
     this.compiledCookie.validate(request.cookie);
 
     if (this.body) {
-      this.body.validate(request.header && request.header['content-type'], request.body);
+      const contentType = CompiledMediaType.extractMediaType(request.header && request.header['content-type'])
+      this.body.validate(contentType, request.body);
     }
   }
 

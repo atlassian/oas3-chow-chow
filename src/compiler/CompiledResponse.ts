@@ -24,8 +24,9 @@ export default class CompiledResponse {
   public validate(response: ResponseMeta) {
     this.compiledResponseHeader.validate(response.header);
 
-    if (this.content[response.header['content-type']]) {
-      this.content[response.header['content-type']].validate(response.body);
+    const contentType = CompiledMediaType.extractMediaType(response.header['content-type']);
+    if (this.content[contentType]) {
+      this.content[contentType].validate(response.body);
     } else {
       throw new ChowError('Unsupported Response Media Type', { in: 'response' })
     }

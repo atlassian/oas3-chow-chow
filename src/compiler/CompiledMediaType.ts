@@ -18,4 +18,8 @@ export default class CompiledMediaType {
       throw new ChowError('Schema validation error', { in: `media-type:${this.name}`, rawErrors: e });
     }
   }
+
+  static extractMediaType(contentType: string) {
+    return contentType.split(';')[0];
+  }
 }

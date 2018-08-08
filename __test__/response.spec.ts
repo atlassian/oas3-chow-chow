@@ -65,6 +65,30 @@ describe("Response", () => {
     }).toThrow();
   })
 
+  it('should fail on empty response media type', () => {
+    expect(() => {
+      chowchow.validateResponse("/pets/123", {
+        method: "get",
+        status: 200,
+        header: {
+          "content-type": ""
+        }
+      });
+    }).toThrow();
+  })
+
+  it('should extract media type correctly in Content-Type header', () => {
+    expect(() => {
+      chowchow.validateResponse("/pets/123", {
+        method: "get",
+        status: 200,
+        header: {
+          "content-type": "application/json; charset=utf-8"
+        }
+      });
+    }).toThrow();
+  })
+
   it('should fail if response body is invalid', () => {
     expect(() => {
       chowchow.validateResponse("/pets/123", {
