@@ -10,7 +10,7 @@ export default class CompiledRequestBody {
 
   constructor(requestBody: RequestBodyObject) {
     this.compiledSchemas = Object.keys(requestBody.content).reduce((compiled: any, mediaType: string) => {
-      compiled[mediaType] = new CompiledSchema(requestBody.content[mediaType].schema);
+      compiled[mediaType] = new CompiledSchema(requestBody.content[mediaType].schema || {});
       return compiled;
     }, {});
     this.required = !!requestBody.required;

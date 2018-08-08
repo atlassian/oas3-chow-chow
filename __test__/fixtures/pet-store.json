@@ -117,6 +117,37 @@
         }
       }
     },
+    "/test/body": {
+      "post": {
+        "summary": "Create a pet",
+        "operationId": "createPets",
+        "tags": [
+          "pets"
+        ],
+        "requestBody": {
+          "description": "A body without schema",
+          "content": {
+            "application/json":{}
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Null response"
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/test/header": {
       "get": {
         "summary": "For testing header validation",
