@@ -1,5 +1,4 @@
 import { OperationObject, ParameterObject, RequestBodyObject } from 'openapi3-ts';
-import CompiledParameter from './CompiledParameter';
 import CompiledRequestBody from './CompiledRequestBody'
 import CompiledResponse from './CompiledResponse';
 import { RequestMeta, ResponseMeta } from '.';
@@ -7,6 +6,7 @@ import ChowError from '../error';
 import CompiledParameterHeader from './CompiledParameterHeader';
 import CompiledParameterQuery from './CompiledParameterQuery';
 import CompiledParameterPath from './CompiledParameterPath';
+import CompiledParameterCookie from './CompiledParameterCookie';
 
 export default class CompiledOperation {
   private header: ParameterObject[] = [];
@@ -15,9 +15,8 @@ export default class CompiledOperation {
   private compiledQuery: CompiledParameterQuery;
   private path: ParameterObject[] = [];
   private compiledPath: CompiledParameterPath;
-  private cookie: {
-    [key: string]: CompiledParameter;
-  } = {};
+  private cookie: ParameterObject[] = [];
+  private compiledCookie: CompiledParameterCookie;
   private body?: CompiledRequestBody;
   private response: {
     [key: string]: CompiledResponse;
@@ -37,10 +36,7 @@ export default class CompiledOperation {
           this.path.push(parameter);
           break;
         case 'cookie':
-          this.cookie = {
-            ...this.cookie,
-            [parameter.name]: new CompiledParameter(parameter)
-          };
+          this.cookie.push(parameter);
           break;
         default:
           throw new ChowError(`Unsupported Paramter Location`, { in: parameter.in, name: ''})
@@ -49,6 +45,7 @@ export default class CompiledOperation {
     this.compiledHeader = new CompiledParameterHeader(this.header);
     this.compiledQuery = new CompiledParameterQuery(this.query);
     this.compiledPath = new CompiledParameterPath(this.path);
+    this.compiledCookie = new CompiledParameterCookie(this.cookie);
 
     if (operation.requestBody) {
       this.body = new CompiledRequestBody(operation.requestBody as RequestBodyObject);
@@ -64,10 +61,7 @@ export default class CompiledOperation {
     this.compiledHeader.validate(request.header);
     this.compiledQuery.validate(request.query);
     this.compiledPath.validate(request.path);
-
-    for (const key in this.cookie) {
-      this.cookie[key].validate(request.cookie && request.cookie[key]);
-    }
+    this.compiledCookie.validate(request.cookie);
 
     if (this.body) {
       this.body.validate(request.header && request.header['content-type'], request.body);
