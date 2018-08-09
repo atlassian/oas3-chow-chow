@@ -10,7 +10,7 @@ Object {
     "in": "test",
   },
   "message": "An error",
-  "rawErrors": Array [],
+  "suggestions": Array [],
 }
 `);
   });
@@ -24,7 +24,7 @@ Object {
     "in": "test",
   },
   "message": "An error",
-  "rawErrors": Array [],
+  "suggestions": Array [],
 }
 `);
   });
