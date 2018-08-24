@@ -157,6 +157,14 @@ describe('Pet Store', () => {
       }).toThrowError(ChowError)
     })
 
+    test('It should fail validation if requestBody is required but Content type is missing', () => {
+      expect(() => {
+        chowchow.validateRequest('/pets', {
+          method: 'post',
+        })
+      }).toThrowError(ChowError)
+    });
+
     test('It is ok to ignore body if it is not required', () => {
       expect(() => {
         chowchow.validateRequest('/pets/123', {

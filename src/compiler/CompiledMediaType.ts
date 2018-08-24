@@ -19,7 +19,11 @@ export default class CompiledMediaType {
     }
   }
 
-  static extractMediaType(contentType: string) {
+  static extractMediaType(contentType: string | undefined): string | undefined {
+    if (!contentType) {
+      return;
+    }
+
     return contentType.split(';')[0];
   }
 }

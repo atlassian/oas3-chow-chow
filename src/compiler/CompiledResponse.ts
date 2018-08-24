@@ -25,7 +25,7 @@ export default class CompiledResponse {
     this.compiledResponseHeader.validate(response.header);
 
     const contentType = CompiledMediaType.extractMediaType(response.header['content-type']);
-    if (this.content[contentType]) {
+    if (contentType && this.content[contentType]) {
       this.content[contentType].validate(response.body);
     } else {
       throw new ChowError('Unsupported Response Media Type', { in: 'response' })

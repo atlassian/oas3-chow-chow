@@ -16,15 +16,15 @@ export default class CompiledRequestBody {
     this.required = !!requestBody.required;
   }
 
-  public validate(mediaType: string, value: any) {
+  public validate(mediaType: string | undefined, value: any) {
     if (this.required && !value) {
       throw new ChowError('Missing required body', { in: 'request-body' });
     }
     if (!this.required && !value) {
       return;
     }
-    if (!this.compiledSchemas[mediaType]) {
-      throw new ChowError(`Unsupported mediaType: ${mediaType}`, { in: 'request-body' });
+    if (!mediaType || !this.compiledSchemas[mediaType]) {
+      throw new ChowError(`Unsupported mediaType: "${mediaType}"`, { in: 'request-body' });
     }
 
     try {
