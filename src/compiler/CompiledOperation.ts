@@ -63,7 +63,7 @@ export default class CompiledOperation {
     this.compiledCookie.validate(request.cookie);
 
     if (this.body) {
-      const contentType = CompiledMediaType.extractMediaType(request.header && request.header['content-type'])
+      const contentType = CompiledMediaType.extractMediaType(request.header && request.header['content-type']);
       this.body.validate(contentType, request.body);
     }
   }
