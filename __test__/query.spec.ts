@@ -9,14 +9,18 @@ describe('Query', () => {
     chowchow = new ChowChow(fixture);
   })
 
-  test('It should coerce query parameter to an array', () => {
-    expect(() => {
-      chowchow.validateRequest('/pets', {
-        method: 'get',
-        query: {
-          petId: 123
-        }
-      });
-    }).not.toThrow();
+  it('should coerce query parameter to an array', () => {
+    const queryMeta = {
+      method: 'get',
+      query: {
+        petId: 123
+      }
+    };
+    expect(chowchow.validateRequest('/pets', queryMeta)).toEqual(expect.objectContaining({
+      query: {
+        petId: [123]
+      }
+    }));
+    expect(queryMeta.query.petId).toEqual(123);
   });
 })

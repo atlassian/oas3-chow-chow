@@ -21,7 +21,7 @@ export default class CompiledRequestBody {
       throw new ChowError('Missing required body', { in: 'request-body' });
     }
     if (!this.required && !value) {
-      return;
+      return value;
     }
     if (!mediaType || !this.compiledSchemas[mediaType]) {
       throw new ChowError(`Unsupported mediaType: "${mediaType}"`, { in: 'request-body' });
@@ -29,6 +29,7 @@ export default class CompiledRequestBody {
 
     try {
       this.compiledSchemas[mediaType].validate(value);
+      return value;
     } catch(e) {
       throw new ChowError('Schema validation error', { in: 'request-body', rawErrors: e });
     }

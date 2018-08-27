@@ -56,22 +56,32 @@ export default class CompiledOperation {
     }, {});
   }
 
-  public validateRequest(request: RequestMeta) {
-    this.compiledHeader.validate(request.header);
-    this.compiledQuery.validate(request.query);
-    this.compiledPath.validate(request.path);
-    this.compiledCookie.validate(request.cookie);
+  public validateRequest(request: RequestMeta): RequestMeta {
+    const header = this.compiledHeader.validate(request.header);
+    const query = this.compiledQuery.validate(request.query);
+    const path = this.compiledPath.validate(request.path);
+    const cookie = this.compiledCookie.validate(request.cookie);
 
+    let body;
     if (this.body) {
       const contentType = CompiledMediaType.extractMediaType(request.header && request.header['content-type']);
-      this.body.validate(contentType, request.body);
+      body = this.body.validate(contentType, request.body);
     }
+
+    return {
+      method: request.method,
+      header,
+      query,
+      path,
+      cookie,
+      body
+    };
   }
 
-  public validateResponse(response: ResponseMeta) {
+  public validateResponse(response: ResponseMeta): ResponseMeta {
     const compiledResponse = this.response[response.status] || this.response['default'];
     if (compiledResponse) {
-      compiledResponse.validate(response);
+      return {...response, body: compiledResponse.validate(response)};
     } else {
       throw new ChowError('Unsupported Response Status Code', { in: 'response' });
     }

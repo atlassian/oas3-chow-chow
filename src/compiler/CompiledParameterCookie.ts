@@ -27,6 +27,7 @@ export default class CompiledParameterCookie {
   public validate(value: any = {}) {
     try {
       this.compiledSchema.validate(value);
+      return value;
     } catch(e) {
       throw new ChowError('Schema validation error', { in: 'cookie', rawErrors: e });
     }

@@ -1,5 +1,7 @@
 import ChowChow from "../src";
 import ChowError from "../src/error";
+import {ResponseMeta} from "../src/compiler";
+
 const fixture = require("./fixtures/response.json");
 
 describe("Response", () => {
@@ -9,43 +11,41 @@ describe("Response", () => {
     chowchow = new ChowChow(fixture);
   });
 
-  test("It should validate the response with status code", () => {
-    expect(() => {
-      chowchow.validateResponse("/pets/123", {
-        method: "get",
-        status: 200,
-        header: {
-          "content-type": "application/json"
-        },
-        body: [
-          {
-            id: 1,
-            name: "plum"
-          }
-        ]
-      });
-    }).not.toThrow();
+  it("should validate the response with status code", () => {
+    const responseMeta: ResponseMeta = {
+      method: "get",
+      status: 200,
+      header: {
+        "content-type": "application/json"
+      },
+      body: [
+        {
+          id: 1,
+          name: "plum"
+        }
+      ]
+    };
+    expect(chowchow.validateResponse("/pets/123", responseMeta)).toEqual(responseMeta);
   });
 
-  test("It should fall back to default if no status code is matched", () => {
-    expect(() => {
-      chowchow.validateResponse("/pets/123", {
-        method: "get",
-        status: 500,
-        header: {
-          "content-type": "application/json"
-        },
-        body: [
-          {
-            code: 500,
-            message: "something is wrong"
-          }
-        ]
-      });
-    }).not.toThrow();
+  it("should fall back to default if no status code is matched", () => {
+    const responseMeta: ResponseMeta = {
+      method: "get",
+      status: 500,
+      header: {
+        "content-type": "application/json"
+      },
+      body: [
+        {
+          code: 500,
+          message: "something is wrong"
+        }
+      ]
+    };
+    expect(chowchow.validateResponse("/pets/123", responseMeta)).toEqual(responseMeta);
   });
 
-  test("It should throw error if path parameter fails schema check", () => {
+  it("should throw error if path parameter fails schema check", () => {
     expect(() => {
       chowchow.validateRequest("/pets/abc", {
         method: "get"
