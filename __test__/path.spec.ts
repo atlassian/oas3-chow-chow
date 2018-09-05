@@ -9,15 +9,19 @@ describe('Path', () => {
     chowchow = new ChowChow(fixture);
   })
 
-  test('It should validate the path parameters', () => {
-    expect(() => {
-      chowchow.validateRequest('/pets/123', {
-        method: 'get'
-      });
-    }).not.toThrow();
+  it('should validate the path parameters and coerce to the correct type', () => {
+    const pathMeta = {
+      method: 'get'
+    };
+    expect(chowchow.validateRequest('/pets/123', pathMeta)).toEqual(expect.objectContaining({
+      path: {
+        petId: 123
+      }
+    }));
+    expect(pathMeta['path']).toBeUndefined();
   });
 
-  test('It should throw error if path parameter fails schema check', () => {
+  it('should throw error if path parameter fails schema check', () => {
     expect(() => {
       chowchow.validateRequest('/pets/abc', {
         method: 'get'

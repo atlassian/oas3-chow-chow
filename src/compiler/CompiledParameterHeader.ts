@@ -39,6 +39,7 @@ export default class CompiledParameterHeader {
   public validate(value: any = {}) {
     try {
       this.compiledSchema.validate(value);
+      return value;
     } catch(e) {
       throw new ChowError('Schema validation error', { in: 'header', rawErrors: e });
     }

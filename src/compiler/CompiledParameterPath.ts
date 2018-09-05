@@ -32,7 +32,9 @@ export default class CompiledParameterPath {
    */
   public validate(value: any) {
     try {
-      this.compiledSchema.validate(value);
+      const coercedValue = {...value};
+      this.compiledSchema.validate(coercedValue);
+      return coercedValue;
     } catch(e) {
       throw new ChowError('Schema validation error', { in: 'path', rawErrors: e });
     }
