@@ -32,6 +32,16 @@
                 "type": "number"
               }
             }
+          },
+          {
+            "name": "redirectUrl",
+            "in": "query",
+            "description": "to test format validation",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "url"
+            }
           }
         ],
         "responses": {

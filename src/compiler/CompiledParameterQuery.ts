@@ -1,6 +1,7 @@
 import { ParameterObject, SchemaObject } from 'openapi3-ts';
 import CompiledSchema from './CompiledSchema';
 import ChowError from '../error';
+import * as querystring from 'querystring'
 
 export default class CompiledParameterQuery {
   private compiledSchema: CompiledSchema;
@@ -31,7 +32,17 @@ export default class CompiledParameterQuery {
    */
   public validate(value: any = {}) {
     try {
-      const coercedValue = {...value};
+      /**
+       * unescape the query if neccessary
+       */
+      const coercedValue = Object.keys(value).reduce((result: any, key) => {
+        if (typeof value[key] === 'string') {
+          result[key] = querystring.unescape(value[key]);
+        } else {
+          result[key] = value[key];
+        }
+        return result;
+      }, {});
       this.compiledSchema.validate(coercedValue);
       return coercedValue;
     } catch(e) {
