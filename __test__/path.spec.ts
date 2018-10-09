@@ -18,7 +18,6 @@ describe('Path', () => {
         petId: 123
       }
     }));
-    expect(pathMeta['path']).toBeUndefined();
   });
 
   it('should throw error if path parameter fails schema check', () => {
