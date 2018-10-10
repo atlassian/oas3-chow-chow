@@ -1,9 +1,12 @@
 import { OpenAPIObject } from 'openapi3-ts';
 import compile, { RequestMeta, ResponseMeta } from './compiler';
 import CompiledPath from './compiler/CompiledPath';
-import ChowError from './error';
+import ChowError, { RequestValidationError, ResponseValidationError } from './error';
 
-export { default as ChowError } from './error';
+/**
+ * Export Errors so that consumers can use it to ditinguish different error type.
+ */
+export { default as ChowError, RequestValidationError, ResponseValidationError } from './error';
 
 export default class ChowChow {
   private compiledPaths: CompiledPath[];
@@ -13,13 +16,29 @@ export default class ChowChow {
   }
 
   validateRequest(path: string, request: RequestMeta) {
-    const compiledPath = this.identifyCompiledPath(path);
-    return compiledPath.validateRequest(path, request);
+    try {
+      const compiledPath = this.identifyCompiledPath(path);
+      return compiledPath.validateRequest(path, request);
+    } catch(err) {
+      if (err instanceof ChowError) {
+        throw new RequestValidationError(err.message, err.meta);
+      } else {
+        throw err;
+      }
+    }
   }
 
   validateResponse(path: string, response: ResponseMeta) {
-    const compiledPath = this.identifyCompiledPath(path);
-    return compiledPath.validateResponse(response);
+    try {
+      const compiledPath = this.identifyCompiledPath(path);
+      return compiledPath.validateResponse(response);
+    } catch(err) {
+      if (err instanceof ChowError) {
+        throw new ResponseValidationError(err.message, err.meta);
+      } else {
+        throw err;
+      }
+    }
   }
 
   private identifyCompiledPath(path: string) {

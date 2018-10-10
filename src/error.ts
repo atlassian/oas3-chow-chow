@@ -5,11 +5,12 @@ export interface ChowErrorMeta {
 }
 
 export default class ChowError extends Error {
-  private meta: ChowErrorMeta;
+  meta: ChowErrorMeta;
 
   constructor(message: string, meta: ChowErrorMeta) {
     // Pass remaining arguments (including vendor specific ones) to parent constructor
     super(message);
+    this.name = this.constructor.name;
 
     // Custom debugging information
     this.meta = meta;
@@ -26,3 +27,6 @@ export default class ChowError extends Error {
     }
   }
 }
+
+export class RequestValidationError extends ChowError {}
+export class ResponseValidationError extends ChowError {}
