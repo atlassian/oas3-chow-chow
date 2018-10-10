@@ -65,16 +65,16 @@ describe("Response", () => {
     }).toThrow();
   })
 
-  it('should fail on empty response media type', () => {
+  it('should ignore on empty response media type', () => {
     expect(() => {
       chowchow.validateResponse("/pets/123", {
         method: "get",
-        status: 200,
+        status: 204,
         header: {
           "content-type": ""
         }
       });
-    }).toThrow();
+    }).not.toThrow();
   })
 
   it('should extract media type correctly in Content-Type header', () => {
