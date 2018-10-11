@@ -28,5 +28,15 @@ export default class ChowError extends Error {
   }
 }
 
-export class RequestValidationError extends ChowError {}
-export class ResponseValidationError extends ChowError {}
+export class RequestValidationError extends ChowError {
+  constructor(message: string, meta: ChowErrorMeta) {
+    // Pass remaining arguments (including vendor specific ones) to parent constructor
+    super(`RequestValidationError: ${message}`, meta);
+  }
+}
+export class ResponseValidationError extends ChowError {
+  constructor(message: string, meta: ChowErrorMeta) {
+    // Pass remaining arguments (including vendor specific ones) to parent constructor
+    super(`ResponseValidationError: ${message}`, meta);
+  }
+}
