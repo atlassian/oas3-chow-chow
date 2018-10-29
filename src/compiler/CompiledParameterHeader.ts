@@ -1,6 +1,7 @@
 import { ParameterObject, SchemaObject } from 'openapi3-ts';
 import CompiledSchema from './CompiledSchema';
 import ChowError from '../error';
+import { ChowOptions } from '..';
 
 export default class CompiledParameterHeader {
   private compiledSchema: CompiledSchema;
@@ -17,7 +18,7 @@ export default class CompiledParameterHeader {
    */
   private ignoreHeaders = ['Accept', 'Content-Type', 'Authorization'];
 
-  constructor(parameters: ParameterObject[]) {
+  constructor(parameters: ParameterObject[], options: Partial<ChowOptions>) {
     for (const parameter of parameters) {
       if (this.ignoreHeaders.includes(parameter.name)) {
         continue;
@@ -30,7 +31,7 @@ export default class CompiledParameterHeader {
       }
     }
 
-    this.compiledSchema = new CompiledSchema(this.headerSchema);
+    this.compiledSchema = new CompiledSchema(this.headerSchema, options.headerAjvOptions);
   }
 
   /**

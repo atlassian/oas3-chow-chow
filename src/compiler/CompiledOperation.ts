@@ -8,6 +8,7 @@ import CompiledParameterQuery from './CompiledParameterQuery';
 import CompiledParameterPath from './CompiledParameterPath';
 import CompiledParameterCookie from './CompiledParameterCookie';
 import CompiledMediaType from './CompiledMediaType';
+import { ChowOptions } from '..';
 
 export default class CompiledOperation {
   private header: ParameterObject[] = [];
@@ -23,7 +24,7 @@ export default class CompiledOperation {
     [key: string]: CompiledResponse;
   } = {};
 
-  constructor(operation: OperationObject) {
+  constructor(operation: OperationObject, options: Partial<ChowOptions>) {
     const parameters = !!operation.parameters ? [...operation.parameters] : []
     for (const parameter of parameters as ParameterObject[]) {
       switch(parameter.in) {
@@ -41,10 +42,10 @@ export default class CompiledOperation {
           break;
       } 
     }
-    this.compiledHeader = new CompiledParameterHeader(this.header);
-    this.compiledQuery = new CompiledParameterQuery(this.query);
-    this.compiledPath = new CompiledParameterPath(this.path);
-    this.compiledCookie = new CompiledParameterCookie(this.cookie);
+    this.compiledHeader = new CompiledParameterHeader(this.header, options);
+    this.compiledQuery = new CompiledParameterQuery(this.query, options);
+    this.compiledPath = new CompiledParameterPath(this.path, options);
+    this.compiledCookie = new CompiledParameterCookie(this.cookie, options);
 
     if (operation.requestBody) {
       this.body = new CompiledRequestBody(operation.requestBody as RequestBodyObject);

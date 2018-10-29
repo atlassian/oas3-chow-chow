@@ -1,3 +1,4 @@
+import * as Ajv from 'ajv';
 import { OpenAPIObject } from 'openapi3-ts';
 import compile, { RequestMeta, ResponseMeta } from './compiler';
 import CompiledPath from './compiler/CompiledPath';
@@ -8,11 +9,20 @@ import ChowError, { RequestValidationError, ResponseValidationError } from './er
  */
 export { default as ChowError, RequestValidationError, ResponseValidationError } from './error';
 
+export interface ChowOptions {
+  headerAjvOptions: Ajv.Options;
+  cookieAjvOptions: Ajv.Options;
+  pathAjvOptions: Ajv.Options;
+  queryAjvOptions: Ajv.Options;
+  requestBodyAjvOptions: Ajv.Options;
+  responseBodyAjvOptions: Ajv.Options;
+}
+
 export default class ChowChow {
   private compiledPaths: CompiledPath[];
 
-  constructor(document: OpenAPIObject) {
-    this.compiledPaths = compile(document);
+  constructor(document: OpenAPIObject, options: Partial<ChowOptions> = {}) {
+    this.compiledPaths = compile(document, options);
   }
 
   validateRequest(path: string, request: RequestMeta) {
