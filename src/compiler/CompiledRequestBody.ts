@@ -10,7 +10,8 @@ export default class CompiledRequestBody {
 
   constructor(requestBody: RequestBodyObject) {
     this.compiledSchemas = Object.keys(requestBody.content).reduce((compiled: any, mediaType: string) => {
-      compiled[mediaType] = new CompiledSchema(requestBody.content[mediaType].schema || {});
+      const key = mediaType.toLowerCase(); // normalise
+      compiled[key] = new CompiledSchema(requestBody.content[mediaType].schema || {});
       return compiled;
     }, {});
     this.required = !!requestBody.required;
@@ -23,15 +24,34 @@ export default class CompiledRequestBody {
     if (!this.required && !value) {
       return value;
     }
-    if (!mediaType || !this.compiledSchemas[mediaType]) {
+    const compiledSchema = this.findCompiledSchema(mediaType);
+    if (!compiledSchema) {
       throw new ChowError(`Unsupported mediaType: "${mediaType}"`, { in: 'request-body' });
     }
 
     try {
-      this.compiledSchemas[mediaType].validate(value);
+      compiledSchema.validate(value);
       return value;
     } catch(e) {
       throw new ChowError('Schema validation error', { in: 'request-body', rawErrors: e });
     }
+  }
+
+  private findCompiledSchema(mediaType: string | undefined): CompiledSchema | undefined {
+    if (!mediaType) {
+      mediaType = '*/*';
+    }
+    mediaType = mediaType.toLowerCase(); // normalise
+    if (this.compiledSchemas[mediaType]) {
+      return this.compiledSchemas[mediaType];
+    }
+    // try wildcard
+    const parts = mediaType.split('/');
+    // mediaTypeRange name taken from https://github.com/OAI/OpenAPI-Specification/pull/1295/files
+    const mediaTypeRange = parts[0] + '/*';
+    if (this.compiledSchemas[mediaTypeRange]) {
+      return this.compiledSchemas[mediaTypeRange];
+    }
+    return this.compiledSchemas['*/*']; // last choice, may be undefined.
   }
 }
