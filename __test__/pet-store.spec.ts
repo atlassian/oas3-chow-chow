@@ -69,7 +69,7 @@ describe('Pet Store', () => {
             limit: 50
           }
         });
-      }).not.toThrowError(); 
+      }).not.toThrowError();
     })
 
     test('It should pass validation if an array is passed to parameter which should be an array', () => {
@@ -192,7 +192,7 @@ describe('Pet Store', () => {
             'content-type': 'application/json'
           }
         })
-      }).not.toThrowError() 
+      }).not.toThrowError()
     })
   })
 
@@ -287,5 +287,41 @@ describe('Pet Store', () => {
         })
       }).not.toThrowError()
     })
+
+    test('It is ok to use wildcards', () => {
+      expect(() => {
+        chowchow.validateRequest('/test/wildcard', {
+          method: 'post',
+          body: {
+            id: 123,
+            name: 'plum'
+          },
+          header: {
+            'content-type': 'application/awesome'
+          }
+        })
+      }).not.toThrowError()
+    })
+
+    test('It is ok to fall back to */* when no content type is provided', () => {
+      expect(() => {
+        chowchow.validateRequest('/test/wildcard', {
+          method: 'post',
+          body: [
+            {
+              id: 123,
+              name: 'plum'
+            },
+            {
+              id: 456,
+              name: 'chow'
+            }
+          ]
+        })
+      }).not.toThrowError()
+    })
+
   })
+
+
 });

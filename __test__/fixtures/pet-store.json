@@ -148,6 +148,46 @@
         }
       }
     },
+    "/test/wildcard": {
+      "post": {
+        "summary": "Create a pet",
+        "operationId": "createPets",
+        "tags": [
+          "pets"
+        ],
+        "requestBody": {
+          "description": "a schema that accepts many applications",
+          "content": {
+            "application/*":{
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            },
+            "*/*":{
+              "schema": {
+                "$ref": "#/components/schemas/Pets"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Null response"
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/test/header": {
       "get": {
         "summary": "For testing header validation",
@@ -170,7 +210,7 @@
             "description": "This should be ignored",
             "schema": {
               "type": "string"
-            } 
+            }
           },
           {
             "name": "no-required",
@@ -179,7 +219,7 @@
             "description": "This is not required",
             "schema": {
               "type": "string"
-            } 
+            }
           },
           {
             "name": "no-schema",
