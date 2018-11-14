@@ -1,5 +1,5 @@
 import ChowChow from '../src';
-import ChowError from '../src/error';
+import ChowError, { RequestValidationError } from '../src/error';
 const fixture = require('./fixtures/pet-store.json');
 
 describe('Pet Store', () => {
@@ -122,7 +122,7 @@ describe('Pet Store', () => {
         chowchow.validateRequest('/pets', {
           method: 'post',
           body: {
-            name: 'plum'
+            name: 'plum',
           },
           header: {
             'content-type': 'application/json'
@@ -186,13 +186,31 @@ describe('Pet Store', () => {
           method: 'post',
           body: {
             id: 123,
-            name: 'plum'
+            name: 'plum',
+            writeOnlyProp: '42',
+            notReadOnlyProp: '42'
           },
           header: {
             'content-type': 'application/json'
           }
         })
       }).not.toThrowError()
+    })
+
+    test('It should fail validation if requestBody with readOnly property passed', () => {
+      expect(() => {
+        chowchow.validateRequest('/pets', {
+          method: 'post',
+          body: {
+            id: 123,
+            name: 'plum',
+            readOnlyProp: '42'
+          },
+          header: {
+            'content-type': 'application/json'
+          }
+        })
+      }).toThrow(RequestValidationError) 
     })
   })
 

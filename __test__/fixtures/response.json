@@ -136,6 +136,22 @@
           "name": {
             "type": "string"
           },
+          "readOnlyProp": {
+            "type": "string",
+            "readOnly": true
+          },
+          "writeOnlyProp": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "notReadOnlyProp": {
+            "type": "string",
+            "readOnly": false
+          },
+          "notWriteOnlyProp": {
+            "type": "string",
+            "writeOnly": false
+          },
           "tag": {
             "type": "string"
           }
