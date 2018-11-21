@@ -9,11 +9,18 @@ export default class CompiledRequestBody {
   private required: boolean;
 
   constructor(requestBody: RequestBodyObject) {
-    this.compiledSchemas = Object.keys(requestBody.content).reduce((compiled: any, mediaType: string) => {
-      const key = mediaType.toLowerCase(); // normalise
-      compiled[key] = new CompiledSchema(requestBody.content[mediaType].schema || {});
-      return compiled;
-    }, {});
+    this.compiledSchemas = Object.keys(requestBody.content).reduce(
+      (compiled: any, mediaType: string) => {
+        const key = mediaType.toLowerCase(); // normalise
+        compiled[key] = new CompiledSchema(
+          requestBody.content[mediaType].schema || {},
+          {},
+          { schemaContext: 'request' }
+        );
+        return compiled;
+      },
+      {}
+    );
     this.required = !!requestBody.required;
   }
 

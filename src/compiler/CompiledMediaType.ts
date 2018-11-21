@@ -8,7 +8,9 @@ export default class CompiledMediaType {
 
   constructor(name: string, mediaType: MediaTypeObject) {
     this.name = name;
-    this.compiledSchema = new CompiledSchema(mediaType.schema || {});
+    this.compiledSchema = new CompiledSchema(mediaType.schema || {},
+      {},
+      { schemaContext: 'response' });
   }
 
   public validate(value: any) {
