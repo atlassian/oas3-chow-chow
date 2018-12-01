@@ -30,6 +30,24 @@ describe('Response', () => {
     expect(chowchow.validateResponse('/pets/123', responseMeta)).toEqual(responseMeta);
   });
 
+  it("should pass if a field that is nullable: true is null", () => {
+      const responseMeta: ResponseMeta = {
+          method: "get",
+          status: 200,
+          header: {
+              "content-type": "application/json"
+          },
+          body: [
+              {
+                  id: 1,
+                  name: "plum",
+                  tag: null
+              }
+          ]
+      };
+      expect(chowchow.validateResponse("/pets/123", responseMeta)).toEqual(responseMeta);
+  });
+
   it('should fail validation the response with writeOnly property', () => {
     const responseMeta: ResponseMeta = {
       method: 'get',

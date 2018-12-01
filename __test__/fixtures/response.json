@@ -153,6 +153,7 @@
             "writeOnly": false
           },
           "tag": {
+            "nullable": true,
             "type": "string"
           }
         }

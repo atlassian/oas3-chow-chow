@@ -6,6 +6,7 @@ const options: Ajv.Options = {
    * TODO: Add custom format supports for following formats.
    */
   unknownFormats: [ 'int32', 'int64', 'float', 'double', 'byte', 'binary', 'password' ],
+  nullable: true,
   jsonPointers: true
 }
 
