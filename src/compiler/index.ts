@@ -23,7 +23,7 @@ export interface ResponseMeta {
 }
 
 export default function compile(oas: OpenAPIObject, options: Partial<ChowOptions>): CompiledPath[] {
-  const document: OpenAPIObject = deref(oas);
+  const document: OpenAPIObject = deref(oas, {failOnMissing: true});
 
   return Object.keys(document.paths).map((path: string) => {
     const pathItemObject: PathItemObject = document.paths[path];
