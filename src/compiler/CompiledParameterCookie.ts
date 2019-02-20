@@ -1,6 +1,7 @@
 import { ParameterObject, SchemaObject } from 'openapi3-ts';
 import CompiledSchema from './CompiledSchema';
 import ChowError from '../error';
+import { ChowOptions } from '..';
 
 export default class CompiledParameterCookie {
   private compiledSchema: CompiledSchema;
@@ -10,7 +11,7 @@ export default class CompiledParameterCookie {
     required: []
   };
 
-  constructor(parameters: ParameterObject[]) {
+  constructor(parameters: ParameterObject[], options: Partial<ChowOptions>) {
     for (const parameter of parameters) {
       this.cookieSchema.properties![parameter.name] = parameter.schema || {};
       if (parameter.required) {
@@ -18,7 +19,7 @@ export default class CompiledParameterCookie {
       }
     }
 
-    this.compiledSchema = new CompiledSchema(this.cookieSchema);
+    this.compiledSchema = new CompiledSchema(this.cookieSchema, options.cookieAjvOptions);
   }
 
   /**

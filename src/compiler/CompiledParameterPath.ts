@@ -1,6 +1,7 @@
 import { ParameterObject, SchemaObject } from 'openapi3-ts';
 import CompiledSchema from './CompiledSchema';
 import ChowError from '../error';
+import { ChowOptions } from '..';
 
 export default class CompiledParameterPath {
   private compiledSchema: CompiledSchema;
@@ -10,7 +11,7 @@ export default class CompiledParameterPath {
     required: []
   };
 
-  constructor(parameters: ParameterObject[]) {
+  constructor(parameters: ParameterObject[], options: Partial<ChowOptions>) {
     for (const parameter of parameters) {
       this.pathSchema.properties![parameter.name] = parameter.schema || {};
       /**
@@ -24,7 +25,7 @@ export default class CompiledParameterPath {
      * For example:
      *   `/pets/123` will be valid against a schema with type=number even if `123` is string
      */
-    this.compiledSchema = new CompiledSchema(this.pathSchema, { coerceTypes: true });
+    this.compiledSchema = new CompiledSchema(this.pathSchema, { coerceTypes: true, ...(options.pathAjvOptions ? options.pathAjvOptions : {}) });
   }
 
   /**

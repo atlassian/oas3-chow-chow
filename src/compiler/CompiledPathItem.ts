@@ -2,6 +2,7 @@ import { PathItemObject } from 'openapi3-ts';
 import CompiledOperation from './CompiledOperation';
 import { RequestMeta, ResponseMeta } from '.';
 import ChowError from '../error';
+import { ChowOptions } from '..';
 
 export default class CompiledPathItem {
   private supportedMethod = ['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace'];
@@ -10,11 +11,11 @@ export default class CompiledPathItem {
   } = {};
   private path: string;
 
-  constructor(pathItemObject: PathItemObject, path: string) {
+  constructor(pathItemObject: PathItemObject, path: string, options: Partial<ChowOptions>) {
     this.compiledOperations = this.supportedMethod.reduce((compiled: any, method: string) => {
       const m = method.toLowerCase();
       if (pathItemObject[m]) { 
-        compiled[m] = new CompiledOperation(pathItemObject[m]);
+        compiled[m] = new CompiledOperation(pathItemObject[m], options);
       }
       return compiled;
     }, {})

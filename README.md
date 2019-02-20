@@ -51,3 +51,24 @@ chow.validateResponse("./books", {
   }
 });
 ```
+
+## Config
+
+You could optionally provide configs to the constructor
+```typescript
+const chow = new ChowChow(doc, {
+  headerAjvOptions: {},
+  cookieAjvOptions: {},
+  pathAjvOptions: { coerceTypes: true },
+  queryAjvOptions: { coerceTypes: 'array' },
+  requestBodyAjvOptions: {},
+  responseBodyAjvOptions: {},
+});
+```
+
+* **headerAjvOptions**: Ajv options that pass to header ajv instance
+* **cookieAjvOptions**: Ajv options that pass to cookie ajv instance
+* **pathAjvOptions**: Ajv options that pass to path ajv instance, default `{ coerceTypes: true }`
+* **queryAjvOptions**: Ajv options that pass to query ajv instance, default `{ coerceTypes: 'array' }`
+* **requestBodyAjvOptions**: Ajv options that pass to request body ajv instance
+* **responseBodyAjvOptions**: Ajv options that pass to response body ajv instance

@@ -2,6 +2,7 @@ import { ParameterObject, SchemaObject } from 'openapi3-ts';
 import CompiledSchema from './CompiledSchema';
 import ChowError from '../error';
 import * as querystring from 'querystring'
+import { ChowOptions } from '..';
 
 export default class CompiledParameterQuery {
   private compiledSchema: CompiledSchema;
@@ -11,7 +12,7 @@ export default class CompiledParameterQuery {
     required: []
   };
 
-  constructor(parameters: ParameterObject[]) {
+  constructor(parameters: ParameterObject[], options: Partial<ChowOptions>) {
     for (const parameter of parameters) {
       this.querySchema.properties![parameter.name] = parameter.schema || {};
       if (parameter.required) {
@@ -24,7 +25,7 @@ export default class CompiledParameterQuery {
      * For example:
      *   `?query=x` will be valid against a schema with type=array
      */
-    this.compiledSchema = new CompiledSchema(this.querySchema, { coerceTypes: 'array' });
+    this.compiledSchema = new CompiledSchema(this.querySchema, { coerceTypes: 'array', ...(options.queryAjvOptions ? options.queryAjvOptions : {}) });
   }
 
   /**
