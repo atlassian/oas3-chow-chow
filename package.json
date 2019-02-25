@@ -5,6 +5,10 @@
   "types": "lib/index.d.ts",
   "author": "<tli@atlassian.com>",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atlassian/oas3-chow-chow.git"
+  },
   "scripts": {
     "test": "jest --coverage --no-watchman",
     "test:watch": "jest --coverage --watch",
