@@ -10,6 +10,7 @@
 If you are looking for framework specific middleware, you might want to look at following libraries that use oas3-chow-chow under the hood.
 
 [koa-oas3](https://github.com/atlassian/koa-oas3)
+[openapi3-middleware](https://github.com/naugtur/openapi3-middleware)
 
 ## Installation
 
