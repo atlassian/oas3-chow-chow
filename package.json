@@ -31,7 +31,7 @@
   "dependencies": {
     "ajv": "^6.6.1",
     "better-ajv-errors": "^0.6.1",
-    "json-schema-deref-sync": "^0.7.0",
+    "json-schema-deref-sync": "^0.9.0",
     "openapi3-ts": "^1.0.3",
     "xregexp": "^4.2.0"
   },
