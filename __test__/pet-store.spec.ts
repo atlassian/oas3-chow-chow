@@ -210,7 +210,7 @@ describe('Pet Store', () => {
             'content-type': 'application/json'
           }
         })
-      }).toThrow(RequestValidationError) 
+      }).toThrow(RequestValidationError)
     })
   })
 
@@ -341,5 +341,29 @@ describe('Pet Store', () => {
 
   })
 
+  describe('OperationId', () => {
+
+    test('It should return unique operationId', () => {
+      const validatedRequest = chowchow.validateRequest('/pets/123', {
+        method: 'get',
+        path: {
+          petId: 123
+        }
+      });
+      expect(validatedRequest.operationId).toEqual('showPetById');
+    })
+
+    test('It should respect custom operationId', () => {
+      const validatedRequest = chowchow.validateRequest('/pets/123', {
+        method: 'get',
+        operationId: 'customId',
+        path: {
+          petId: 123
+        }
+      });
+      expect(validatedRequest.operationId).toEqual('customId');
+    })
+
+  })
 
 });

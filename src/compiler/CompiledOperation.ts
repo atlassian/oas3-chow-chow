@@ -20,6 +20,7 @@ export default class CompiledOperation {
   private cookie: ParameterObject[] = [];
   private compiledCookie: CompiledParameterCookie;
   private body?: CompiledRequestBody;
+  private operationId?: string;
   private response: {
     [key: string]: CompiledResponse;
   } = {};
@@ -40,7 +41,7 @@ export default class CompiledOperation {
         case 'cookie':
           this.cookie.push(parameter);
           break;
-      } 
+      }
     }
     this.compiledHeader = new CompiledParameterHeader(this.header, options);
     this.compiledQuery = new CompiledParameterQuery(this.query, options);
@@ -50,6 +51,8 @@ export default class CompiledOperation {
     if (operation.requestBody) {
       this.body = new CompiledRequestBody(operation.requestBody as RequestBodyObject);
     }
+
+    this.operationId = operation.operationId;
 
     this.response = Object.keys(operation.responses).reduce((compiled: any, status: string) => {
       compiled[status] = new CompiledResponse(operation.responses[status]);
@@ -71,6 +74,7 @@ export default class CompiledOperation {
 
     return {
       method: request.method,
+      operationId: request.operationId || this.operationId,
       header,
       query,
       path,

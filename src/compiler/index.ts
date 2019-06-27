@@ -13,6 +13,7 @@ export interface RequestMeta {
   path?: any;
   cookie?: any;
   body?: any;
+  operationId?: string;
 }
 
 export interface ResponseMeta {
