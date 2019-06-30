@@ -1,0 +1,52 @@
+{
+	"openapi": "3.0.2",
+	"info": {
+		"version": "1.0.0",
+		"title": "Chow chow test",
+		"description": "test",
+		"contact": {
+			"name": "test",
+			"email": "test@test.com",
+			"url": "http://test.com"
+		},
+		"license": {
+			"name": "Apache 2.0",
+			"url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+		}
+	},
+	"servers": [
+		{
+			"url": "http://test.com",
+			"description": "test"
+		}
+	],
+	"paths": {
+		"/v1/test": {
+			"get": {
+				"description": "test",
+				"operationId": "test",
+				"responses": {
+					"200": {
+						"$ref": "#/components/schemas/TestSchema"
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"TestSchema": {
+				"description": "test",
+				"type": "object",
+				"properties": {
+					"test": {
+						"type": {
+							"$ref": "#/components/schemas/blahBlahBlah"
+						},
+						"description": "test"
+					}
+				}
+			}
+		}
+	}
+}

@@ -26,6 +26,10 @@ export interface ResponseMeta {
 export default function compile(oas: OpenAPIObject, options: Partial<ChowOptions>): CompiledPath[] {
   const document: OpenAPIObject = deref(oas, {failOnMissing: true});
 
+  if (document instanceof Error){ 
+    throw document;
+  }
+
   return Object.keys(document.paths).map((path: string) => {
     const pathItemObject: PathItemObject = document.paths[path];
 
