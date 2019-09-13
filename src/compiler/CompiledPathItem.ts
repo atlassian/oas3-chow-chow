@@ -22,6 +22,10 @@ export default class CompiledPathItem {
     this.path = path;
   }
 
+  public getDefinedBodyContentType(method: string) {
+    return this.compiledOperations[method] ? this.compiledOperations[method].getDefinedBodyContentType() : [];
+  }
+
   public validateRequest(request: RequestMeta) {
     const method = request.method.toLowerCase();
     const compiledOperation = this.compiledOperations[method];

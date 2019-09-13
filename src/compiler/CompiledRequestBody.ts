@@ -44,6 +44,10 @@ export default class CompiledRequestBody {
     }
   }
 
+  public getDefinedContentTypes(): string[] {
+    return Object.keys(this.compiledSchemas).filter(type => this.compiledSchemas.hasOwnProperty(type));
+  }
+
   private findCompiledSchema(mediaType: string | undefined): CompiledSchema | undefined {
     if (!mediaType) {
       mediaType = '*/*';

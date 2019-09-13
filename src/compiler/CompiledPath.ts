@@ -25,6 +25,10 @@ export default class CompiledPath {
     this.compiledPathItem = new CompiledPathItem(pathItemObject, path, options);
   }
 
+  public getDefinedBodyContentType(method: string) {
+    return this.compiledPathItem.getDefinedBodyContentType(method);
+  }
+
   public test(path: string): boolean {
     return XRegExp.test(path, this.regex);
   }
