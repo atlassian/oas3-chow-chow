@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pet Store RequestBody It returns defined body content type 1`] = `
+Array [
+  "application/json",
+]
+`;
+
+exports[`Pet Store RequestBody It returns empty array for defined body content type if method is undefined 1`] = `Array []`;
+
+exports[`Pet Store RequestBody It returns empty array for defined body content type if path is undefined 1`] = `Array []`;
+
+exports[`Pet Store RequestBody It returns empty array for defined body content type if requestBody is not defined 1`] = `Array []`;

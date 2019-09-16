@@ -51,10 +51,10 @@ export default class ChowChow {
     }
   }
 
-  getDefinedBodyContentType(path: string, method: string) {
+  getDefinedRequestBodyContentType(path: string, method: string) {
     try {
       const compiledPath = this.identifyCompiledPath(path);
-      return compiledPath.getDefinedBodyContentType(method);
+      return compiledPath.getDefinedRequestBodyContentType(method);
     } catch(err) {
       if (err instanceof ChowError) {
         return [];

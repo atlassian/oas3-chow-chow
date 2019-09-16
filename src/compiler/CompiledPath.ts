@@ -25,8 +25,8 @@ export default class CompiledPath {
     this.compiledPathItem = new CompiledPathItem(pathItemObject, path, options);
   }
 
-  public getDefinedBodyContentType(method: string) {
-    return this.compiledPathItem.getDefinedBodyContentType(method);
+  public getDefinedRequestBodyContentType(method: string): string[] {
+    return this.compiledPathItem.getDefinedRequestBodyContentType(method);
   }
 
   public test(path: string): boolean {

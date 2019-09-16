@@ -214,30 +214,26 @@ describe('Pet Store', () => {
     })
 
     test('It returns defined body content type', () => {
-      expect(chowchow.getDefinedBodyContentType('/pets', 'post'))
-        .toMatchInlineSnapshot(`
-Array [
-  "application/json",
-]
-`);
+      expect(chowchow.getDefinedRequestBodyContentType('/pets', 'post'))
+        .toMatchSnapshot();
     })
 
-    test('It return empty array for defined body content type if path is undefined', () => {
+    test('It returns empty array for defined body content type if path is undefined', () => {
       expect(
-        chowchow.getDefinedBodyContentType('/nonono', 'post')
-      ).toMatchInlineSnapshot(`Array []`)
+        chowchow.getDefinedRequestBodyContentType('/nonono', 'post')
+      ).toMatchSnapshot()
     })
 
-    test('It return empty array for defined body content type if method is undefined', () => {
+    test('It returns empty array for defined body content type if method is undefined', () => {
       expect(
-        chowchow.getDefinedBodyContentType('/pets', 'head')
-      ).toMatchInlineSnapshot(`Array []`)
+        chowchow.getDefinedRequestBodyContentType('/pets', 'head')
+      ).toMatchSnapshot()
     })
 
-    test('It return empty array for defined body content type if requestBody is not defined', () => {
+    test('It returns empty array for defined body content type if requestBody is not defined', () => {
       expect(
-        chowchow.getDefinedBodyContentType('/pets', 'get')
-      ).toMatchInlineSnapshot(`Array []`)
+        chowchow.getDefinedRequestBodyContentType('/pets', 'get')
+      ).toMatchSnapshot()
     })
   })
 

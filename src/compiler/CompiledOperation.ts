@@ -60,7 +60,7 @@ export default class CompiledOperation {
     }, {});
   }
 
-  public getDefinedBodyContentType() {
+  public getDefinedRequestBodyContentType(): string[] {
     return this.body ? this.body.getDefinedContentTypes() : [];
   }
 
