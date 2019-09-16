@@ -23,7 +23,8 @@ export default class CompiledPathItem {
   }
 
   public getDefinedRequestBodyContentType(method: string): string[] {
-    return this.compiledOperations[method] ? this.compiledOperations[method].getDefinedRequestBodyContentType() : [];
+    const m = method.toLowerCase();
+    return this.compiledOperations[m] ? this.compiledOperations[m].getDefinedRequestBodyContentType() : [];
   }
 
   public validateRequest(request: RequestMeta) {
