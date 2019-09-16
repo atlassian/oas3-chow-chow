@@ -212,6 +212,29 @@ describe('Pet Store', () => {
         })
       }).toThrow(RequestValidationError)
     })
+
+    test('It returns defined body content type', () => {
+      expect(chowchow.getDefinedRequestBodyContentType('/pets', 'post'))
+        .toMatchSnapshot();
+    })
+
+    test('It returns empty array for defined body content type if path is undefined', () => {
+      expect(
+        chowchow.getDefinedRequestBodyContentType('/nonono', 'post')
+      ).toMatchSnapshot()
+    })
+
+    test('It returns empty array for defined body content type if method is undefined', () => {
+      expect(
+        chowchow.getDefinedRequestBodyContentType('/pets', 'head')
+      ).toMatchSnapshot()
+    })
+
+    test('It returns empty array for defined body content type if requestBody is not defined', () => {
+      expect(
+        chowchow.getDefinedRequestBodyContentType('/pets', 'get')
+      ).toMatchSnapshot()
+    })
   })
 
   describe('Header', () => {

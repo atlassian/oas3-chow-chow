@@ -60,6 +60,10 @@ export default class CompiledOperation {
     }, {});
   }
 
+  public getDefinedRequestBodyContentType(): string[] {
+    return this.body ? this.body.getDefinedContentTypes() : [];
+  }
+
   public validateRequest(request: RequestMeta): RequestMeta {
     const header = this.compiledHeader.validate(request.header);
     const query = this.compiledQuery.validate(request.query);
