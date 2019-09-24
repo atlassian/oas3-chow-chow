@@ -36,6 +36,7 @@
     "xregexp": "^4.2.4"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.0.3",
     "@types/jest": "^23.3.4",
     "@types/node": "^10.11.5",
     "@types/xregexp": "^3.0.29",
