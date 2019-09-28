@@ -1,4 +1,4 @@
-import { PathItemObject } from 'openapi3-ts';
+import { PathItemObject, ParameterObject } from 'openapi3-ts';
 import CompiledOperation from './CompiledOperation';
 import { RequestMeta, ResponseMeta } from '.';
 import ChowError from '../error';
@@ -15,7 +15,10 @@ export default class CompiledPathItem {
     this.compiledOperations = this.supportedMethod.reduce((compiled: any, method: string) => {
       const m = method.toLowerCase();
       if (pathItemObject[m]) { 
-        compiled[m] = new CompiledOperation(pathItemObject[m], options);
+        compiled[m] = new CompiledOperation(
+          pathItemObject[m],
+          (pathItemObject.parameters as ParameterObject[]) || [],
+          options);
       }
       return compiled;
     }, {})
