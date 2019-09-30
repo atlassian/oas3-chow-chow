@@ -29,7 +29,7 @@ jobs:
         with:
           # The --otp=1 is to get around a bug in changesets
           # It will be fixed in Changesets 2
-          publish: yarn release --otp=1
+          publish: yarn release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

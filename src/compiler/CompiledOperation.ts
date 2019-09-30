@@ -11,13 +11,13 @@ import CompiledMediaType from './CompiledMediaType';
 import { ChowOptions } from '..';
 
 export default class CompiledOperation {
-  private header: ParameterObject[] = [];
+  private header: Map<string, ParameterObject> = new Map();
   private compiledHeader: CompiledParameterHeader;
-  private query: ParameterObject[] = [];
+  private query: Map<string, ParameterObject> = new Map();
   private compiledQuery: CompiledParameterQuery;
-  private path: ParameterObject[] = [];
+  private path: Map<string, ParameterObject> = new Map();
   private compiledPath: CompiledParameterPath;
-  private cookie: ParameterObject[] = [];
+  private cookie: Map<string, ParameterObject> = new Map();
   private compiledCookie: CompiledParameterCookie;
   private body?: CompiledRequestBody;
   private operationId?: string;
@@ -25,28 +25,28 @@ export default class CompiledOperation {
     [key: string]: CompiledResponse;
   } = {};
 
-  constructor(operation: OperationObject, options: Partial<ChowOptions>) {
-    const parameters = !!operation.parameters ? [...operation.parameters] : []
+  constructor(operation: OperationObject, inheritedParameter: ParameterObject[], options: Partial<ChowOptions>) {
+    const parameters = !!operation.parameters ? [...inheritedParameter, ...operation.parameters] : [...inheritedParameter];
     for (const parameter of parameters as ParameterObject[]) {
       switch(parameter.in) {
         case 'header':
-          this.header.push(parameter);
+          this.header.set(parameter.name, parameter);
           break;
         case 'query':
-          this.query.push(parameter);
+          this.query.set(parameter.name, parameter);
           break;
         case 'path':
-          this.path.push(parameter);
+          this.path.set(parameter.name, parameter);
           break;
         case 'cookie':
-          this.cookie.push(parameter);
+          this.cookie.set(parameter.name, parameter);
           break;
       }
     }
-    this.compiledHeader = new CompiledParameterHeader(this.header, options);
-    this.compiledQuery = new CompiledParameterQuery(this.query, options);
-    this.compiledPath = new CompiledParameterPath(this.path, options);
-    this.compiledCookie = new CompiledParameterCookie(this.cookie, options);
+    this.compiledHeader = new CompiledParameterHeader(Array.from(this.header.values()), options);
+    this.compiledQuery = new CompiledParameterQuery(Array.from(this.query.values()), options);
+    this.compiledPath = new CompiledParameterPath(Array.from(this.path.values()), options);
+    this.compiledCookie = new CompiledParameterCookie(Array.from(this.cookie.values()), options);
 
     if (operation.requestBody) {
       this.body = new CompiledRequestBody(operation.requestBody as RequestBodyObject);
