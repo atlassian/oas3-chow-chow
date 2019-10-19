@@ -77,7 +77,6 @@ export default class CompiledOperation {
     }
 
     return {
-      method: request.method,
       operationId: request.operationId || this.operationId,
       header,
       query,

@@ -1,5 +1,5 @@
 import { PathItemObject } from 'openapi3-ts';
-import CompiledPathItem from './CompiledPathItem';
+import CompiledPathItem, { OperationRegisterFunc } from './CompiledPathItem';
 import { RequestMeta, ResponseMeta } from '.';
 import * as XRegExp from 'xregexp';
 import { ChowOptions } from '..';
@@ -14,7 +14,7 @@ export default class CompiledPath {
   private compiledPathItem: CompiledPathItem;
   private ignoredMatches = ['index', 'input']; 
 
-  constructor(path: string, pathItemObject: PathItemObject, options: Partial<ChowOptions>) {
+  constructor(path: string, pathItemObject: PathItemObject, options: Partial<ChowOptions & { registerCompiledOperationWithId: OperationRegisterFunc }>) {
     this.path = path;
     /**
      * The following statement should create Named Capturing Group for
@@ -33,15 +33,15 @@ export default class CompiledPath {
     return XRegExp.test(path, this.regex);
   }
 
-  public validateRequest(path: string, request: RequestMeta) {
-    return this.compiledPathItem.validateRequest({
+  public validateRequest(path: string, method: string, request: RequestMeta) {
+    return this.compiledPathItem.validateRequest(method, {
       ...request,
       path: this.extractPathParams(path)
     });
   }
 
-  public validateResponse(response: ResponseMeta) {
-    return this.compiledPathItem.validateResponse(response);
+  public validateResponse(method: string, response: ResponseMeta) {
+    return this.compiledPathItem.validateResponse(method, response);
   }
 
   private extractPathParams = (path: string): PathParameters => {
