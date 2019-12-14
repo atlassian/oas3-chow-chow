@@ -49,7 +49,7 @@ export default class CompiledOperation {
     this.compiledCookie = new CompiledParameterCookie(Array.from(this.cookie.values()), options);
 
     if (operation.requestBody) {
-      this.body = new CompiledRequestBody(operation.requestBody as RequestBodyObject);
+      this.body = new CompiledRequestBody(operation.requestBody as RequestBodyObject, options);
     }
 
     this.operationId = operation.operationId;
@@ -73,6 +73,7 @@ export default class CompiledOperation {
     let body;
     if (this.body) {
       const contentType = CompiledMediaType.extractMediaType(request.header && request.header['content-type']);
+      console.log('validate body');
       body = this.body.validate(contentType, request.body);
     }
 

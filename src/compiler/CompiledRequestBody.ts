@@ -1,6 +1,7 @@
 import { RequestBodyObject } from 'openapi3-ts';
 import CompiledSchema from './CompiledSchema';
 import ChowError from '../error';
+import { ChowOptions } from '..';
 
 export default class CompiledRequestBody {
   private compiledSchemas: {
@@ -8,13 +9,13 @@ export default class CompiledRequestBody {
   };
   private required: boolean;
 
-  constructor(requestBody: RequestBodyObject) {
+  constructor(requestBody: RequestBodyObject, options: Partial<ChowOptions>) {
     this.compiledSchemas = Object.keys(requestBody.content).reduce(
       (compiled: any, mediaType: string) => {
         const key = mediaType.toLowerCase(); // normalise
         compiled[key] = new CompiledSchema(
           requestBody.content[mediaType].schema || {},
-          {},
+          options.requestBodyAjvOptions,
           { schemaContext: 'request' }
         );
         return compiled;
