@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 0.17.1
+
+### Minor Changes
+
+- 90ebe99: Add constructor argument "options" (ChowOptions) to CompiledRequestBody. This arg is passed to CompiledSchema and ultimately AJV for validation
+
 ## 0.17.0
 
 ### Minor Changes
