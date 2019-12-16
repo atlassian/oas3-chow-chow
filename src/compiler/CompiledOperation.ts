@@ -73,7 +73,6 @@ export default class CompiledOperation {
     let body;
     if (this.body) {
       const contentType = CompiledMediaType.extractMediaType(request.header && request.header['content-type']);
-      console.log('validate body');
       body = this.body.validate(contentType, request.body);
     }
 
