@@ -167,8 +167,7 @@ describe('Pet Store', () => {
     })
 
     test('It should fail validation and receive a single error if payload is invalid and ChowOptions not configured', () => {
-      let chowOptions: Partial<ChowOptions> = {requestBodyAjvOptions: {allErrors: false}};
-      chowchow = new ChowChow(fixture as any, chowOptions);
+      chowchow = new ChowChow(fixture as any);
 
       try {
         chowchow.validateRequest('/pets', {
