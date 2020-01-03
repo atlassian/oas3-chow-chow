@@ -16,18 +16,19 @@ export default class CompiledParameterHeader {
    * If in is "header" and the name field is "Accept", "Content-Type" or "Authorization",
    * the parameter definition SHALL be ignored.
    */
-  private ignoreHeaders = ['Accept', 'Content-Type', 'Authorization'];
+  private ignoreHeaders = ['Accept', 'Content-Type', 'Authorization'].map(header => header.toLowerCase())
 
   constructor(parameters: ParameterObject[], options: Partial<ChowOptions>) {
     for (const parameter of parameters) {
-      if (this.ignoreHeaders.includes(parameter.name)) {
+      const headerName = parameter.name.toLowerCase()
+      if (this.ignoreHeaders.includes(headerName)) {
         continue;
       }
 
-      this.headerSchema.properties![parameter.name] = parameter.schema || {};
+      this.headerSchema.properties![headerName] = parameter.schema || {};
 
       if (parameter.required) {
-        this.headerSchema.required!.push(parameter.name);
+        this.headerSchema.required!.push(headerName);
       }
     }
 
