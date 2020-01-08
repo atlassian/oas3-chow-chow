@@ -1,5 +1,15 @@
 # oas3-chow-chow
 
+## 0.18.0
+
+### Minor Changes
+
+- 1edce3e: Add constructor argument "options" (ChowOptions) to CompiledRequestBody. This arg is passed to CompiledSchema and ultimately AJV for validation
+
+### Patch Changes
+
+- 989f29c: Make HTTP header names case-insensitive
+
 ## 0.17.0
 
 ### Minor Changes
