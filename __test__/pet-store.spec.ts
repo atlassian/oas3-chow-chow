@@ -1,4 +1,4 @@
-import ChowChow from '../src';
+import ChowChow, { ChowOptions } from '../src';
 import ChowError, { RequestValidationError } from '../src/error';
 const fixture = require('./fixtures/pet-store.json');
 
@@ -116,6 +116,80 @@ describe('Pet Store', () => {
       }).not.toThrowError();
     })
   })
+  describe('Configure ChowOptions for allErrors', () => {
+    test('It should fail validation and receive multiple errors if payload is invalid and ChowOptions configured with allErrors:true', () => {
+      let chowOptions: Partial<ChowOptions> = {requestBodyAjvOptions: {allErrors: true}};
+      chowchow = new ChowChow(fixture as any, chowOptions);
+
+      try {
+        chowchow.validateRequest('/pets', {
+          method: 'post',
+          body: {
+            name: 123
+          },
+          header: {
+            'content-type': 'application/json'
+          }
+        });
+      }
+      catch (e) {
+        expect(e).toBeDefined();
+        expect(e).toBeInstanceOf(ChowError);
+        const chowError: ChowError = e;
+        expect(chowError.toJSON().suggestions.length).toBe(2);
+        expect (chowError.meta.rawErrors && chowError.meta.rawErrors.length).toBe(2);
+      }
+    })
+    
+
+    test('It should fail validation and receive a single error if payload is invalid and ChowOptions configured for allErrors:false', () => {
+      let chowOptions: Partial<ChowOptions> = {requestBodyAjvOptions: {allErrors: false}};
+      chowchow = new ChowChow(fixture as any, chowOptions);
+
+      try {
+        chowchow.validateRequest('/pets', {
+          method: 'post',
+          body: {
+            name: 123
+          },
+          header: {
+            'content-type': 'application/json'
+          }
+        });
+      }
+      catch (e) {
+        expect(e).toBeDefined();
+        expect(e).toBeInstanceOf(ChowError);
+        const chowError: ChowError = e;
+        expect(chowError.toJSON().suggestions.length).toBe(1);
+        expect (chowError.meta.rawErrors && chowError.meta.rawErrors.length).toBe(1);
+      }
+    })
+
+    test('It should fail validation and receive a single error if payload is invalid and ChowOptions not configured', () => {
+      chowchow = new ChowChow(fixture as any);
+
+      try {
+        chowchow.validateRequest('/pets', {
+          method: 'post',
+          body: {
+            name: 123
+          },
+          header: {
+            'content-type': 'application/json'
+          }
+        });
+      }
+      catch (e) {
+        expect(e).toBeDefined();
+        expect(e).toBeInstanceOf(ChowError);
+        const chowError: ChowError = e;
+        expect(chowError.toJSON().suggestions.length).toBe(1);
+        expect (chowError.meta.rawErrors && chowError.meta.rawErrors.length).toBe(1);
+      }
+    })
+  })
+
   describe('RequestBody', () => {
     test('It should fail validation if payload is invalid', () => {
       expect(() => {

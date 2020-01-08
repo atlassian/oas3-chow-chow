@@ -49,7 +49,7 @@ export default class CompiledOperation {
     this.compiledCookie = new CompiledParameterCookie(Array.from(this.cookie.values()), options);
 
     if (operation.requestBody) {
-      this.body = new CompiledRequestBody(operation.requestBody as RequestBodyObject);
+      this.body = new CompiledRequestBody(operation.requestBody as RequestBodyObject, options);
     }
 
     this.operationId = operation.operationId;
