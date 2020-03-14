@@ -1,6 +1,5 @@
 import ChowChow from '../src';
 import ChowError, { ResponseValidationError } from '../src/error';
-import {ResponseMeta} from '../src/compiler';
 
 const fixture = require('./fixtures/response.json');
 
@@ -12,7 +11,7 @@ describe('Response', () => {
   });
 
   it('should validate the response with status code', () => {
-    const responseMeta: ResponseMeta = {
+    const responseMeta = {
       method: 'get',
       status: 200,
       header: {
@@ -31,7 +30,7 @@ describe('Response', () => {
   });
 
   it("should pass if a field that is nullable: true is null", () => {
-      const responseMeta: ResponseMeta = {
+      const responseMeta = {
           method: "get",
           status: 200,
           header: {
@@ -49,7 +48,7 @@ describe('Response', () => {
   });
 
   it('should fail validation the response with writeOnly property', () => {
-    const responseMeta: ResponseMeta = {
+    const responseMeta = {
       method: 'get',
       status: 200,
       header: {
@@ -67,7 +66,7 @@ describe('Response', () => {
   });
 
   it('should fall back to default if no status code is matched', () => {
-    const responseMeta: ResponseMeta = {
+    const responseMeta = {
       method: 'get',
       status: 500,
       header: {

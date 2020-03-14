@@ -4,47 +4,58 @@ import { RequestMeta, ResponseMeta } from '.';
 import ChowError from '../error';
 import { ChowOptions } from '..';
 
+export type OperationRegisterFunc = (operationId: string, compiledOperation: CompiledOperation) => void;
+
 export default class CompiledPathItem {
-  private supportedMethod = ['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace'];
-  private compiledOperations: {
-    [key: string]: CompiledOperation;
-  } = {};
+  static readonly SupportedMethod = <const>['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace'];
+  private compiledOperationsByMethod: Map<string, CompiledOperation> = new Map();
   private path: string;
 
-  constructor(pathItemObject: PathItemObject, path: string, options: Partial<ChowOptions>) {
-    this.compiledOperations = this.supportedMethod.reduce((compiled: any, method: string) => {
-      const m = method.toLowerCase();
-      if (pathItemObject[m]) { 
-        compiled[m] = new CompiledOperation(
-          pathItemObject[m],
-          (pathItemObject.parameters as ParameterObject[]) || [],
-          options);
+  constructor(pathItemObject: PathItemObject, path: string, options: Partial<ChowOptions & { registerCompiledOperationWithId: OperationRegisterFunc }>) {
+    CompiledPathItem.SupportedMethod.forEach(method => {
+      const operationObject = pathItemObject[method];
+
+      if (!operationObject) {
+        return;
       }
-      return compiled;
-    }, {})
+
+      const compiledOperation = new CompiledOperation(
+        operationObject,
+        (pathItemObject.parameters as ParameterObject[]) || [],
+        options
+      );
+      this.compiledOperationsByMethod.set(method, compiledOperation);
+
+      if (operationObject.operationId && options.registerCompiledOperationWithId) {
+        options.registerCompiledOperationWithId(operationObject.operationId, compiledOperation);
+      }
+    });
+
     this.path = path;
   }
 
   public getDefinedRequestBodyContentType(method: string): string[] {
     const m = method.toLowerCase();
-    return this.compiledOperations[m] ? this.compiledOperations[m].getDefinedRequestBodyContentType() : [];
+
+    const compiledOperation = this.compiledOperationsByMethod.get(m);
+    return !!compiledOperation ? compiledOperation.getDefinedRequestBodyContentType() : [];
   }
 
-  public validateRequest(request: RequestMeta) {
-    const method = request.method.toLowerCase();
-    const compiledOperation = this.compiledOperations[method];
+  public validateRequest(method: string, request: RequestMeta) {
+    const mt = method.toLowerCase();
+    const compiledOperation = this.compiledOperationsByMethod.get(mt);
     if (!compiledOperation) {
-      throw new ChowError(`Invalid request method - ${method}`, { in: 'path' })
+      throw new ChowError(`Invalid request method - ${mt}`, { in: 'path' })
     }
 
     return compiledOperation.validateRequest(request);
   }
 
-  public validateResponse(response: ResponseMeta) {
-    const method = response.method.toLowerCase();
-    const compiledOperation = this.compiledOperations[method];
+  public validateResponse(method: string, response: ResponseMeta) {
+    const mt = method.toLowerCase();
+    const compiledOperation = this.compiledOperationsByMethod.get(mt);
     if (!compiledOperation) {
-      throw new ChowError(`Invalid request method - ${method}`, { in: 'path' })
+      throw new ChowError(`Invalid request method - ${mt}`, { in: 'path' })
     }
 
     return compiledOperation.validateResponse(response);
