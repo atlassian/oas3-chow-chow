@@ -23,6 +23,14 @@ export interface ChowOptions {
 export default class ChowChow {
   private compiledPaths: CompiledPath[];
   private compiledOperationById: Map<string, CompiledOperation>;
+  private deprecateValidateRequest = util.deprecate(
+    this.validateRequestByPath.bind(this),
+    'validateRequest() is now deprecated, please use validateRequestByPath or validateRequestByOperationId instead'
+  );
+  private deprecateValidateResponse = util.deprecate(
+    this.validateResponseByPath.bind(this),
+    'validateResponse() is now deprecated, please use validateResponseByPath or validateResponseByOperationId instead'
+  );
 
   constructor(document: OpenAPIObject, options: Partial<ChowOptions> = {}) {
     const { compiledPaths, compiledOperationById } = compile(document, options);
@@ -31,17 +39,11 @@ export default class ChowChow {
   }
 
   validateRequest(path: string, request: RequestMeta & { method: string }) {
-    return util.deprecate(
-      this.validateRequestByPath.bind(this),
-      'validateRequest() is now deprecated, please use validateRequestByPath or validateRequestByOperationId instead'
-    )(path, request.method, request);
+    return this.deprecateValidateRequest(path, request.method, request);
   }
 
   validateResponse(path: string, response: ResponseMeta & { method: string }) {
-    return util.deprecate(
-      this.validateResponseByPath.bind(this),
-      'validateResponse() is now deprecated, please use validateResponseByPath or validateResponseByOperationId instead'
-    )(path, response.method, response);
+    return this.deprecateValidateResponse(path, response.method, response);
   }
 
   validateRequestByPath(path: string, method: string, request: RequestMeta) {
