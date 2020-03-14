@@ -5,6 +5,9 @@
   "types": "lib/index.d.ts",
   "author": "<tli@atlassian.com>",
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/atlassian/oas3-chow-chow.git"
