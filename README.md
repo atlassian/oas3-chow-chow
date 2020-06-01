@@ -30,22 +30,21 @@ import * as yaml from "js-yaml";
 var doc = yaml.safeLoad(fs.readFileSync("./openapi.yml", "utf8"));
 const chow = new ChowChow(doc);
 
-chow.validateRequest("./books", {
-  method: "post",
-  query: {
-    expand: ["document", "author"]
-  },
-  body: {
-    name: "a nice book",
-    author: "me me me"
+// For URL: /:pathParam/info?arrParam=x&arrParam=y&other=z
+chow.validateRequestByPath(
+  // url.pathname,
+  "/books/info",
+  "POST", {
+    path: { pathParam: "books" },
+    // query: querystring.parse(url.search.substr(1)),
+    query: { arrParam: ["x", "y"], other: "z" },
+    // header: req.headers,
+    header: { "Content-Type": "application/json" },
+    body: { a: 1, b: 2 },
   }
-});
-
-chow.validateResponse("./books", {
-  method: "post",
-  header: {
-    "content-type": "application/json"
-  },
+);
+chow.validateResponseByPath("/books/info", "POST", {
+  header: { "Content-Type": "application/json" },
   body: {
     name: "a nice book",
     author: "me me me"
