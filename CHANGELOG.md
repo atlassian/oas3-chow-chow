@@ -1,5 +1,15 @@
 # oas3-chow-chow
 
+## 1.1.0
+
+### Minor Changes
+
+- 4612f8a: Fixed type of ChowError.meta.rawErrors and updated documentation
+
+### Patch Changes
+
+- 0df9521: Upgrade json-schema-deref-sync
+
 ## 1.0.0
 
 ### Major Changes
