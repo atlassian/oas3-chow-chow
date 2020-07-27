@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 1.1.1
+
+### Patch Changes
+
+- af69512: Bump avj to 6.12.3
+
 ## 1.1.0
 
 ### Minor Changes
