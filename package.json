@@ -14,7 +14,8 @@
   },
   "scripts": {
     "test": "jest --coverage --no-watchman",
-    "test:watch": "jest --coverage --watch",
+    "test:watch": "jest --watch",
+    "test:watch:debug": "node --inspect node_modules/.bin/jest --runInBand --watch",
     "prepublishOnly": "rm -rf lib && tsc",
     "release": "yarn prepublishOnly && changeset publish"
   },

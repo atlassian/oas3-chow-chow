@@ -98,7 +98,7 @@ export default class ChowChow {
     }
 
     try {
-      return compiledOperation.validateRequest(response);
+      return compiledOperation.validateResponse(response);
     } catch(err) {
       if (err instanceof ChowError) {
         throw new ResponseValidationError(err.message, err.meta);
