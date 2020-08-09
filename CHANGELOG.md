@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 1.1.2
+
+### Patch Changes
+
+- f0ed23d: fix #45 where validateRequest was mistakenly called in validateResponseByOperationId
+
 ## 1.1.1
 
 ### Patch Changes
