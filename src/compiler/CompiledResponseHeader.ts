@@ -1,6 +1,7 @@
 import { HeadersObject, SchemaObject, HeaderObject } from 'openapi3-ts';
 import CompiledSchema from './CompiledSchema';
 import ChowError from '../error';
+import { ChowOptions } from '..';
 
 export default class CompiledResponseHeader {
   private compiledSchema: CompiledSchema;
@@ -14,7 +15,7 @@ export default class CompiledResponseHeader {
    */
   private ignoreHeaders = ['Content-Type'];
 
-  constructor(headers: HeadersObject = {}) {
+  constructor(headers: HeadersObject = {}, options: Partial<ChowOptions>) {
     for (const name in headers) {
       if (this.ignoreHeaders.includes(name)) {
         continue;
@@ -29,7 +30,7 @@ export default class CompiledResponseHeader {
         this.headerSchema.required!.push(name);
       }
     }
-    this.compiledSchema = new CompiledSchema(this.headerSchema);
+    this.compiledSchema = new CompiledSchema(this.headerSchema, options.headerAjvOptions || {});
   }
 
   public validate(value: any = {}) {

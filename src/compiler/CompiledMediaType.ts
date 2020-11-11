@@ -1,4 +1,5 @@
 import { MediaTypeObject } from 'openapi3-ts';
+import * as Ajv from 'ajv';
 import CompiledSchema from './CompiledSchema';
 import ChowError from '../error';
 
@@ -6,10 +7,10 @@ export default class CompiledMediaType {
   private name: string;
   private compiledSchema: CompiledSchema;
 
-  constructor(name: string, mediaType: MediaTypeObject) {
+  constructor(name: string, mediaType: MediaTypeObject, opts?: Ajv.Options) {
     this.name = name;
     this.compiledSchema = new CompiledSchema(mediaType.schema || {},
-      {},
+      opts || {},
       { schemaContext: 'response' });
   }
 

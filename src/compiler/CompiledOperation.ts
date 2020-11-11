@@ -55,7 +55,7 @@ export default class CompiledOperation {
     this.operationId = operation.operationId;
 
     this.response = Object.keys(operation.responses).reduce((compiled: any, status: string) => {
-      compiled[status] = new CompiledResponse(operation.responses[status]);
+      compiled[status] = new CompiledResponse(operation.responses[status], options);
       return compiled;
     }, {});
   }
