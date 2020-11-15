@@ -3,6 +3,7 @@ import ChowError from '../error';
 import CompiledResponseHeader from './CompiledResponseHeader';
 import { ResponseMeta } from '.';
 import CompiledMediaType from './CompiledMediaType';
+import { ChowOptions } from '..';
 
 export default class CompiledResponse {
   private compiledResponseHeader: CompiledResponseHeader;
@@ -10,12 +11,12 @@ export default class CompiledResponse {
     [key: string]: CompiledMediaType
   } = {};
 
-  constructor(response: ResponseObject) {
-    this.compiledResponseHeader = new CompiledResponseHeader(response.headers);
+  constructor(response: ResponseObject, options: Partial<ChowOptions>) {
+    this.compiledResponseHeader = new CompiledResponseHeader(response.headers, options);
 
     if (response.content) {
       this.content = Object.keys(response.content).reduce((compiled: any, name: string) => {
-        compiled[name] = new CompiledMediaType(name, response.content![name] as MediaTypeObject);
+        compiled[name] = new CompiledMediaType(name, response.content![name] as MediaTypeObject, options.responseBodyAjvOptions || {});
         return compiled;
       }, {});
     }
