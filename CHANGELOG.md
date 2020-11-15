@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 1.1.3
+
+### Patch Changes
+
+- 9b804b4: fix: use responseBodyAjvOptions if passed
+
 ## 1.1.2
 
 ### Patch Changes
