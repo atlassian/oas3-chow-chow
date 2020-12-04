@@ -1,15 +1,15 @@
-import { ParameterObject, SchemaObject } from 'openapi3-ts';
-import CompiledSchema from './CompiledSchema';
-import ChowError from '../error';
-import * as querystring from 'querystring'
-import { ChowOptions } from '..';
+import { ParameterObject, SchemaObject } from "openapi3-ts";
+import CompiledSchema from "./CompiledSchema";
+import ChowError from "../error";
+import * as querystring from "querystring";
+import { ChowOptions } from "..";
 
 export default class CompiledParameterQuery {
   private compiledSchema: CompiledSchema;
   private querySchema: SchemaObject = {
-    type: 'object',
+    type: "object",
     properties: {},
-    required: []
+    required: [],
   };
 
   constructor(parameters: ParameterObject[], options: Partial<ChowOptions>) {
@@ -25,7 +25,10 @@ export default class CompiledParameterQuery {
      * For example:
      *   `?query=x` will be valid against a schema with type=array
      */
-    this.compiledSchema = new CompiledSchema(this.querySchema, { coerceTypes: 'array', ...(options.queryAjvOptions ? options.queryAjvOptions : {}) });
+    this.compiledSchema = new CompiledSchema(this.querySchema, {
+      coerceTypes: "array",
+      ...(options.queryAjvOptions ? options.queryAjvOptions : {}),
+    });
   }
 
   /**
@@ -37,7 +40,7 @@ export default class CompiledParameterQuery {
        * unescape the query if neccessary
        */
       const coercedValue = Object.keys(value).reduce((result: any, key) => {
-        if (typeof value[key] === 'string') {
+        if (typeof value[key] === "string") {
           result[key] = querystring.unescape(value[key]);
         } else {
           result[key] = value[key];
@@ -46,8 +49,11 @@ export default class CompiledParameterQuery {
       }, {});
       this.compiledSchema.validate(coercedValue);
       return coercedValue;
-    } catch(e) {
-      throw new ChowError('Schema validation error', { in: 'query', rawErrors: e });
+    } catch (e) {
+      throw new ChowError("Schema validation error", {
+        in: "query",
+        rawErrors: e,
+      });
     }
   }
 }

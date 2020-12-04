@@ -1,4 +1,4 @@
-import * as betterAjvErrors from 'better-ajv-errors';
+import * as betterAjvErrors from "better-ajv-errors";
 
 export interface ChowErrorMeta {
   in: string;
@@ -25,8 +25,8 @@ export default class ChowError extends Error {
         in: this.meta.in,
       },
       message: this.message,
-      suggestions: this.meta.rawErrors || []
-    }
+      suggestions: this.meta.rawErrors || [],
+    };
   }
 }
 

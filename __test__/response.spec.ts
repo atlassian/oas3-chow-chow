@@ -1,212 +1,227 @@
-import ChowChow from '../src';
-import ChowError, { ResponseValidationError } from '../src/error';
-import { ResponseMeta } from '../src/compiler';
+import ChowChow from "../src";
+import ChowError, { ResponseValidationError } from "../src/error";
+import { ResponseMeta } from "../src/compiler";
 
-const fixture = require('./fixtures/response.json');
+const fixture = require("./fixtures/response.json");
 
-describe('Response', () => {
+describe("Response", () => {
   let chowchow: ChowChow;
 
   beforeAll(() => {
     chowchow = new ChowChow(fixture);
   });
 
-  it('should validate the response with status code', () => {
+  it("should validate the response with status code", () => {
     const responseMeta: ResponseMeta = {
       status: 200,
       header: {
-        'content-type': 'application/json'
+        "content-type": "application/json",
       },
       body: [
         {
           id: 1,
-          name: 'plum',
-          readOnlyProp: '42',
-          notWriteOnlyProp: '42'
-        }
-      ]
+          name: "plum",
+          readOnlyProp: "42",
+          notWriteOnlyProp: "42",
+        },
+      ],
     };
-    expect(chowchow.validateResponseByPath('/pets/123', 'get', responseMeta)).toEqual(responseMeta);
-    expect(chowchow.validateResponseByOperationId('showPetById', responseMeta)).toEqual(responseMeta);
+    expect(
+      chowchow.validateResponseByPath("/pets/123", "get", responseMeta)
+    ).toEqual(responseMeta);
+    expect(
+      chowchow.validateResponseByOperationId("showPetById", responseMeta)
+    ).toEqual(responseMeta);
   });
 
   it("should pass if a field that is nullable: true is null", () => {
     const responseMeta: ResponseMeta = {
-        status: 200,
-        header: {
-            "content-type": "application/json"
-        },
-        body: [
-            {
-                id: 1,
-                name: "plum",
-                tag: null
-            }
-        ]
-    };
-    expect(chowchow.validateResponseByPath("/pets/123", 'get', responseMeta)).toEqual(responseMeta);
-    expect(chowchow.validateResponseByOperationId('showPetById', responseMeta)).toEqual(responseMeta);
-  });
-
-  it('should fail validation the response with writeOnly property', () => {
-    const responseMeta: ResponseMeta = {
       status: 200,
       header: {
-        'content-type': 'application/json'
+        "content-type": "application/json",
       },
       body: [
         {
           id: 1,
-          name: 'plum',
-          writeOnlyProp: '42'
-        }
-      ]
+          name: "plum",
+          tag: null,
+        },
+      ],
     };
-    expect(() => chowchow.validateResponseByPath('/pets/123', 'get', responseMeta)).toThrow(ResponseValidationError);
-    expect(() => chowchow.validateResponseByOperationId('showPetById', responseMeta)).toThrow(ResponseValidationError);
+    expect(
+      chowchow.validateResponseByPath("/pets/123", "get", responseMeta)
+    ).toEqual(responseMeta);
+    expect(
+      chowchow.validateResponseByOperationId("showPetById", responseMeta)
+    ).toEqual(responseMeta);
   });
 
-  it('should fall back to default if no status code is matched', () => {
+  it("should fail validation the response with writeOnly property", () => {
+    const responseMeta: ResponseMeta = {
+      status: 200,
+      header: {
+        "content-type": "application/json",
+      },
+      body: [
+        {
+          id: 1,
+          name: "plum",
+          writeOnlyProp: "42",
+        },
+      ],
+    };
+    expect(() =>
+      chowchow.validateResponseByPath("/pets/123", "get", responseMeta)
+    ).toThrow(ResponseValidationError);
+    expect(() =>
+      chowchow.validateResponseByOperationId("showPetById", responseMeta)
+    ).toThrow(ResponseValidationError);
+  });
+
+  it("should fall back to default if no status code is matched", () => {
     const responseMeta: ResponseMeta = {
       status: 500,
       header: {
-        'content-type': 'application/json'
+        "content-type": "application/json",
       },
       body: [
         {
           code: 500,
-          message: 'something is wrong'
-        }
-      ]
+          message: "something is wrong",
+        },
+      ],
     };
-    expect(chowchow.validateResponseByPath('/pets/123', 'get', responseMeta)).toEqual(responseMeta);
-    expect(chowchow.validateResponseByOperationId('showPetById', responseMeta)).toEqual(responseMeta);
+    expect(
+      chowchow.validateResponseByPath("/pets/123", "get", responseMeta)
+    ).toEqual(responseMeta);
+    expect(
+      chowchow.validateResponseByOperationId("showPetById", responseMeta)
+    ).toEqual(responseMeta);
   });
 
-  it('should throw error if path parameter fails schema check', () => {
+  it("should throw error if path parameter fails schema check", () => {
     expect(() => {
-      chowchow.validateRequestByPath('/pets/abc', 'get', {});
+      chowchow.validateRequestByPath("/pets/abc", "get", {});
     }).toThrowError(ChowError);
   });
 
-  it('should fail on unsupported response media type', () => {
+  it("should fail on unsupported response media type", () => {
     const responseMeta: ResponseMeta = {
       status: 200,
       header: {
-        'content-type': 'application/nonono'
-      }
+        "content-type": "application/nonono",
+      },
     };
     expect(() => {
-      chowchow.validateResponseByPath('/pets/123', 'get', responseMeta);
+      chowchow.validateResponseByPath("/pets/123", "get", responseMeta);
     }).toThrow();
     expect(() => {
-      chowchow.validateResponseByOperationId('showPetById', responseMeta);
+      chowchow.validateResponseByOperationId("showPetById", responseMeta);
     }).toThrow();
-  })
+  });
 
-  it('should ignore on empty response media type', () => {
+  it("should ignore on empty response media type", () => {
     const responseMeta: ResponseMeta = {
       status: 204,
       header: {
-        'content-type': ''
-      }
-    }
-    expect(() => {
-      chowchow.validateResponseByPath('/pets/123', 'get', responseMeta);
-    }).not.toThrow();
-    expect(() => {
-      chowchow.validateResponseByOperationId('showPetById', responseMeta);
-    }).not.toThrow();
-  })
-
-  it('should extract media type correctly in Content-Type header', () => {
-    const responseMeta: ResponseMeta = {
-      status: 200,
-      header: {
-        'content-type': 'application/json; charset=utf-8'
-      }
+        "content-type": "",
+      },
     };
     expect(() => {
-      chowchow.validateResponseByPath('/pets/123', 'get', responseMeta);
-    }).toThrow();
+      chowchow.validateResponseByPath("/pets/123", "get", responseMeta);
+    }).not.toThrow();
     expect(() => {
-      chowchow.validateResponseByOperationId('showPetById', responseMeta);
-    }).toThrow();
-  })
+      chowchow.validateResponseByOperationId("showPetById", responseMeta);
+    }).not.toThrow();
+  });
 
-  it('should fail if response body is invalid', () => {
+  it("should extract media type correctly in Content-Type header", () => {
     const responseMeta: ResponseMeta = {
       status: 200,
       header: {
-        'content-type': 'application/json'
+        "content-type": "application/json; charset=utf-8",
+      },
+    };
+    expect(() => {
+      chowchow.validateResponseByPath("/pets/123", "get", responseMeta);
+    }).toThrow();
+    expect(() => {
+      chowchow.validateResponseByOperationId("showPetById", responseMeta);
+    }).toThrow();
+  });
+
+  it("should fail if response body is invalid", () => {
+    const responseMeta: ResponseMeta = {
+      status: 200,
+      header: {
+        "content-type": "application/json",
       },
       body: [
         {
-          id: 1
-        }
-      ]
+          id: 1,
+        },
+      ],
     };
     expect(() => {
-      chowchow.validateResponseByPath('/pets/123', 'get', responseMeta);
+      chowchow.validateResponseByPath("/pets/123", "get", responseMeta);
     }).toThrow();
     expect(() => {
-      chowchow.validateResponseByOperationId('showPetById', responseMeta);
+      chowchow.validateResponseByOperationId("showPetById", responseMeta);
     }).toThrow();
+  });
 
-  })
-
-  it('should fail if response code does not match any', () => {
+  it("should fail if response code does not match any", () => {
     const responseMeta: ResponseMeta = {
       status: 400,
       header: {
-        'content-type': 'application/json'
-      }
+        "content-type": "application/json",
+      },
     };
     expect(() => {
-      chowchow.validateResponseByPath('/no-default', 'get', responseMeta);
+      chowchow.validateResponseByPath("/no-default", "get", responseMeta);
     }).toThrow();
     expect(() => {
-      chowchow.validateResponseByOperationId('/no-default', responseMeta);
+      chowchow.validateResponseByOperationId("/no-default", responseMeta);
     }).toThrow();
-  })
+  });
 
-  it('should fail if response method is invalid', () => {
+  it("should fail if response method is invalid", () => {
     expect(() => {
-      chowchow.validateResponse('/no-default', {
-        method: 'path',
+      chowchow.validateResponse("/no-default", {
+        method: "path",
         status: 400,
         header: {
-          'content-type': 'application/json'
-        }
+          "content-type": "application/json",
+        },
       });
     }).toThrow();
-  })
+  });
 
-  it('should fail if header is invalid', () => {
+  it("should fail if header is invalid", () => {
     const responseMeta: ResponseMeta = {
       status: 200,
       header: {
-        'content-type': 'application/json',
-        'version': [1, 2]
-      }
+        "content-type": "application/json",
+        version: [1, 2],
+      },
     };
     expect(() => {
-      chowchow.validateResponseByPath('/header', 'get', responseMeta);
+      chowchow.validateResponseByPath("/header", "get", responseMeta);
     }).toThrow();
     expect(() => {
-      chowchow.validateResponseByOperationId('getHeader', responseMeta);
+      chowchow.validateResponseByOperationId("getHeader", responseMeta);
     }).toThrow();
-  })
+  });
 
-  it('should fail if required header is empty', () => {
+  it("should fail if required header is empty", () => {
     const responseMeta: ResponseMeta = {
-      status: 200
+      status: 200,
     };
     expect(() => {
-      chowchow.validateResponseByPath('/header', 'get', responseMeta);
+      chowchow.validateResponseByPath("/header", "get", responseMeta);
     }).toThrow();
     expect(() => {
-      chowchow.validateResponseByOperationId('getHeader', responseMeta);
+      chowchow.validateResponseByOperationId("getHeader", responseMeta);
     }).toThrow();
-  })
+  });
 });
