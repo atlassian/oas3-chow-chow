@@ -16,6 +16,7 @@
     "test": "jest --coverage --no-watchman",
     "test:watch": "jest --watch",
     "test:watch:debug": "node --inspect node_modules/.bin/jest --runInBand --watch",
+    "lint": "npm run lint:prettier",
     "lint:prettier": "prettier src \"__test__/**/*.ts\" --check",
     "fix:prettier": "npm run lint:prettier -- --write",
     "prepublishOnly": "rm -rf lib && tsc",
