@@ -1,9 +1,9 @@
-import { OpenAPIObject, PathItemObject } from "openapi3-ts";
-import CompiledPath from "./CompiledPath";
-import * as deref from "json-schema-deref-sync";
-import { ChowOptions } from "..";
-import CompiledOperation from "./CompiledOperation";
-import { OperationRegisterFunc } from "./CompiledPathItem";
+import { OpenAPIObject, PathItemObject } from 'openapi3-ts';
+import CompiledPath from './CompiledPath';
+import * as deref from 'json-schema-deref-sync';
+import { ChowOptions } from '..';
+import CompiledOperation from './CompiledOperation';
+import { OperationRegisterFunc } from './CompiledPathItem';
 
 export interface RequestMeta {
   query?: any;

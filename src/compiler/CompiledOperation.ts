@@ -2,17 +2,17 @@ import {
   OperationObject,
   ParameterObject,
   RequestBodyObject,
-} from "openapi3-ts";
-import CompiledRequestBody from "./CompiledRequestBody";
-import CompiledResponse from "./CompiledResponse";
-import { RequestMeta, ResponseMeta } from ".";
-import ChowError from "../error";
-import CompiledParameterHeader from "./CompiledParameterHeader";
-import CompiledParameterQuery from "./CompiledParameterQuery";
-import CompiledParameterPath from "./CompiledParameterPath";
-import CompiledParameterCookie from "./CompiledParameterCookie";
-import CompiledMediaType from "./CompiledMediaType";
-import { ChowOptions } from "..";
+} from 'openapi3-ts';
+import CompiledRequestBody from './CompiledRequestBody';
+import CompiledResponse from './CompiledResponse';
+import { RequestMeta, ResponseMeta } from '.';
+import ChowError from '../error';
+import CompiledParameterHeader from './CompiledParameterHeader';
+import CompiledParameterQuery from './CompiledParameterQuery';
+import CompiledParameterPath from './CompiledParameterPath';
+import CompiledParameterCookie from './CompiledParameterCookie';
+import CompiledMediaType from './CompiledMediaType';
+import { ChowOptions } from '..';
 
 export default class CompiledOperation {
   private header: Map<string, ParameterObject> = new Map();
@@ -39,16 +39,16 @@ export default class CompiledOperation {
       : [...inheritedParameter];
     for (const parameter of parameters as ParameterObject[]) {
       switch (parameter.in) {
-        case "header":
+        case 'header':
           this.header.set(parameter.name, parameter);
           break;
-        case "query":
+        case 'query':
           this.query.set(parameter.name, parameter);
           break;
-        case "path":
+        case 'path':
           this.path.set(parameter.name, parameter);
           break;
-        case "cookie":
+        case 'cookie':
           this.cookie.set(parameter.name, parameter);
           break;
       }
@@ -104,7 +104,7 @@ export default class CompiledOperation {
     let body;
     if (this.body) {
       const contentType = CompiledMediaType.extractMediaType(
-        request.header && request.header["content-type"]
+        request.header && request.header['content-type']
       );
       body = this.body.validate(contentType, request.body);
     }
@@ -121,12 +121,12 @@ export default class CompiledOperation {
 
   public validateResponse(response: ResponseMeta): ResponseMeta {
     const compiledResponse =
-      this.response[response.status] || this.response["default"];
+      this.response[response.status] || this.response['default'];
     if (compiledResponse) {
       return { ...response, body: compiledResponse.validate(response) };
     } else {
-      throw new ChowError("Unsupported Response Status Code", {
-        in: "response",
+      throw new ChowError('Unsupported Response Status Code', {
+        in: 'response',
       });
     }
   }

@@ -1,13 +1,13 @@
-import * as Ajv from "ajv";
-import { OpenAPIObject } from "openapi3-ts";
-import compile, { RequestMeta, ResponseMeta } from "./compiler";
-import CompiledPath from "./compiler/CompiledPath";
+import * as Ajv from 'ajv';
+import { OpenAPIObject } from 'openapi3-ts';
+import compile, { RequestMeta, ResponseMeta } from './compiler';
+import CompiledPath from './compiler/CompiledPath';
 import ChowError, {
   RequestValidationError,
   ResponseValidationError,
-} from "./error";
-import CompiledOperation from "./compiler/CompiledOperation";
-import * as util from "util";
+} from './error';
+import CompiledOperation from './compiler/CompiledOperation';
+import * as util from 'util';
 
 /**
  * Export Errors so that consumers can use it to ditinguish different error type.
@@ -16,7 +16,7 @@ export {
   default as ChowError,
   RequestValidationError,
   ResponseValidationError,
-} from "./error";
+} from './error';
 
 export interface ChowOptions {
   headerAjvOptions: Ajv.Options;
@@ -32,11 +32,11 @@ export default class ChowChow {
   private compiledOperationById: Map<string, CompiledOperation>;
   private deprecateValidateRequest = util.deprecate(
     this.validateRequestByPath.bind(this),
-    "validateRequest() is now deprecated, please use validateRequestByPath or validateRequestByOperationId instead"
+    'validateRequest() is now deprecated, please use validateRequestByPath or validateRequestByOperationId instead'
   );
   private deprecateValidateResponse = util.deprecate(
     this.validateResponseByPath.bind(this),
-    "validateResponse() is now deprecated, please use validateResponseByPath or validateResponseByOperationId instead"
+    'validateResponse() is now deprecated, please use validateResponseByPath or validateResponseByOperationId instead'
   );
 
   constructor(document: OpenAPIObject, options: Partial<ChowOptions> = {}) {
@@ -85,7 +85,7 @@ export default class ChowChow {
     if (!compiledOperation) {
       throw new ChowError(
         `No matches found for the given operationId - ${operationId}`,
-        { in: "request", code: 404 }
+        { in: 'request', code: 404 }
       );
     }
 
@@ -106,7 +106,7 @@ export default class ChowChow {
     if (!compiledOperation) {
       throw new ChowError(
         `No matches found for the given operationId - ${operationId}`,
-        { in: "response", code: 404 }
+        { in: 'response', code: 404 }
       );
     }
 
@@ -141,7 +141,7 @@ export default class ChowChow {
 
     if (!compiledPath) {
       throw new ChowError(`No matches found for the given path - ${path}`, {
-        in: "paths",
+        in: 'paths',
         code: 404,
       });
     }

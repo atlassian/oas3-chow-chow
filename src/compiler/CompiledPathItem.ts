@@ -1,8 +1,8 @@
-import { PathItemObject, ParameterObject } from "openapi3-ts";
-import CompiledOperation from "./CompiledOperation";
-import { RequestMeta, ResponseMeta } from ".";
-import ChowError from "../error";
-import { ChowOptions } from "..";
+import { PathItemObject, ParameterObject } from 'openapi3-ts';
+import CompiledOperation from './CompiledOperation';
+import { RequestMeta, ResponseMeta } from '.';
+import ChowError from '../error';
+import { ChowOptions } from '..';
 
 export type OperationRegisterFunc = (
   operationId: string,
@@ -11,14 +11,14 @@ export type OperationRegisterFunc = (
 
 export default class CompiledPathItem {
   static readonly SupportedMethod = <const>[
-    "get",
-    "post",
-    "put",
-    "patch",
-    "delete",
-    "head",
-    "options",
-    "trace",
+    'get',
+    'post',
+    'put',
+    'patch',
+    'delete',
+    'head',
+    'options',
+    'trace',
   ];
   private compiledOperationsByMethod: Map<
     string,
@@ -74,7 +74,7 @@ export default class CompiledPathItem {
     const mt = method.toLowerCase();
     const compiledOperation = this.compiledOperationsByMethod.get(mt);
     if (!compiledOperation) {
-      throw new ChowError(`Invalid request method - ${mt}`, { in: "path" });
+      throw new ChowError(`Invalid request method - ${mt}`, { in: 'path' });
     }
 
     return compiledOperation.validateRequest(request);
@@ -84,7 +84,7 @@ export default class CompiledPathItem {
     const mt = method.toLowerCase();
     const compiledOperation = this.compiledOperationsByMethod.get(mt);
     if (!compiledOperation) {
-      throw new ChowError(`Invalid request method - ${mt}`, { in: "path" });
+      throw new ChowError(`Invalid request method - ${mt}`, { in: 'path' });
     }
 
     return compiledOperation.validateResponse(response);

@@ -1,12 +1,12 @@
-import { ParameterObject, SchemaObject } from "openapi3-ts";
-import CompiledSchema from "./CompiledSchema";
-import ChowError from "../error";
-import { ChowOptions } from "..";
+import { ParameterObject, SchemaObject } from 'openapi3-ts';
+import CompiledSchema from './CompiledSchema';
+import ChowError from '../error';
+import { ChowOptions } from '..';
 
 export default class CompiledParameterCookie {
   private compiledSchema: CompiledSchema;
   private cookieSchema: SchemaObject = {
-    type: "object",
+    type: 'object',
     properties: {},
     required: [],
   };
@@ -33,8 +33,8 @@ export default class CompiledParameterCookie {
       this.compiledSchema.validate(value);
       return value;
     } catch (e) {
-      throw new ChowError("Schema validation error", {
-        in: "cookie",
+      throw new ChowError('Schema validation error', {
+        in: 'cookie',
         rawErrors: e,
       });
     }

@@ -1,12 +1,12 @@
-import { ParameterObject, SchemaObject } from "openapi3-ts";
-import CompiledSchema from "./CompiledSchema";
-import ChowError from "../error";
-import { ChowOptions } from "..";
+import { ParameterObject, SchemaObject } from 'openapi3-ts';
+import CompiledSchema from './CompiledSchema';
+import ChowError from '../error';
+import { ChowOptions } from '..';
 
 export default class CompiledParameterPath {
   private compiledSchema: CompiledSchema;
   private pathSchema: SchemaObject = {
-    type: "object",
+    type: 'object',
     properties: {},
     required: [],
   };
@@ -40,8 +40,8 @@ export default class CompiledParameterPath {
       this.compiledSchema.validate(coercedValue);
       return coercedValue;
     } catch (e) {
-      throw new ChowError("Schema validation error", {
-        in: "path",
+      throw new ChowError('Schema validation error', {
+        in: 'path',
         rawErrors: e,
       });
     }

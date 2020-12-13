@@ -1,9 +1,9 @@
-import { ResponseObject, HeaderObject, MediaTypeObject } from "openapi3-ts";
-import ChowError from "../error";
-import CompiledResponseHeader from "./CompiledResponseHeader";
-import { ResponseMeta } from ".";
-import CompiledMediaType from "./CompiledMediaType";
-import { ChowOptions } from "..";
+import { ResponseObject, HeaderObject, MediaTypeObject } from 'openapi3-ts';
+import ChowError from '../error';
+import CompiledResponseHeader from './CompiledResponseHeader';
+import { ResponseMeta } from '.';
+import CompiledMediaType from './CompiledMediaType';
+import { ChowOptions } from '..';
 
 export default class CompiledResponse {
   private compiledResponseHeader: CompiledResponseHeader;
@@ -36,7 +36,7 @@ export default class CompiledResponse {
     this.compiledResponseHeader.validate(response.header);
 
     const contentType = CompiledMediaType.extractMediaType(
-      response.header["content-type"]
+      response.header['content-type']
     );
     /**
      * In the case where there is no Content-Type header. For example 204 status.
@@ -48,8 +48,8 @@ export default class CompiledResponse {
     if (this.content[contentType]) {
       return this.content[contentType].validate(response.body);
     } else {
-      throw new ChowError("Unsupported Response Media Type", {
-        in: "response",
+      throw new ChowError('Unsupported Response Media Type', {
+        in: 'response',
       });
     }
   }

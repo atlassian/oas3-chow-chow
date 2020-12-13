@@ -1,19 +1,19 @@
-import { HeadersObject, SchemaObject, HeaderObject } from "openapi3-ts";
-import CompiledSchema from "./CompiledSchema";
-import ChowError from "../error";
-import { ChowOptions } from "..";
+import { HeadersObject, SchemaObject, HeaderObject } from 'openapi3-ts';
+import CompiledSchema from './CompiledSchema';
+import ChowError from '../error';
+import { ChowOptions } from '..';
 
 export default class CompiledResponseHeader {
   private compiledSchema: CompiledSchema;
   private headerSchema: SchemaObject = {
-    type: "object",
+    type: 'object',
     properties: {},
     required: [],
   };
   /**
    * If a response header is defined with the name "Content-Type", it SHALL be ignored.
    */
-  private ignoreHeaders = ["Content-Type"];
+  private ignoreHeaders = ['Content-Type'];
 
   constructor(headers: HeadersObject = {}, options: Partial<ChowOptions>) {
     for (const name in headers) {
@@ -40,8 +40,8 @@ export default class CompiledResponseHeader {
     try {
       this.compiledSchema.validate(value);
     } catch (e) {
-      throw new ChowError("Schema validation error", {
-        in: "response-header",
+      throw new ChowError('Schema validation error', {
+        in: 'response-header',
         rawErrors: e,
       });
     }

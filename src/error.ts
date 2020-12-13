@@ -1,4 +1,4 @@
-import * as betterAjvErrors from "better-ajv-errors";
+import * as betterAjvErrors from 'better-ajv-errors';
 
 export interface ChowErrorMeta {
   in: string;

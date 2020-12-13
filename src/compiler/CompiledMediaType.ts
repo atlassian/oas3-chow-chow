@@ -1,7 +1,7 @@
-import { MediaTypeObject } from "openapi3-ts";
-import * as Ajv from "ajv";
-import CompiledSchema from "./CompiledSchema";
-import ChowError from "../error";
+import { MediaTypeObject } from 'openapi3-ts';
+import * as Ajv from 'ajv';
+import CompiledSchema from './CompiledSchema';
+import ChowError from '../error';
 
 export default class CompiledMediaType {
   private name: string;
@@ -12,7 +12,7 @@ export default class CompiledMediaType {
     this.compiledSchema = new CompiledSchema(
       mediaType.schema || {},
       opts || {},
-      { schemaContext: "response" }
+      { schemaContext: 'response' }
     );
   }
 
@@ -21,7 +21,7 @@ export default class CompiledMediaType {
       this.compiledSchema.validate(value);
       return value;
     } catch (e) {
-      throw new ChowError("Schema validation error", {
+      throw new ChowError('Schema validation error', {
         in: `media-type:${this.name}`,
         rawErrors: e,
       });
@@ -33,6 +33,6 @@ export default class CompiledMediaType {
       return;
     }
 
-    return contentType.split(";")[0];
+    return contentType.split(';')[0];
   }
 }

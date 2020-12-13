@@ -1,4 +1,4 @@
-import * as Ajv from "ajv";
+import * as Ajv from 'ajv';
 
 const options: Ajv.Options = {
   /**
@@ -6,13 +6,13 @@ const options: Ajv.Options = {
    * TODO: Add custom format supports for following formats.
    */
   unknownFormats: [
-    "int32",
-    "int64",
-    "float",
-    "double",
-    "byte",
-    "binary",
-    "password",
+    'int32',
+    'int64',
+    'float',
+    'double',
+    'byte',
+    'binary',
+    'password',
   ],
   nullable: true,
   jsonPointers: true,

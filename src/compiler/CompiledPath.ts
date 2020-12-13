@@ -1,8 +1,8 @@
-import { PathItemObject } from "openapi3-ts";
-import CompiledPathItem, { OperationRegisterFunc } from "./CompiledPathItem";
-import { RequestMeta, ResponseMeta } from ".";
-import * as XRegExp from "xregexp";
-import { ChowOptions } from "..";
+import { PathItemObject } from 'openapi3-ts';
+import CompiledPathItem, { OperationRegisterFunc } from './CompiledPathItem';
+import { RequestMeta, ResponseMeta } from '.';
+import * as XRegExp from 'xregexp';
+import { ChowOptions } from '..';
 
 interface PathParameters {
   [key: string]: string;
@@ -12,7 +12,7 @@ export default class CompiledPath {
   private path: string;
   private regex: RegExp;
   private compiledPathItem: CompiledPathItem;
-  private ignoredMatches = ["index", "input"];
+  private ignoredMatches = ['index', 'input'];
 
   constructor(
     path: string,
@@ -28,7 +28,7 @@ export default class CompiledPath {
      * /pets/{petId} => ^/pets/(?<petId>[^/]+)/?$
      */
     (this.regex = XRegExp(
-      "^" + path.replace(/\{([^}]*)}/g, "(?<$1>[^/]+)") + "/?$"
+      '^' + path.replace(/\{([^}]*)}/g, '(?<$1>[^/]+)') + '/?$'
     )),
       (this.compiledPathItem = new CompiledPathItem(
         pathItemObject,

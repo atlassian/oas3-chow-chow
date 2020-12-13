@@ -1,8 +1,8 @@
-import ChowChow from "../src";
+import ChowChow from '../src';
 
-describe("Option Body", () => {
-  it("throw with unknown format", () => {
-    const fixture = require("./fixtures/option-unknown-fmt.json");
+describe('Option Body', () => {
+  it('throw with unknown format', () => {
+    const fixture = require('./fixtures/option-unknown-fmt.json');
 
     expect(() => {
       new ChowChow(fixture);
@@ -11,12 +11,12 @@ describe("Option Body", () => {
     );
   });
 
-  it("success with unknown format if unknown format is allowed", () => {
-    const fixture = require("./fixtures/option-unknown-fmt.json");
+  it('success with unknown format if unknown format is allowed', () => {
+    const fixture = require('./fixtures/option-unknown-fmt.json');
 
     expect(() => {
       new ChowChow(fixture, {
-        responseBodyAjvOptions: { unknownFormats: "ignore" },
+        responseBodyAjvOptions: { unknownFormats: 'ignore' },
       });
     }).not.toThrow();
   });
