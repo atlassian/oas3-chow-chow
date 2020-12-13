@@ -36,6 +36,9 @@
       "node"
     ]
   },
+  "prettier": {
+    "singleQuote": true
+  },
   "dependencies": {
     "ajv": "^6.12.3",
     "better-ajv-errors": "^0.6.7",
