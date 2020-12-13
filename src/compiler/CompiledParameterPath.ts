@@ -8,7 +8,7 @@ export default class CompiledParameterPath {
   private pathSchema: SchemaObject = {
     type: 'object',
     properties: {},
-    required: []
+    required: [],
   };
 
   constructor(parameters: ParameterObject[], options: Partial<ChowOptions>) {
@@ -25,7 +25,10 @@ export default class CompiledParameterPath {
      * For example:
      *   `/pets/123` will be valid against a schema with type=number even if `123` is string
      */
-    this.compiledSchema = new CompiledSchema(this.pathSchema, { coerceTypes: true, ...(options.pathAjvOptions ? options.pathAjvOptions : {}) });
+    this.compiledSchema = new CompiledSchema(this.pathSchema, {
+      coerceTypes: true,
+      ...(options.pathAjvOptions ? options.pathAjvOptions : {}),
+    });
   }
 
   /**
@@ -33,11 +36,14 @@ export default class CompiledParameterPath {
    */
   public validate(value: any) {
     try {
-      const coercedValue = {...value};
+      const coercedValue = { ...value };
       this.compiledSchema.validate(coercedValue);
       return coercedValue;
-    } catch(e) {
-      throw new ChowError('Schema validation error', { in: 'path', rawErrors: e });
+    } catch (e) {
+      throw new ChowError('Schema validation error', {
+        in: 'path',
+        rawErrors: e,
+      });
     }
   }
 }

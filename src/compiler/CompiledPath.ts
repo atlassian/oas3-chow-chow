@@ -12,17 +12,29 @@ export default class CompiledPath {
   private path: string;
   private regex: RegExp;
   private compiledPathItem: CompiledPathItem;
-  private ignoredMatches = ['index', 'input']; 
+  private ignoredMatches = ['index', 'input'];
 
-  constructor(path: string, pathItemObject: PathItemObject, options: Partial<ChowOptions & { registerCompiledOperationWithId: OperationRegisterFunc }>) {
+  constructor(
+    path: string,
+    pathItemObject: PathItemObject,
+    options: Partial<
+      ChowOptions & { registerCompiledOperationWithId: OperationRegisterFunc }
+    >
+  ) {
     this.path = path;
     /**
      * The following statement should create Named Capturing Group for
      * each path parameter, for example
      * /pets/{petId} => ^/pets/(?<petId>[^/]+)/?$
      */
-    this.regex = XRegExp('^'+  path.replace(/\{([^}]*)}/g, '(?<$1>[^/]+)') + '/?$'),
-    this.compiledPathItem = new CompiledPathItem(pathItemObject, path, options);
+    (this.regex = XRegExp(
+      '^' + path.replace(/\{([^}]*)}/g, '(?<$1>[^/]+)') + '/?$'
+    )),
+      (this.compiledPathItem = new CompiledPathItem(
+        pathItemObject,
+        path,
+        options
+      ));
   }
 
   public getDefinedRequestBodyContentType(method: string): string[] {
@@ -36,7 +48,7 @@ export default class CompiledPath {
   public validateRequest(path: string, method: string, request: RequestMeta) {
     return this.compiledPathItem.validateRequest(method, {
       ...request,
-      path: this.extractPathParams(path)
+      path: this.extractPathParams(path),
     });
   }
 
@@ -53,12 +65,12 @@ export default class CompiledPath {
       .reduce((obj, key) => {
         return {
           ...obj,
-          [key]: matches[key as any]
+          [key]: matches[key as any],
         };
       }, {});
-  }
+  };
 
   private matchFilter = (key: string) => {
-    return isNaN(parseInt(key)) && !this.ignoredMatches.includes(key) 
-  }
+    return isNaN(parseInt(key)) && !this.ignoredMatches.includes(key);
+  };
 }

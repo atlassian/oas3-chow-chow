@@ -10,17 +10,21 @@ export default class CompiledParameterHeader {
     properties: {},
     required: [],
     // All header properties should be a string, no?
-    additionalProperties: { type: 'string' }
+    additionalProperties: { type: 'string' },
   };
   /**
    * If in is "header" and the name field is "Accept", "Content-Type" or "Authorization",
    * the parameter definition SHALL be ignored.
    */
-  private ignoreHeaders = ['Accept', 'Content-Type', 'Authorization'].map(header => header.toLowerCase())
+  private ignoreHeaders = [
+    'Accept',
+    'Content-Type',
+    'Authorization',
+  ].map((header) => header.toLowerCase());
 
   constructor(parameters: ParameterObject[], options: Partial<ChowOptions>) {
     for (const parameter of parameters) {
-      const headerName = parameter.name.toLowerCase()
+      const headerName = parameter.name.toLowerCase();
       if (this.ignoreHeaders.includes(headerName)) {
         continue;
       }
@@ -32,7 +36,10 @@ export default class CompiledParameterHeader {
       }
     }
 
-    this.compiledSchema = new CompiledSchema(this.headerSchema, options.headerAjvOptions);
+    this.compiledSchema = new CompiledSchema(
+      this.headerSchema,
+      options.headerAjvOptions
+    );
   }
 
   /**
@@ -42,8 +49,11 @@ export default class CompiledParameterHeader {
     try {
       this.compiledSchema.validate(value);
       return value;
-    } catch(e) {
-      throw new ChowError('Schema validation error', { in: 'header', rawErrors: e });
+    } catch (e) {
+      throw new ChowError('Schema validation error', {
+        in: 'header',
+        rawErrors: e,
+      });
     }
   }
 }

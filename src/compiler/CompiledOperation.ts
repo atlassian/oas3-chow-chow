@@ -1,5 +1,9 @@
-import { OperationObject, ParameterObject, RequestBodyObject } from 'openapi3-ts';
-import CompiledRequestBody from './CompiledRequestBody'
+import {
+  OperationObject,
+  ParameterObject,
+  RequestBodyObject,
+} from 'openapi3-ts';
+import CompiledRequestBody from './CompiledRequestBody';
 import CompiledResponse from './CompiledResponse';
 import { RequestMeta, ResponseMeta } from '.';
 import ChowError from '../error';
@@ -25,10 +29,16 @@ export default class CompiledOperation {
     [key: string]: CompiledResponse;
   } = {};
 
-  constructor(operation: OperationObject, inheritedParameter: ParameterObject[], options: Partial<ChowOptions>) {
-    const parameters = !!operation.parameters ? [...inheritedParameter, ...operation.parameters] : [...inheritedParameter];
+  constructor(
+    operation: OperationObject,
+    inheritedParameter: ParameterObject[],
+    options: Partial<ChowOptions>
+  ) {
+    const parameters = !!operation.parameters
+      ? [...inheritedParameter, ...operation.parameters]
+      : [...inheritedParameter];
     for (const parameter of parameters as ParameterObject[]) {
-      switch(parameter.in) {
+      switch (parameter.in) {
         case 'header':
           this.header.set(parameter.name, parameter);
           break;
@@ -43,21 +53,42 @@ export default class CompiledOperation {
           break;
       }
     }
-    this.compiledHeader = new CompiledParameterHeader(Array.from(this.header.values()), options);
-    this.compiledQuery = new CompiledParameterQuery(Array.from(this.query.values()), options);
-    this.compiledPath = new CompiledParameterPath(Array.from(this.path.values()), options);
-    this.compiledCookie = new CompiledParameterCookie(Array.from(this.cookie.values()), options);
+    this.compiledHeader = new CompiledParameterHeader(
+      Array.from(this.header.values()),
+      options
+    );
+    this.compiledQuery = new CompiledParameterQuery(
+      Array.from(this.query.values()),
+      options
+    );
+    this.compiledPath = new CompiledParameterPath(
+      Array.from(this.path.values()),
+      options
+    );
+    this.compiledCookie = new CompiledParameterCookie(
+      Array.from(this.cookie.values()),
+      options
+    );
 
     if (operation.requestBody) {
-      this.body = new CompiledRequestBody(operation.requestBody as RequestBodyObject, options);
+      this.body = new CompiledRequestBody(
+        operation.requestBody as RequestBodyObject,
+        options
+      );
     }
 
     this.operationId = operation.operationId;
 
-    this.response = Object.keys(operation.responses).reduce((compiled: any, status: string) => {
-      compiled[status] = new CompiledResponse(operation.responses[status], options);
-      return compiled;
-    }, {});
+    this.response = Object.keys(operation.responses).reduce(
+      (compiled: any, status: string) => {
+        compiled[status] = new CompiledResponse(
+          operation.responses[status],
+          options
+        );
+        return compiled;
+      },
+      {}
+    );
   }
 
   public getDefinedRequestBodyContentType(): string[] {
@@ -72,7 +103,9 @@ export default class CompiledOperation {
 
     let body;
     if (this.body) {
-      const contentType = CompiledMediaType.extractMediaType(request.header && request.header['content-type']);
+      const contentType = CompiledMediaType.extractMediaType(
+        request.header && request.header['content-type']
+      );
       body = this.body.validate(contentType, request.body);
     }
 
@@ -82,16 +115,19 @@ export default class CompiledOperation {
       query,
       path,
       cookie,
-      body
+      body,
     };
   }
 
   public validateResponse(response: ResponseMeta): ResponseMeta {
-    const compiledResponse = this.response[response.status] || this.response['default'];
+    const compiledResponse =
+      this.response[response.status] || this.response['default'];
     if (compiledResponse) {
-      return {...response, body: compiledResponse.validate(response)};
+      return { ...response, body: compiledResponse.validate(response) };
     } else {
-      throw new ChowError('Unsupported Response Status Code', { in: 'response' });
+      throw new ChowError('Unsupported Response Status Code', {
+        in: 'response',
+      });
     }
   }
 }

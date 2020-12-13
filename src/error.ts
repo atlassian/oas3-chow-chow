@@ -25,8 +25,8 @@ export default class ChowError extends Error {
         in: this.meta.in,
       },
       message: this.message,
-      suggestions: this.meta.rawErrors || []
-    }
+      suggestions: this.meta.rawErrors || [],
+    };
   }
 }
 

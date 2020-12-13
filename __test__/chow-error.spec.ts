@@ -1,8 +1,8 @@
-import ChowError from "../src/error";
+import ChowError from '../src/error';
 
-describe("ChowError", () => {
-  it("should be able to initialize a ChowError", () => {
-    const chowError = new ChowError("An error", { in: "test" });
+describe('ChowError', () => {
+  it('should be able to initialize a ChowError', () => {
+    const chowError = new ChowError('An error', { in: 'test' });
     expect(chowError.toJSON()).toMatchInlineSnapshot(`
 Object {
   "code": 400,
@@ -15,8 +15,8 @@ Object {
 `);
   });
 
-  it("should be able to output JSON format of the error", () => {
-    const chowError = new ChowError("An error", { in: "test" });
+  it('should be able to output JSON format of the error', () => {
+    const chowError = new ChowError('An error', { in: 'test' });
     expect(chowError.toJSON()).toMatchInlineSnapshot(`
 Object {
   "code": 400,

@@ -13,10 +13,12 @@ export default class CompiledSchema {
     ajvInstance.removeKeyword('writeOnly');
     ajvInstance.removeKeyword('readOnly');
     ajvInstance.addKeyword('writeOnly', {
-      validate: (schema: any) => schema ? context.schemaContext === 'request' : true
+      validate: (schema: any) =>
+        schema ? context.schemaContext === 'request' : true,
     });
     ajvInstance.addKeyword('readOnly', {
-      validate: (schema: any) => schema ? context.schemaContext === 'response' : true
+      validate: (schema: any) =>
+        schema ? context.schemaContext === 'response' : true,
     });
     this.validator = ajvInstance.compile(schema);
   }

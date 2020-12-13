@@ -34,22 +34,31 @@ export default class CompiledRequestBody {
     }
     const compiledSchema = this.findCompiledSchema(mediaType);
     if (!compiledSchema) {
-      throw new ChowError(`Unsupported mediaType: "${mediaType}"`, { in: 'request-body' });
+      throw new ChowError(`Unsupported mediaType: "${mediaType}"`, {
+        in: 'request-body',
+      });
     }
 
     try {
       compiledSchema.validate(value);
       return value;
-    } catch(e) {
-      throw new ChowError('Schema validation error', { in: 'request-body', rawErrors: e });
+    } catch (e) {
+      throw new ChowError('Schema validation error', {
+        in: 'request-body',
+        rawErrors: e,
+      });
     }
   }
 
   public getDefinedContentTypes(): string[] {
-    return Object.keys(this.compiledSchemas).filter(type => this.compiledSchemas.hasOwnProperty(type));
+    return Object.keys(this.compiledSchemas).filter((type) =>
+      this.compiledSchemas.hasOwnProperty(type)
+    );
   }
 
-  private findCompiledSchema(mediaType: string | undefined): CompiledSchema | undefined {
+  private findCompiledSchema(
+    mediaType: string | undefined
+  ): CompiledSchema | undefined {
     if (!mediaType) {
       mediaType = '*/*';
     }

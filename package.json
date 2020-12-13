@@ -16,6 +16,9 @@
     "test": "jest --coverage --no-watchman",
     "test:watch": "jest --watch",
     "test:watch:debug": "node --inspect node_modules/.bin/jest --runInBand --watch",
+    "lint": "yarn lint:prettier",
+    "lint:prettier": "prettier src \"__test__/**/*.ts\" --check",
+    "fix:prettier": "yarn lint:prettier --write",
     "prepublishOnly": "rm -rf lib && tsc",
     "release": "yarn prepublishOnly && changeset publish"
   },
@@ -33,6 +36,9 @@
       "node"
     ]
   },
+  "prettier": {
+    "singleQuote": true
+  },
   "dependencies": {
     "ajv": "^6.12.3",
     "better-ajv-errors": "^0.6.7",
@@ -48,7 +54,7 @@
     "babel-core": "^6.26.3",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
-    "prettier": "^1.18.2",
+    "prettier": "^2.2.1",
     "ts-jest": "^24.1.0",
     "typescript": "^3.6.3"
   }

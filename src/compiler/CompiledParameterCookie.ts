@@ -8,7 +8,7 @@ export default class CompiledParameterCookie {
   private cookieSchema: SchemaObject = {
     type: 'object',
     properties: {},
-    required: []
+    required: [],
   };
 
   constructor(parameters: ParameterObject[], options: Partial<ChowOptions>) {
@@ -19,7 +19,10 @@ export default class CompiledParameterCookie {
       }
     }
 
-    this.compiledSchema = new CompiledSchema(this.cookieSchema, options.cookieAjvOptions);
+    this.compiledSchema = new CompiledSchema(
+      this.cookieSchema,
+      options.cookieAjvOptions
+    );
   }
 
   /**
@@ -29,8 +32,11 @@ export default class CompiledParameterCookie {
     try {
       this.compiledSchema.validate(value);
       return value;
-    } catch(e) {
-      throw new ChowError('Schema validation error', { in: 'cookie', rawErrors: e });
+    } catch (e) {
+      throw new ChowError('Schema validation error', {
+        in: 'cookie',
+        rawErrors: e,
+      });
     }
   }
 }

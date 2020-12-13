@@ -2,14 +2,21 @@ import * as Ajv from 'ajv';
 import { OpenAPIObject } from 'openapi3-ts';
 import compile, { RequestMeta, ResponseMeta } from './compiler';
 import CompiledPath from './compiler/CompiledPath';
-import ChowError, { RequestValidationError, ResponseValidationError } from './error';
+import ChowError, {
+  RequestValidationError,
+  ResponseValidationError,
+} from './error';
 import CompiledOperation from './compiler/CompiledOperation';
 import * as util from 'util';
 
 /**
  * Export Errors so that consumers can use it to ditinguish different error type.
  */
-export { default as ChowError, RequestValidationError, ResponseValidationError } from './error';
+export {
+  default as ChowError,
+  RequestValidationError,
+  ResponseValidationError,
+} from './error';
 
 export interface ChowOptions {
   headerAjvOptions: Ajv.Options;
@@ -50,7 +57,7 @@ export default class ChowChow {
     try {
       const compiledPath = this.identifyCompiledPath(path);
       return compiledPath.validateRequest(path, method, request);
-    } catch(err) {
+    } catch (err) {
       if (err instanceof ChowError) {
         throw new RequestValidationError(err.message, err.meta);
       } else {
@@ -63,7 +70,7 @@ export default class ChowChow {
     try {
       const compiledPath = this.identifyCompiledPath(path);
       return compiledPath.validateResponse(method, response);
-    } catch(err) {
+    } catch (err) {
       if (err instanceof ChowError) {
         throw new ResponseValidationError(err.message, err.meta);
       } else {
@@ -76,12 +83,15 @@ export default class ChowChow {
     const compiledOperation = this.compiledOperationById.get(operationId);
 
     if (!compiledOperation) {
-      throw new ChowError(`No matches found for the given operationId - ${operationId}`, {in: 'request', code: 404});
+      throw new ChowError(
+        `No matches found for the given operationId - ${operationId}`,
+        { in: 'request', code: 404 }
+      );
     }
 
     try {
       return compiledOperation.validateRequest(request);
-    } catch(err) {
+    } catch (err) {
       if (err instanceof ChowError) {
         throw new RequestValidationError(err.message, err.meta);
       } else {
@@ -94,12 +104,15 @@ export default class ChowChow {
     const compiledOperation = this.compiledOperationById.get(operationId);
 
     if (!compiledOperation) {
-      throw new ChowError(`No matches found for the given operationId - ${operationId}`, {in: 'response', code: 404});
+      throw new ChowError(
+        `No matches found for the given operationId - ${operationId}`,
+        { in: 'response', code: 404 }
+      );
     }
 
     try {
       return compiledOperation.validateResponse(response);
-    } catch(err) {
+    } catch (err) {
       if (err instanceof ChowError) {
         throw new ResponseValidationError(err.message, err.meta);
       } else {
@@ -112,7 +125,7 @@ export default class ChowChow {
     try {
       const compiledPath = this.identifyCompiledPath(path);
       return compiledPath.getDefinedRequestBodyContentType(method);
-    } catch(err) {
+    } catch (err) {
       if (err instanceof ChowError) {
         return [];
       } else {
@@ -127,7 +140,10 @@ export default class ChowChow {
     });
 
     if (!compiledPath) {
-      throw new ChowError(`No matches found for the given path - ${path}`, {in: 'paths', code: 404});
+      throw new ChowError(`No matches found for the given path - ${path}`, {
+        in: 'paths',
+        code: 404,
+      });
     }
 
     return compiledPath;

@@ -8,24 +8,36 @@ import { ChowOptions } from '..';
 export default class CompiledResponse {
   private compiledResponseHeader: CompiledResponseHeader;
   private content: {
-    [key: string]: CompiledMediaType
+    [key: string]: CompiledMediaType;
   } = {};
 
   constructor(response: ResponseObject, options: Partial<ChowOptions>) {
-    this.compiledResponseHeader = new CompiledResponseHeader(response.headers, options);
+    this.compiledResponseHeader = new CompiledResponseHeader(
+      response.headers,
+      options
+    );
 
     if (response.content) {
-      this.content = Object.keys(response.content).reduce((compiled: any, name: string) => {
-        compiled[name] = new CompiledMediaType(name, response.content![name] as MediaTypeObject, options.responseBodyAjvOptions || {});
-        return compiled;
-      }, {});
+      this.content = Object.keys(response.content).reduce(
+        (compiled: any, name: string) => {
+          compiled[name] = new CompiledMediaType(
+            name,
+            response.content![name] as MediaTypeObject,
+            options.responseBodyAjvOptions || {}
+          );
+          return compiled;
+        },
+        {}
+      );
     }
   }
 
   public validate(response: ResponseMeta) {
     this.compiledResponseHeader.validate(response.header);
 
-    const contentType = CompiledMediaType.extractMediaType(response.header['content-type']);
+    const contentType = CompiledMediaType.extractMediaType(
+      response.header['content-type']
+    );
     /**
      * In the case where there is no Content-Type header. For example 204 status.
      */
@@ -36,7 +48,9 @@ export default class CompiledResponse {
     if (this.content[contentType]) {
       return this.content[contentType].validate(response.body);
     } else {
-      throw new ChowError('Unsupported Response Media Type', { in: 'response' })
+      throw new ChowError('Unsupported Response Media Type', {
+        in: 'response',
+      });
     }
   }
 }
