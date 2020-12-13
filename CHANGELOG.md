@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 1.1.4
+
+### Patch Changes
+
+- b99e1f1: Renovate bump dependencies
+
 ## 1.1.3
 
 ### Patch Changes
