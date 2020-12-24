@@ -55,6 +55,7 @@
     "babel-jest": "24.9.0",
     "jest": "24.9.0",
     "prettier": "2.2.1",
+    "reflect-metadata": "0.1.13",
     "ts-jest": "24.3.0",
     "typescript": "3.7.4"
   }
