@@ -17,11 +17,10 @@ export default class CompiledResponseHeader {
 
   constructor(headers: HeadersObject = {}, options: Partial<ChowOptions>) {
     for (const name in headers) {
-      
       if (this.ignoreHeaders.includes(name)) {
         continue;
       }
-  
+
       const headerNameLower = name.toLowerCase();
       const header = headers[name] as HeaderObject;
 

@@ -212,21 +212,23 @@ describe('Response', () => {
     try {
       chowchow.validateResponseByPath('/header', 'get', responseMeta);
       fail('An exception should have been thrown');
-    }
-    catch (error) {
+    } catch (error) {
       thrownError = error;
     }
-    expect (thrownError.toJSON().suggestions[0].error).toMatch(new RegExp('version: type should be string'));
+    expect(thrownError.toJSON().suggestions[0].error).toMatch(
+      new RegExp('version: type should be string')
+    );
 
     // test validateResponseByOperationId
     try {
       chowchow.validateResponseByOperationId('getHeader', responseMeta);
       fail('An exception should have been thrown');
-    }
-    catch (error) {
+    } catch (error) {
       thrownError = error;
     }
-    expect (thrownError.toJSON().suggestions[0].error).toMatch(new RegExp('version: type should be string'));
+    expect(thrownError.toJSON().suggestions[0].error).toMatch(
+      new RegExp('version: type should be string')
+    );
   });
 
   it('should succeed if header case is different than spec', () => {
@@ -240,8 +242,7 @@ describe('Response', () => {
     // test validateResponseByPath
     try {
       chowchow.validateResponseByPath('/header', 'get', responseMeta);
-    }
-    catch (error) {
+    } catch (error) {
       fail('An exception should not have been thrown');
     }
   });
