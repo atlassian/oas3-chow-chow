@@ -17,17 +17,20 @@ export default class CompiledResponseHeader {
 
   constructor(headers: HeadersObject = {}, options: Partial<ChowOptions>) {
     for (const name in headers) {
+      
       if (this.ignoreHeaders.includes(name)) {
         continue;
       }
+  
+      const headerNameLower = name.toLowerCase();
       const header = headers[name] as HeaderObject;
 
       if (header.schema) {
-        this.headerSchema.properties![name] = header.schema;
+        this.headerSchema.properties![headerNameLower] = header.schema;
       }
 
       if (header.required) {
-        this.headerSchema.required!.push(name);
+        this.headerSchema.required!.push(headerNameLower);
       }
     }
     this.compiledSchema = new CompiledSchema(
