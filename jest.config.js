@@ -5,20 +5,24 @@ module.exports = {
           tsconfig: 'tsconfig.json'
       }
   },
-  "roots": [
+  roots: [
       "<rootDir>/src",
       "<rootDir>__test__"
   ],
-  "testRegex": "\.(test|spec){1}\\.ts?$",
-  "moduleFileExtensions": [
-      "ts",
-      "js",
-      "jsx",
-      "json",
-      "node"
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+  moduleFileExtensions: [
+    'ts',
+    'tsx',
+    'js',
+    'jsx',
+    'json',
+    'node'
   ],
-  "setupFilesAfterEnv": [
+  setupFilesAfterEnv: [
       './jest.setup.js'
   ],
-  "testEnvironment": 'node'
+  testEnvironment: 'node',
+  transform: {
+    "^.+\\.tsx?$": "ts-jest"
+  }
 };
