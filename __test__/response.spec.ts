@@ -247,6 +247,22 @@ describe('Response', () => {
     }
   });
 
+  it('should succeed if header case is same as spec', () => {
+    const responseMeta: ResponseMeta = {
+      status: 200,
+      header: {
+        Version: '1',
+      },
+    };
+
+    // test validateResponseByPath
+    try {
+      chowchow.validateResponseByPath('/header', 'get', responseMeta);
+    } catch (error) {
+      fail('An exception should not have been thrown');
+    }
+  });
+
   it('should fail if required header is empty', () => {
     const responseMeta: ResponseMeta = {
       status: 200,

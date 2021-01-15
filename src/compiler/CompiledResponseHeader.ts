@@ -40,7 +40,14 @@ export default class CompiledResponseHeader {
 
   public validate(value: any = {}) {
     try {
-      this.compiledSchema.validate(value);
+      // Before validation, lowercase the header name, since header name is also lowercased in compiledSchema
+      const newHeader = Object.entries(value)
+        .reduce((newObject: any, [key, value]) => {
+          newObject[key.toLowerCase()] = value;
+          return newObject;
+        }, {});
+
+      this.compiledSchema.validate(newHeader);
     } catch (e) {
       throw new ChowError('Schema validation error', {
         in: 'response-header',
