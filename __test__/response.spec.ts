@@ -206,8 +206,9 @@ describe('Response', () => {
       },
     };
 
-    expect(() => chowchow.validateResponseByPath('/header', 'get', responseMeta)).toThrowErrorMatchingSnapshot();
-
+    expect(() =>
+      chowchow.validateResponseByPath('/header', 'get', responseMeta)
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('validateResponseByOperationId should fail if header value is invalid', () => {
@@ -218,41 +219,40 @@ describe('Response', () => {
         version: [1, 2],
       },
     };
-  
-    expect(() => chowchow.validateResponseByOperationId('getHeader', responseMeta)).toThrowErrorMatchingSnapshot();
 
+    expect(() =>
+      chowchow.validateResponseByOperationId('getHeader', responseMeta)
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('should succeed if header case is different than spec', () => {
+    const lowercaseHeaderName = 'version';
     const responseMeta: ResponseMeta = {
       status: 200,
       header: {
-        version: '1',
+        [lowercaseHeaderName]: '1',
       },
     };
 
     // test validateResponseByPath
-    try {
-      chowchow.validateResponseByPath('/header', 'get', responseMeta);
-    } catch (error) {
-      fail('An exception should not have been thrown');
-    }
+    expect(() =>
+      chowchow.validateResponseByPath('/header', 'get', responseMeta)
+    ).not.toThrow();
   });
 
   it('should succeed if header case is same as spec', () => {
+    const uppercaseHeaderName = 'Version';
     const responseMeta: ResponseMeta = {
       status: 200,
       header: {
-        Version: '1',
+        [uppercaseHeaderName]: '1'
       },
     };
 
     // test validateResponseByPath
-    try {
-      chowchow.validateResponseByPath('/header', 'get', responseMeta);
-    } catch (error) {
-      fail('An exception should not have been thrown');
-    }
+    expect(() =>
+      chowchow.validateResponseByPath('/header', 'get', responseMeta)
+    ).not.toThrow();
   });
 
   it('should fail if required header is empty', () => {
