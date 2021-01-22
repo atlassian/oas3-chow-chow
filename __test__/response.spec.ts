@@ -245,7 +245,7 @@ describe('Response', () => {
     const responseMeta: ResponseMeta = {
       status: 200,
       header: {
-        [uppercaseHeaderName]: '1'
+        [uppercaseHeaderName]: '1',
       },
     };
 
