@@ -197,7 +197,7 @@ describe('Response', () => {
     }).toThrow();
   });
 
-  it('should fail if header value is invalid', () => {
+  it('validateResponseByPath should fail if header value is invalid', () => {
     const responseMeta: ResponseMeta = {
       status: 200,
       header: {
@@ -206,29 +206,21 @@ describe('Response', () => {
       },
     };
 
-    let thrownError: ResponseValidationError;
+    expect(() => chowchow.validateResponseByPath('/header', 'get', responseMeta)).toThrowErrorMatchingSnapshot();
 
-    // test validateResponseByPath
-    try {
-      chowchow.validateResponseByPath('/header', 'get', responseMeta);
-      fail('An exception should have been thrown');
-    } catch (error) {
-      thrownError = error;
-    }
-    expect(thrownError.toJSON().suggestions[0].error).toMatch(
-      new RegExp('version: type should be string')
-    );
+  });
 
-    // test validateResponseByOperationId
-    try {
-      chowchow.validateResponseByOperationId('getHeader', responseMeta);
-      fail('An exception should have been thrown');
-    } catch (error) {
-      thrownError = error;
-    }
-    expect(thrownError.toJSON().suggestions[0].error).toMatch(
-      new RegExp('version: type should be string')
-    );
+  it('validateResponseByOperationId should fail if header value is invalid', () => {
+    const responseMeta: ResponseMeta = {
+      status: 200,
+      header: {
+        'content-type': 'application/json',
+        version: [1, 2],
+      },
+    };
+  
+    expect(() => chowchow.validateResponseByOperationId('getHeader', responseMeta)).toThrowErrorMatchingSnapshot();
+
   });
 
   it('should succeed if header case is different than spec', () => {
