@@ -38,10 +38,10 @@ export default class CompiledResponseHeader {
     );
   }
 
-  public validate(value: any = {}) {
+  public validate(header: any = {}) {
     try {
       // Before validation, lowercase the header name, since header name is also lowercased in compiledSchema
-      const newHeader = Object.entries(value).reduce(
+      const newHeader = Object.entries(header).reduce(
         (newObject: any, [key, value]) => {
           newObject[key.toLowerCase()] = value;
           return newObject;
