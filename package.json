@@ -22,20 +22,6 @@
     "prepublishOnly": "rm -rf lib && tsc",
     "release": "yarn prepublishOnly && changeset publish"
   },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
-  },
   "prettier": {
     "singleQuote": true
   },

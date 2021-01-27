@@ -20,14 +20,16 @@ export default class CompiledResponseHeader {
       if (this.ignoreHeaders.includes(name)) {
         continue;
       }
+
+      const headerNameLower = name.toLowerCase();
       const header = headers[name] as HeaderObject;
 
       if (header.schema) {
-        this.headerSchema.properties![name] = header.schema;
+        this.headerSchema.properties![headerNameLower] = header.schema;
       }
 
       if (header.required) {
-        this.headerSchema.required!.push(name);
+        this.headerSchema.required!.push(headerNameLower);
       }
     }
     this.compiledSchema = new CompiledSchema(
@@ -36,9 +38,18 @@ export default class CompiledResponseHeader {
     );
   }
 
-  public validate(value: any = {}) {
+  public validate(header: any = {}) {
     try {
-      this.compiledSchema.validate(value);
+      // Before validation, lowercase the header name, since header name is also lowercased in compiledSchema
+      const newHeader = Object.entries(header).reduce(
+        (newObject: any, [key, value]) => {
+          newObject[key.toLowerCase()] = value;
+          return newObject;
+        },
+        {}
+      );
+
+      this.compiledSchema.validate(newHeader);
     } catch (e) {
       throw new ChowError('Schema validation error', {
         in: 'response-header',

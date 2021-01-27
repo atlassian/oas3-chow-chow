@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Response validateResponseByOperationId should fail if header value is invalid 1`] = `"ResponseValidationError: Schema validation error"`;
+
+exports[`Response validateResponseByPath should fail if header value is invalid 1`] = `"ResponseValidationError: Schema validation error"`;

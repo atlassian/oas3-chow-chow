@@ -86,7 +86,7 @@
     "/header": {
       "get": {
         "summary": "Info for a specific pet",
-        "operationId": "showHeader",
+        "operationId": "getHeader",
         "tags": ["pets"],
         "parameters": [],
         "responses": {
