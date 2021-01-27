@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 1.2.0
+
+### Minor Changes
+
+- 48fa398: Make response header name validation case-insensitive
+
 ## 1.1.4
 
 ### Patch Changes
