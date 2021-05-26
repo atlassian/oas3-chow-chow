@@ -35,7 +35,7 @@
   "devDependencies": {
     "@changesets/cli": "2.16.0",
     "@types/jest": "24.9.1",
-    "@types/node": "12.12.24",
+    "@types/node": "14.17.1",
     "@types/xregexp": "3.0.30",
     "babel-core": "6.26.3",
     "babel-jest": "24.9.0",
