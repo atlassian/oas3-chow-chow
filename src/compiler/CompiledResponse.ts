@@ -36,7 +36,7 @@ export default class CompiledResponse {
     this.compiledResponseHeader.validate(response.header);
 
     const contentType = CompiledMediaType.extractMediaType(
-      response.header['content-type']
+      response.header ? response.header['content-type'] : undefined
     );
     /**
      * In the case where there is no Content-Type header. For example 204 status.
