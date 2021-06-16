@@ -42,6 +42,6 @@
     "jest": "24.9.0",
     "prettier": "2.2.1",
     "ts-jest": "24.3.0",
-    "typescript": "3.7.4"
+    "typescript": "3.9.10"
   }
 }
