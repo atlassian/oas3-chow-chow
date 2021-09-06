@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 1.2.1
+
+### Patch Changes
+
+- 5cc0aeb: Renovate bump dependencies
+
 ## 1.2.0
 
 ### Minor Changes
