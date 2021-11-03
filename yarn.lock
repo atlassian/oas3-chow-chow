@@ -1030,10 +1030,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-better-ajv-errors@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/better-ajv-errors/-/better-ajv-errors-0.7.0.tgz#625a87e7e4e511a39478f5d79151749346add42d"
-  integrity sha512-6GtJQ/AwVSo1pI1MDQU/yg8O86gMsrt5RKtELo08Epa2zWJPCOK85v/O8/U5A9JkWmwRkE16JpSgssKSx6moog==
+better-ajv-errors@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/better-ajv-errors/-/better-ajv-errors-0.8.0.tgz#bb63410ee70ece97bf95ad83a9fc9e49da8b8213"
+  integrity sha512-HP2jXJuyoC9yq/nFZUULLRzlB26fKPQL2us8vRaNCAulSTizBecNDe5lPf4Y6r1SbLg2dRz90C7dtwM7ljGz2g==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     "@babel/runtime" "^7.0.0"
