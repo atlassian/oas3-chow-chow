@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 1.2.2
+
+### Patch Changes
+
+- c8fc209: bump better-ajv-errors version
+
 ## 1.2.1
 
 ### Patch Changes
