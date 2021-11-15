@@ -1,8 +1,8 @@
-import * as betterAjvErrors from 'better-ajv-errors';
+import { IOutputError } from 'better-ajv-errors';
 
 export interface ChowErrorMeta {
   in: string;
-  rawErrors?: betterAjvErrors.IOutputError[];
+  rawErrors?: IOutputError[];
   code?: number;
 }
 

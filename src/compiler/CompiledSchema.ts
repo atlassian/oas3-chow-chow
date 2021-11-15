@@ -1,6 +1,6 @@
 import { SchemaObject } from 'openapi3-ts';
 import * as Ajv from 'ajv';
-import * as betterAjvErrors from 'better-ajv-errors';
+import betterAjvErrors from 'better-ajv-errors';
 import ajv from './ajv';
 
 export default class CompiledSchema {
