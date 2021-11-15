@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 2.0.0
+
+### Major Changes
+
+- bd2cac7: bump typescript to v4
+
 ## 1.2.2
 
 ### Patch Changes
