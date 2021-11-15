@@ -23,7 +23,7 @@ export default class CompiledMediaType {
     } catch (e) {
       throw new ChowError('Schema validation error', {
         in: `media-type:${this.name}`,
-        rawErrors: e,
+        rawErrors: e as any,
       });
     }
   }

@@ -35,7 +35,7 @@ export default class CompiledParameterCookie {
     } catch (e) {
       throw new ChowError('Schema validation error', {
         in: 'cookie',
-        rawErrors: e,
+        rawErrors: e as any,
       });
     }
   }

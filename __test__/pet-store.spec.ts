@@ -136,7 +136,7 @@ describe('Pet Store', () => {
       } catch (e) {
         expect(e).toBeDefined();
         expect(e).toBeInstanceOf(ChowError);
-        const chowError: ChowError = e;
+        const chowError: ChowError = e as any;
         expect(chowError.toJSON().suggestions.length).toBe(2);
         expect(
           chowError.meta.rawErrors && chowError.meta.rawErrors.length
@@ -163,7 +163,7 @@ describe('Pet Store', () => {
       } catch (e) {
         expect(e).toBeDefined();
         expect(e).toBeInstanceOf(ChowError);
-        const chowError: ChowError = e;
+        const chowError: ChowError = e as any;
         expect(chowError.toJSON().suggestions.length).toBe(1);
         expect(
           chowError.meta.rawErrors && chowError.meta.rawErrors.length
@@ -187,7 +187,7 @@ describe('Pet Store', () => {
       } catch (e) {
         expect(e).toBeDefined();
         expect(e).toBeInstanceOf(ChowError);
-        const chowError: ChowError = e;
+        const chowError: ChowError = e as any;
         expect(chowError.toJSON().suggestions.length).toBe(1);
         expect(
           chowError.meta.rawErrors && chowError.meta.rawErrors.length

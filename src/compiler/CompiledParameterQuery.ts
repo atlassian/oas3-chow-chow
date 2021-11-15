@@ -52,7 +52,7 @@ export default class CompiledParameterQuery {
     } catch (e) {
       throw new ChowError('Schema validation error', {
         in: 'query',
-        rawErrors: e,
+        rawErrors: e as any,
       });
     }
   }
