@@ -45,7 +45,7 @@ export default class CompiledRequestBody {
     } catch (e) {
       throw new ChowError('Schema validation error', {
         in: 'request-body',
-        rawErrors: e,
+        rawErrors: e as any,
       });
     }
   }

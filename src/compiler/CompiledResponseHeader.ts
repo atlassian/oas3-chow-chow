@@ -53,7 +53,7 @@ export default class CompiledResponseHeader {
     } catch (e) {
       throw new ChowError('Schema validation error', {
         in: 'response-header',
-        rawErrors: e,
+        rawErrors: e as any,
       });
     }
   }

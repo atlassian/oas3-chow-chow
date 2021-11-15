@@ -13,13 +13,14 @@
     "url": "git+https://github.com/atlassian/oas3-chow-chow.git"
   },
   "scripts": {
+    "build": "tsc",
     "test": "jest --coverage --no-watchman",
     "test:watch": "jest --watch",
     "test:watch:debug": "node --inspect node_modules/.bin/jest --runInBand --watch",
     "lint": "yarn lint:prettier",
     "lint:prettier": "prettier src \"__test__/**/*.ts\" --check",
     "fix:prettier": "yarn lint:prettier --write",
-    "prepublishOnly": "rm -rf lib && tsc",
+    "prepublishOnly": "rm -rf lib && yarn build",
     "release": "yarn prepublishOnly && changeset publish"
   },
   "prettier": {
@@ -34,14 +35,14 @@
   },
   "devDependencies": {
     "@changesets/cli": "2.16.0",
-    "@types/jest": "24.9.1",
+    "@types/jest": "27.0.2",
     "@types/node": "14.17.1",
     "@types/xregexp": "3.0.30",
     "babel-core": "6.26.3",
     "babel-jest": "24.9.0",
-    "jest": "24.9.0",
+    "jest": "27.3.1",
     "prettier": "2.2.1",
-    "ts-jest": "24.3.0",
-    "typescript": "3.7.4"
+    "ts-jest": "27.0.7",
+    "typescript": "4.4.4"
   }
 }

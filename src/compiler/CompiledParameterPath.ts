@@ -42,7 +42,7 @@ export default class CompiledParameterPath {
     } catch (e) {
       throw new ChowError('Schema validation error', {
         in: 'path',
-        rawErrors: e,
+        rawErrors: e as any,
       });
     }
   }

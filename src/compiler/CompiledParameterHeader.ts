@@ -52,7 +52,7 @@ export default class CompiledParameterHeader {
     } catch (e) {
       throw new ChowError('Schema validation error', {
         in: 'header',
-        rawErrors: e,
+        rawErrors: e as any,
       });
     }
   }
