@@ -7,7 +7,6 @@ import ChowError, {
   ResponseValidationError,
 } from './error';
 import CompiledOperation from './compiler/CompiledOperation';
-import * as util from 'util';
 
 /**
  * Export Errors so that consumers can use it to ditinguish different error type.
@@ -30,27 +29,11 @@ export interface ChowOptions {
 export default class ChowChow {
   private compiledPaths: CompiledPath[];
   private compiledOperationById: Map<string, CompiledOperation>;
-  private deprecateValidateRequest = util.deprecate(
-    this.validateRequestByPath.bind(this),
-    'validateRequest() is now deprecated, please use validateRequestByPath or validateRequestByOperationId instead'
-  );
-  private deprecateValidateResponse = util.deprecate(
-    this.validateResponseByPath.bind(this),
-    'validateResponse() is now deprecated, please use validateResponseByPath or validateResponseByOperationId instead'
-  );
 
   constructor(document: OpenAPIObject, options: Partial<ChowOptions> = {}) {
     const { compiledPaths, compiledOperationById } = compile(document, options);
     this.compiledPaths = compiledPaths;
     this.compiledOperationById = compiledOperationById;
-  }
-
-  validateRequest(path: string, request: RequestMeta & { method: string }) {
-    return this.deprecateValidateRequest(path, request.method, request);
-  }
-
-  validateResponse(path: string, response: ResponseMeta & { method: string }) {
-    return this.deprecateValidateResponse(path, response.method, response);
   }
 
   validateRequestByPath(path: string, method: string, request: RequestMeta) {

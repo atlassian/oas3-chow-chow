@@ -13,10 +13,8 @@ describe('Path', () => {
     });
 
     it('should validate the path parameters and coerce to the correct type', () => {
-      const pathMeta = {
-        method: 'get',
-      };
-      expect(chowchow.validateRequest('/pets/123', pathMeta)).toEqual(
+      const pathMeta = {};
+      expect(chowchow.validateRequestByPath('/pets/123', 'get', pathMeta)).toEqual(
         expect.objectContaining({
           path: {
             petId: 123,
@@ -27,9 +25,7 @@ describe('Path', () => {
 
     it('should throw error if path parameter fails schema check', () => {
       expect(() => {
-        chowchow.validateRequest('/pets/abc', {
-          method: 'get',
-        });
+        chowchow.validateRequestByPath('/pets/abc', 'get', {});
       }).toThrowError(ChowError);
     });
   });
@@ -42,10 +38,8 @@ describe('Path', () => {
     });
 
     it('should validate the path parameters and coerce to the correct type', () => {
-      const pathMeta = {
-        method: 'get',
-      };
-      expect(chowchow.validateRequest('/pets/123', pathMeta)).toEqual(
+      const pathMeta = {};
+      expect(chowchow.validateRequestByPath('/pets/123', 'get', pathMeta)).toEqual(
         expect.objectContaining({
           path: {
             petId: 123,
@@ -56,9 +50,7 @@ describe('Path', () => {
 
     it('should throw error if path parameter fails schema check', () => {
       expect(() => {
-        chowchow.validateRequest('/pets/abc', {
-          method: 'get',
-        });
+        chowchow.validateRequestByPath('/pets/abc', 'get', {});
       }).toThrowError(ChowError);
     });
   });
@@ -71,10 +63,8 @@ describe('Path', () => {
     });
 
     it('should validate the path parameters and coerce to the correct type', () => {
-      const pathMeta = {
-        method: 'get',
-      };
-      expect(chowchow.validateRequest('/pets/123', pathMeta)).toEqual(
+      const pathMeta = {};
+      expect(chowchow.validateRequestByPath('/pets/123', 'get', pathMeta)).toEqual(
         expect.objectContaining({
           path: {
             petId: 123,
@@ -85,9 +75,7 @@ describe('Path', () => {
 
     it('should throw error if path parameter fails schema check', () => {
       expect(() => {
-        chowchow.validateRequest('/pets/abc', {
-          method: 'get',
-        });
+        chowchow.validateRequestByPath('/pets/abc', 'get', {});
       }).toThrowError(ChowError);
     });
   });

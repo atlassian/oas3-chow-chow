@@ -197,8 +197,7 @@ describe('Response', () => {
 
   it('should fail if response method is invalid', () => {
     expect(() => {
-      chowchow.validateResponse('/no-default', {
-        method: 'path',
+      chowchow.validateResponseByPath('/no-default', 'path', {
         status: 400,
         header: {
           'content-type': 'application/json',

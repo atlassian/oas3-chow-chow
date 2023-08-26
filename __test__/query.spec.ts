@@ -1,5 +1,4 @@
 import ChowChow from '../src';
-import ChowError from '../src/error';
 const fixture = require('./fixtures/query.json');
 
 describe('Query', () => {
@@ -16,7 +15,7 @@ describe('Query', () => {
         petId: 123,
       },
     };
-    expect(chowchow.validateRequest('/pets', queryMeta)).toEqual(
+    expect(chowchow.validateRequestByPath('/pets', 'get', queryMeta)).toEqual(
       expect.objectContaining({
         query: {
           petId: [123],
@@ -35,7 +34,7 @@ describe('Query', () => {
       },
     };
     expect(() =>
-      chowchow.validateRequest('/pets', queryMeta)
+      chowchow.validateRequestByPath('/pets', 'get', queryMeta)
     ).not.toThrowError();
   });
 
@@ -48,7 +47,7 @@ describe('Query', () => {
       },
     };
     expect(() =>
-      chowchow.validateRequest('/pets', queryMeta)
+      chowchow.validateRequestByPath('/pets', 'get', queryMeta)
     ).not.toThrowError();
   });
 });
