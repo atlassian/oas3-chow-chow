@@ -12,11 +12,13 @@ export default class CompiledSchema {
     const ajvInstance = ajv(opts);
     ajvInstance.removeKeyword('writeOnly');
     ajvInstance.removeKeyword('readOnly');
-    ajvInstance.addKeyword('writeOnly', {
+    ajvInstance.addKeyword({
+      keyword: 'writeOnly',
       validate: (schema: any) =>
         schema ? context.schemaContext === 'request' : true,
-    });
-    ajvInstance.addKeyword('readOnly', {
+    })
+    ajvInstance.addKeyword({
+      keyword: 'readOnly',
       validate: (schema: any) =>
         schema ? context.schemaContext === 'response' : true,
     });

@@ -84,12 +84,10 @@ describe('Response', () => {
       header: {
         'content-type': 'application/json',
       },
-      body: [
-        {
-          code: 500,
-          message: 'something is wrong',
-        },
-      ],
+      body: {
+        code: 500,
+        message: 'something is wrong',
+      },
     };
     expect(
       chowchow.validateResponseByPath('/pets/123', 'get', responseMeta)

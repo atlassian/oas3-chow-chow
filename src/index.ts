@@ -1,4 +1,4 @@
-import * as Ajv from 'ajv';
+import { Options as AjvOptions } from 'ajv';
 import { OpenAPIObject } from 'openapi3-ts';
 import compile, { RequestMeta, ResponseMeta } from './compiler';
 import CompiledPath from './compiler/CompiledPath';
@@ -19,12 +19,12 @@ export {
 } from './error';
 
 export interface ChowOptions {
-  headerAjvOptions: Ajv.Options;
-  cookieAjvOptions: Ajv.Options;
-  pathAjvOptions: Ajv.Options;
-  queryAjvOptions: Ajv.Options;
-  requestBodyAjvOptions: Ajv.Options;
-  responseBodyAjvOptions: Ajv.Options;
+  headerAjvOptions: AjvOptions;
+  cookieAjvOptions: AjvOptions;
+  pathAjvOptions: AjvOptions;
+  queryAjvOptions: AjvOptions;
+  requestBodyAjvOptions: AjvOptions;
+  responseBodyAjvOptions: AjvOptions;
 }
 
 export default class ChowChow {

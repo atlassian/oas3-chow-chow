@@ -1,26 +1,13 @@
-import * as Ajv from 'ajv';
+import Ajv, { Options } from 'ajv';
+import addFormats from "ajv-formats"
 
-const options: Ajv.Options = {
-  /**
-   * Ignore following formats for now because they are not supported by AJV by default.
-   * TODO: Add custom format supports for following formats.
-   */
-  unknownFormats: [
-    'int32',
-    'int64',
-    'float',
-    'double',
-    'byte',
-    'binary',
-    'password',
-  ],
-  nullable: true,
-  jsonPointers: true,
-};
+const options: Options = {};
 
-export default function ajv(opts: Ajv.Options = {}) {
-  return new Ajv({
+export default function ajv(opts: Options = {}) {
+  const ajv = new Ajv({
     ...options,
     ...opts,
   });
+  addFormats(ajv);
+  return ajv;
 }
