@@ -135,6 +135,18 @@ describe('Response', () => {
     }).not.toThrow();
   });
 
+  it('should ignore on empty response header', () => {
+    const responseMeta: ResponseMeta = {
+      status: 200,
+    };
+    expect(() => {
+      chowchow.validateResponseByPath('/pets/123', 'get', responseMeta);
+    }).not.toThrow();
+    expect(() => {
+      chowchow.validateResponseByOperationId('showPetById', responseMeta);
+    }).not.toThrow();
+  });
+
   it('should extract media type correctly in Content-Type header', () => {
     const responseMeta: ResponseMeta = {
       status: 200,
