@@ -1,5 +1,5 @@
 import Ajv, { Options } from 'ajv';
-import addFormats from "ajv-formats"
+import addFormats from 'ajv-formats';
 
 const options: Options = {};
 

@@ -16,7 +16,7 @@ export default class CompiledSchema {
       keyword: 'writeOnly',
       validate: (schema: any) =>
         schema ? context.schemaContext === 'request' : true,
-    })
+    });
     ajvInstance.addKeyword({
       keyword: 'readOnly',
       validate: (schema: any) =>

@@ -16,10 +16,11 @@ describe('Option Body', () => {
 
     expect(() => {
       new ChowChow(fixture, {
-        responseBodyAjvOptions: { formats: {
-          'pet-name': true,
-          'int64': true
-        } },
+        responseBodyAjvOptions: {
+          formats: {
+            'pet-name': true,
+          },
+        },
       });
     }).not.toThrow();
   });
