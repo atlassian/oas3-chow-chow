@@ -39,7 +39,7 @@
     "@types/node": "14.18.56",
     "@types/xregexp": "3.0.30",
     "babel-core": "6.26.3",
-    "babel-jest": "24.9.0",
+    "babel-jest": "29.6.4",
     "jest": "27.5.1",
     "prettier": "2.2.1",
     "ts-jest": "29.1.1",
