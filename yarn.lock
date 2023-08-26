@@ -1540,10 +1540,10 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-better-ajv-errors@1.1.0:
-  version "1.1.0"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/better-ajv-errors/-/better-ajv-errors-1.1.0.tgz#9ca19cc133df2ec290f4e185ea5b543825fa3d3d"
-  integrity sha1-nKGcwTPfLsKQ9OGF6ltUOCX6PT0=
+better-ajv-errors@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/better-ajv-errors/-/better-ajv-errors-1.2.0.tgz#6412d58fa4d460ff6ccbd9e65c5fef9781cc5286"
+  integrity sha512-UW+IsFycygIo7bclP9h5ugkNH8EjCSgqyFB/yQ4Hqqa1OEYDtb0uFIkYE0b6+CjkgJYVM5UKI/pJPxjYe9EZlA==
   dependencies:
     "@babel/code-frame" "^7.16.0"
     "@humanwhocodes/momoa" "^2.0.2"
