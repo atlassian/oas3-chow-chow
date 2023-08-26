@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 2.0.1
+
+### Patch Changes
+
+- 1e25a24: Fix issue with empty response header
+
 ## 2.0.0
 
 ### Major Changes
