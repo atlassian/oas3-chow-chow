@@ -14,7 +14,9 @@ describe('Path', () => {
 
     it('should validate the path parameters and coerce to the correct type', () => {
       const pathMeta = {};
-      expect(chowchow.validateRequestByPath('/pets/123', 'get', pathMeta)).toEqual(
+      expect(
+        chowchow.validateRequestByPath('/pets/123', 'get', pathMeta)
+      ).toEqual(
         expect.objectContaining({
           path: {
             petId: 123,
@@ -39,7 +41,9 @@ describe('Path', () => {
 
     it('should validate the path parameters and coerce to the correct type', () => {
       const pathMeta = {};
-      expect(chowchow.validateRequestByPath('/pets/123', 'get', pathMeta)).toEqual(
+      expect(
+        chowchow.validateRequestByPath('/pets/123', 'get', pathMeta)
+      ).toEqual(
         expect.objectContaining({
           path: {
             petId: 123,
@@ -64,7 +68,9 @@ describe('Path', () => {
 
     it('should validate the path parameters and coerce to the correct type', () => {
       const pathMeta = {};
-      expect(chowchow.validateRequestByPath('/pets/123', 'get', pathMeta)).toEqual(
+      expect(
+        chowchow.validateRequestByPath('/pets/123', 'get', pathMeta)
+      ).toEqual(
         expect.objectContaining({
           path: {
             petId: 123,

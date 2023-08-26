@@ -412,21 +412,29 @@ describe('Pet Store', () => {
 
   describe('OperationId', () => {
     test('It should return unique operationId', () => {
-      const validatedRequest = chowchow.validateRequestByPath('/pets/123', 'get', {
-        path: {
-          petId: 123,
-        },
-      });
+      const validatedRequest = chowchow.validateRequestByPath(
+        '/pets/123',
+        'get',
+        {
+          path: {
+            petId: 123,
+          },
+        }
+      );
       expect(validatedRequest.operationId).toEqual('showPetById');
     });
 
     test('It should respect custom operationId', () => {
-      const validatedRequest = chowchow.validateRequestByPath('/pets/123', 'get', {
-        operationId: 'customId',
-        path: {
-          petId: 123,
-        },
-      });
+      const validatedRequest = chowchow.validateRequestByPath(
+        '/pets/123',
+        'get',
+        {
+          operationId: 'customId',
+          path: {
+            petId: 123,
+          },
+        }
+      );
       expect(validatedRequest.operationId).toEqual('customId');
     });
   });
