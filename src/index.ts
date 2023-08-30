@@ -1,4 +1,4 @@
-import * as Ajv from 'ajv';
+import { Options as AjvOptions } from 'ajv';
 import { OpenAPIObject } from 'openapi3-ts';
 import compile, { RequestMeta, ResponseMeta } from './compiler';
 import CompiledPath from './compiler/CompiledPath';
@@ -7,7 +7,6 @@ import ChowError, {
   ResponseValidationError,
 } from './error';
 import CompiledOperation from './compiler/CompiledOperation';
-import * as util from 'util';
 
 /**
  * Export Errors so that consumers can use it to ditinguish different error type.
@@ -19,38 +18,22 @@ export {
 } from './error';
 
 export interface ChowOptions {
-  headerAjvOptions: Ajv.Options;
-  cookieAjvOptions: Ajv.Options;
-  pathAjvOptions: Ajv.Options;
-  queryAjvOptions: Ajv.Options;
-  requestBodyAjvOptions: Ajv.Options;
-  responseBodyAjvOptions: Ajv.Options;
+  headerAjvOptions: AjvOptions;
+  cookieAjvOptions: AjvOptions;
+  pathAjvOptions: AjvOptions;
+  queryAjvOptions: AjvOptions;
+  requestBodyAjvOptions: AjvOptions;
+  responseBodyAjvOptions: AjvOptions;
 }
 
 export default class ChowChow {
   private compiledPaths: CompiledPath[];
   private compiledOperationById: Map<string, CompiledOperation>;
-  private deprecateValidateRequest = util.deprecate(
-    this.validateRequestByPath.bind(this),
-    'validateRequest() is now deprecated, please use validateRequestByPath or validateRequestByOperationId instead'
-  );
-  private deprecateValidateResponse = util.deprecate(
-    this.validateResponseByPath.bind(this),
-    'validateResponse() is now deprecated, please use validateResponseByPath or validateResponseByOperationId instead'
-  );
 
   constructor(document: OpenAPIObject, options: Partial<ChowOptions> = {}) {
     const { compiledPaths, compiledOperationById } = compile(document, options);
     this.compiledPaths = compiledPaths;
     this.compiledOperationById = compiledOperationById;
-  }
-
-  validateRequest(path: string, request: RequestMeta & { method: string }) {
-    return this.deprecateValidateRequest(path, request.method, request);
-  }
-
-  validateResponse(path: string, response: ResponseMeta & { method: string }) {
-    return this.deprecateValidateResponse(path, response.method, response);
   }
 
   validateRequestByPath(path: string, method: string, request: RequestMeta) {

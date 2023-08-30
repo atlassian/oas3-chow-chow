@@ -84,12 +84,10 @@ describe('Response', () => {
       header: {
         'content-type': 'application/json',
       },
-      body: [
-        {
-          code: 500,
-          message: 'something is wrong',
-        },
-      ],
+      body: {
+        code: 500,
+        message: 'something is wrong',
+      },
     };
     expect(
       chowchow.validateResponseByPath('/pets/123', 'get', responseMeta)
@@ -199,8 +197,7 @@ describe('Response', () => {
 
   it('should fail if response method is invalid', () => {
     expect(() => {
-      chowchow.validateResponse('/no-default', {
-        method: 'path',
+      chowchow.validateResponseByPath('/no-default', 'path', {
         status: 400,
         header: {
           'content-type': 'application/json',

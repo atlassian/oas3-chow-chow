@@ -7,7 +7,7 @@ describe('Option Body', () => {
     expect(() => {
       new ChowChow(fixture);
     }).toThrow(
-      'unknown format "pet-name" is used in schema at path "#/properties/name"'
+      'unknown format "pet-name" ignored in schema at path "#/properties/name"'
     );
   });
 
@@ -16,7 +16,11 @@ describe('Option Body', () => {
 
     expect(() => {
       new ChowChow(fixture, {
-        responseBodyAjvOptions: { unknownFormats: 'ignore' },
+        responseBodyAjvOptions: {
+          formats: {
+            'pet-name': true,
+          },
+        },
       });
     }).not.toThrow();
   });

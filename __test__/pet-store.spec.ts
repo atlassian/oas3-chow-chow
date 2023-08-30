@@ -11,25 +11,20 @@ describe('Pet Store', () => {
 
   test('It should throw an error if a path is undefined', () => {
     expect(() => {
-      chowchow.validateRequest('/undefined', {
-        method: 'get',
-      });
+      chowchow.validateRequestByPath('/undefined', 'get', {});
     }).toThrowError(ChowError);
   });
 
   test('It should successfully throw an error if a method is undefined', () => {
     expect(() => {
-      chowchow.validateRequest('/pets', {
-        method: 'put',
-      });
+      chowchow.validateRequestByPath('/pets', 'put', {});
     }).toThrowError(ChowError);
   });
 
   describe('Path', () => {
     test('It should fail validation if provided path parameter is wrong', () => {
       expect(() => {
-        chowchow.validateRequest('/pets/chow', {
-          method: 'get',
+        chowchow.validateRequestByPath('/pets/chow', 'get', {
           path: {
             petId: 'chow',
           },
@@ -39,8 +34,7 @@ describe('Pet Store', () => {
 
     test('It should pass validation if provided path parameter is correct', () => {
       expect(() => {
-        chowchow.validateRequest('/pets/123', {
-          method: 'get',
+        chowchow.validateRequestByPath('/pets/123', 'get', {
           path: {
             petId: 123,
           },
@@ -52,8 +46,7 @@ describe('Pet Store', () => {
   describe('Query', () => {
     test('It should fail validation if provided query parameter is wrong', () => {
       expect(() => {
-        chowchow.validateRequest('/pets', {
-          method: 'get',
+        chowchow.validateRequestByPath('/pets', 'get', {
           query: {
             limit: 'xyz',
           },
@@ -63,8 +56,7 @@ describe('Pet Store', () => {
 
     test('It should pass validation if provided path parameter is correct', () => {
       expect(() => {
-        chowchow.validateRequest('/pets', {
-          method: 'get',
+        chowchow.validateRequestByPath('/pets', 'get', {
           query: {
             limit: 50,
           },
@@ -74,8 +66,7 @@ describe('Pet Store', () => {
 
     test('It should pass validation if an array is passed to parameter which should be an array', () => {
       expect(() => {
-        chowchow.validateRequest('/pets', {
-          method: 'get',
+        chowchow.validateRequestByPath('/pets', 'get', {
           query: {
             breed: ['chowchow'],
           },
@@ -85,8 +76,7 @@ describe('Pet Store', () => {
 
     test('It should fail validation if invalid item is passed in enum', () => {
       expect(() => {
-        chowchow.validateRequest('/pets', {
-          method: 'get',
+        chowchow.validateRequestByPath('/pets', 'get', {
           query: {
             breed: ['nice dog'],
           },
@@ -96,8 +86,7 @@ describe('Pet Store', () => {
 
     test('It should fail validation if number of items exceeds the limit', () => {
       expect(() => {
-        chowchow.validateRequest('/pets', {
-          method: 'get',
+        chowchow.validateRequestByPath('/pets', 'get', {
           query: {
             breed: ['chowchow', 'bichon', 'jack russell', 'labrador'],
           },
@@ -107,8 +96,7 @@ describe('Pet Store', () => {
 
     test('It should pass validation for valid array parameter', () => {
       expect(() => {
-        chowchow.validateRequest('/pets', {
-          method: 'get',
+        chowchow.validateRequestByPath('/pets', 'get', {
           query: {
             breed: ['chowchow', 'bichon', 'labrador'],
           },
@@ -124,8 +112,7 @@ describe('Pet Store', () => {
       chowchow = new ChowChow(fixture as any, chowOptions);
 
       try {
-        chowchow.validateRequest('/pets', {
-          method: 'post',
+        chowchow.validateRequestByPath('/pets', 'post', {
           body: {
             name: 123,
           },
@@ -151,8 +138,7 @@ describe('Pet Store', () => {
       chowchow = new ChowChow(fixture as any, chowOptions);
 
       try {
-        chowchow.validateRequest('/pets', {
-          method: 'post',
+        chowchow.validateRequestByPath('/pets', 'post', {
           body: {
             name: 123,
           },
@@ -175,8 +161,7 @@ describe('Pet Store', () => {
       chowchow = new ChowChow(fixture as any);
 
       try {
-        chowchow.validateRequest('/pets', {
-          method: 'post',
+        chowchow.validateRequestByPath('/pets', 'post', {
           body: {
             name: 123,
           },
@@ -199,8 +184,7 @@ describe('Pet Store', () => {
   describe('RequestBody', () => {
     test('It should fail validation if payload is invalid', () => {
       expect(() => {
-        chowchow.validateRequest('/pets', {
-          method: 'post',
+        chowchow.validateRequestByPath('/pets', 'post', {
           body: {
             name: 'plum',
           },
@@ -213,8 +197,7 @@ describe('Pet Store', () => {
 
     test('It should fail validation if invalid mediaType is asked', () => {
       expect(() => {
-        chowchow.validateRequest('/pets', {
-          method: 'post',
+        chowchow.validateRequestByPath('/pets', 'post', {
           body: {
             id: 123,
             name: 'plum',
@@ -228,8 +211,7 @@ describe('Pet Store', () => {
 
     test('It should fail validation if requestBody is required but missing', () => {
       expect(() => {
-        chowchow.validateRequest('/pets', {
-          method: 'post',
+        chowchow.validateRequestByPath('/pets', 'post', {
           header: {
             'content-type': 'application/json',
           },
@@ -239,16 +221,13 @@ describe('Pet Store', () => {
 
     test('It should fail validation if requestBody is required but Content type is missing', () => {
       expect(() => {
-        chowchow.validateRequest('/pets', {
-          method: 'post',
-        });
+        chowchow.validateRequestByPath('/pets', 'post', {});
       }).toThrowError(ChowError);
     });
 
     test('It is ok to ignore body if it is not required', () => {
       expect(() => {
-        chowchow.validateRequest('/pets/123', {
-          method: 'post',
+        chowchow.validateRequestByPath('/pets/123', 'post', {
           path: {
             petId: 123,
           },
@@ -261,8 +240,7 @@ describe('Pet Store', () => {
 
     test('It should pass validation if valid requestBody is passed', () => {
       expect(() => {
-        chowchow.validateRequest('/pets', {
-          method: 'post',
+        chowchow.validateRequestByPath('/pets', 'post', {
           body: {
             id: 123,
             name: 'plum',
@@ -278,8 +256,7 @@ describe('Pet Store', () => {
 
     test('It should fail validation if requestBody with readOnly property passed', () => {
       expect(() => {
-        chowchow.validateRequest('/pets', {
-          method: 'post',
+        chowchow.validateRequestByPath('/pets', 'post', {
           body: {
             id: 123,
             name: 'plum',
@@ -320,8 +297,7 @@ describe('Pet Store', () => {
   describe('Header', () => {
     test('It should fail validation if a required header is missing', () => {
       expect(() => {
-        chowchow.validateRequest('/test/header', {
-          method: 'get',
+        chowchow.validateRequestByPath('/test/header', 'get', {
           header: {
             'content-type': 'application/json',
           },
@@ -331,8 +307,7 @@ describe('Pet Store', () => {
 
     test('It should fail validation if a header fails schema validation', () => {
       expect(() => {
-        chowchow.validateRequest('/test/header', {
-          method: 'get',
+        chowchow.validateRequestByPath('/test/header', 'get', {
           header: {
             version: 'awsome version',
           },
@@ -342,8 +317,7 @@ describe('Pet Store', () => {
 
     test('It should pass validation if headers are satisfied', () => {
       expect(() => {
-        chowchow.validateRequest('/test/header', {
-          method: 'get',
+        chowchow.validateRequestByPath('/test/header', 'get', {
           header: {
             version: 123,
           },
@@ -353,8 +327,7 @@ describe('Pet Store', () => {
 
     test('It should pass for header without schema', () => {
       expect(() => {
-        chowchow.validateRequest('/test/header', {
-          method: 'get',
+        chowchow.validateRequestByPath('/test/header', 'get', {
           header: {
             version: 123,
             'no-schema': 123,
@@ -367,8 +340,7 @@ describe('Pet Store', () => {
   describe('Cookie', () => {
     test('It should fail validation if a required cookie is missing', () => {
       expect(() => {
-        chowchow.validateRequest('/test/cookie', {
-          method: 'get',
+        chowchow.validateRequestByPath('/test/cookie', 'get', {
           cookie: {},
         });
       }).toThrowError(ChowError);
@@ -376,8 +348,7 @@ describe('Pet Store', () => {
 
     test('It should fail validation if a cookie fails schema validation', () => {
       expect(() => {
-        chowchow.validateRequest('/test/cookie', {
-          method: 'get',
+        chowchow.validateRequestByPath('/test/cookie', 'get', {
           cookie: {
             count: 'many',
           },
@@ -387,8 +358,7 @@ describe('Pet Store', () => {
 
     test('It should pass validation if cookies are satisfied', () => {
       expect(() => {
-        chowchow.validateRequest('/test/cookie', {
-          method: 'get',
+        chowchow.validateRequestByPath('/test/cookie', 'get', {
           cookie: {
             count: 123,
           },
@@ -400,8 +370,7 @@ describe('Pet Store', () => {
   describe('Schema', () => {
     test('It is ok to not give a schema', () => {
       expect(() => {
-        chowchow.validateRequest('/test/schema', {
-          method: 'get',
+        chowchow.validateRequestByPath('/test/schema', 'get', {
           cookie: {
             count: 123,
           },
@@ -411,8 +380,7 @@ describe('Pet Store', () => {
 
     test('It is ok to use wildcards', () => {
       expect(() => {
-        chowchow.validateRequest('/test/wildcard', {
-          method: 'post',
+        chowchow.validateRequestByPath('/test/wildcard', 'post', {
           body: {
             id: 123,
             name: 'plum',
@@ -426,8 +394,7 @@ describe('Pet Store', () => {
 
     test('It is ok to fall back to */* when no content type is provided', () => {
       expect(() => {
-        chowchow.validateRequest('/test/wildcard', {
-          method: 'post',
+        chowchow.validateRequestByPath('/test/wildcard', 'post', {
           body: [
             {
               id: 123,
@@ -445,23 +412,29 @@ describe('Pet Store', () => {
 
   describe('OperationId', () => {
     test('It should return unique operationId', () => {
-      const validatedRequest = chowchow.validateRequest('/pets/123', {
-        method: 'get',
-        path: {
-          petId: 123,
-        },
-      });
+      const validatedRequest = chowchow.validateRequestByPath(
+        '/pets/123',
+        'get',
+        {
+          path: {
+            petId: 123,
+          },
+        }
+      );
       expect(validatedRequest.operationId).toEqual('showPetById');
     });
 
     test('It should respect custom operationId', () => {
-      const validatedRequest = chowchow.validateRequest('/pets/123', {
-        method: 'get',
-        operationId: 'customId',
-        path: {
-          petId: 123,
-        },
-      });
+      const validatedRequest = chowchow.validateRequestByPath(
+        '/pets/123',
+        'get',
+        {
+          operationId: 'customId',
+          path: {
+            petId: 123,
+          },
+        }
+      );
       expect(validatedRequest.operationId).toEqual('customId');
     });
   });
