@@ -31,15 +31,18 @@ export default class ChowChow {
   private compiledPaths: CompiledPath[];
   private compiledOperationById: Map<string, CompiledOperation>;
 
-  public static async create(document: object, options: Partial<ChowOptions> = {}) {
+  public static async create(
+    document: object,
+    options: Partial<ChowOptions> = {}
+  ) {
     const res = await $RefParser.dereference(document, {
       continueOnError: false,
       resolve: {
-        external: false
+        external: false,
       },
       dereference: {
-        circular: false
-      }
+        circular: false,
+      },
     });
 
     return new ChowChow(res as OpenAPIObject, options);
