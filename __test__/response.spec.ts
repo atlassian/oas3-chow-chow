@@ -7,8 +7,8 @@ const fixture = require('./fixtures/response.json');
 describe('Response', () => {
   let chowchow: ChowChow;
 
-  beforeAll(() => {
-    chowchow = new ChowChow(fixture);
+  beforeAll(async () => {
+    chowchow = await ChowChow.create(fixture);
   });
 
   it('should validate the response with status code', () => {

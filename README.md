@@ -28,7 +28,7 @@ import * as fs from "fs";
 import * as yaml from "js-yaml";
 
 var doc = yaml.safeLoad(fs.readFileSync("./openapi.yml", "utf8"));
-const chow = new ChowChow(doc);
+const chow = ChowChow.create(doc);
 
 // For URL: /:pathParam/info?arrParam=x&arrParam=y&other=z
 chow.validateRequestByPath(
@@ -56,7 +56,7 @@ chow.validateResponseByPath("/books/info", "POST", {
 
 You could optionally provide configs to the constructor
 ```typescript
-const chow = new ChowChow(doc, {
+const chow = ChowChow.create(doc, {
   headerAjvOptions: {},
   cookieAjvOptions: {},
   pathAjvOptions: { coerceTypes: true },

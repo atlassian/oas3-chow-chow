@@ -4,8 +4,8 @@ const fixture = require('./fixtures/query.json');
 describe('Query', () => {
   let chowchow: ChowChow;
 
-  beforeAll(() => {
-    chowchow = new ChowChow(fixture);
+  beforeAll(async () => {
+    chowchow = await ChowChow.create(fixture);
   });
 
   it('should coerce query parameter to an array', () => {
