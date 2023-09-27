@@ -8,8 +8,8 @@ describe('Path', () => {
   describe('Parameter in Operation level', () => {
     let chowchow: ChowChow;
 
-    beforeAll(() => {
-      chowchow = new ChowChow(pathFixture);
+    beforeAll(async () => {
+      chowchow = await ChowChow.create(pathFixture);
     });
 
     it('should validate the path parameters and coerce to the correct type', () => {
@@ -35,8 +35,8 @@ describe('Path', () => {
   describe('Parameter in Path level', () => {
     let chowchow: ChowChow;
 
-    beforeAll(() => {
-      chowchow = new ChowChow(parameterInPathLevelFixture);
+    beforeAll(async () => {
+      chowchow = await ChowChow.create(parameterInPathLevelFixture);
     });
 
     it('should validate the path parameters and coerce to the correct type', () => {
@@ -62,8 +62,8 @@ describe('Path', () => {
   describe('Parameter in Operation level should override Path level', () => {
     let chowchow: ChowChow;
 
-    beforeAll(() => {
-      chowchow = new ChowChow(parameterInBothOperationAndPathFixture);
+    beforeAll(async () => {
+      chowchow = await ChowChow.create(parameterInBothOperationAndPathFixture);
     });
 
     it('should validate the path parameters and coerce to the correct type', () => {

@@ -1,5 +1,6 @@
 import { Options as AjvOptions } from 'ajv';
 import { OpenAPIObject } from 'openapi3-ts';
+import $RefParser from '@apidevtools/json-schema-ref-parser';
 import compile, { RequestMeta, ResponseMeta } from './compiler';
 import CompiledPath from './compiler/CompiledPath';
 import ChowError, {
@@ -29,6 +30,23 @@ export interface ChowOptions {
 export default class ChowChow {
   private compiledPaths: CompiledPath[];
   private compiledOperationById: Map<string, CompiledOperation>;
+
+  public static async create(
+    document: object,
+    options: Partial<ChowOptions> = {}
+  ) {
+    const res = await $RefParser.dereference(document, {
+      continueOnError: false,
+      resolve: {
+        external: false,
+      },
+      dereference: {
+        circular: false,
+      },
+    });
+
+    return new ChowChow(res as OpenAPIObject, options);
+  }
 
   constructor(document: OpenAPIObject, options: Partial<ChowOptions> = {}) {
     const { compiledPaths, compiledOperationById } = compile(document, options);

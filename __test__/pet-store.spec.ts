@@ -5,8 +5,8 @@ const fixture = require('./fixtures/pet-store.json');
 describe('Pet Store', () => {
   let chowchow: ChowChow;
 
-  beforeAll(() => {
-    chowchow = new ChowChow(fixture as any);
+  beforeAll(async () => {
+    chowchow = await ChowChow.create(fixture as any);
   });
 
   test('It should throw an error if a path is undefined', () => {
@@ -105,11 +105,11 @@ describe('Pet Store', () => {
     });
   });
   describe('Configure ChowOptions for allErrors', () => {
-    test('It should fail validation and receive multiple errors if payload is invalid and ChowOptions configured with allErrors:true', () => {
+    test('It should fail validation and receive multiple errors if payload is invalid and ChowOptions configured with allErrors:true', async () => {
       let chowOptions: Partial<ChowOptions> = {
         requestBodyAjvOptions: { allErrors: true },
       };
-      chowchow = new ChowChow(fixture as any, chowOptions);
+      chowchow = await ChowChow.create(fixture as any, chowOptions);
 
       try {
         chowchow.validateRequestByPath('/pets', 'post', {
@@ -131,11 +131,11 @@ describe('Pet Store', () => {
       }
     });
 
-    test('It should fail validation and receive a single error if payload is invalid and ChowOptions configured for allErrors:false', () => {
+    test('It should fail validation and receive a single error if payload is invalid and ChowOptions configured for allErrors:false', async () => {
       let chowOptions: Partial<ChowOptions> = {
         requestBodyAjvOptions: { allErrors: false },
       };
-      chowchow = new ChowChow(fixture as any, chowOptions);
+      chowchow = await ChowChow.create(fixture as any, chowOptions);
 
       try {
         chowchow.validateRequestByPath('/pets', 'post', {
@@ -157,8 +157,8 @@ describe('Pet Store', () => {
       }
     });
 
-    test('It should fail validation and receive a single error if payload is invalid and ChowOptions not configured', () => {
-      chowchow = new ChowChow(fixture as any);
+    test('It should fail validation and receive a single error if payload is invalid and ChowOptions not configured', async () => {
+      chowchow = await ChowChow.create(fixture as any);
 
       try {
         chowchow.validateRequestByPath('/pets', 'post', {
