@@ -1,5 +1,17 @@
 # oas3-chow-chow
 
+## 3.0.0
+
+### Major Changes
+
+- bf09b6c: The API has been updated to be an async function.
+  Remove support for node v14.
+- b90c88c: Upgrade ajv to version 8.
+
+  The main BREAKING CHANGE is that the support for JSON-Schema draft-04 is removed from version 8.
+  Some properties of Ajv.Options has also changed its shape.
+  More details: https://ajv.js.org/v6-to-v8-migration.html
+
 ## 2.0.1
 
 ### Patch Changes
