@@ -8,7 +8,22 @@ export default class CompiledSchema {
   private validator: Ajv.ValidateFunction;
 
   constructor(schema: SchemaObject, opts?: Ajv.Options, context?: any) {
-    this.schemaObject = schema;
+    /**
+     * Removing unsupported additional OpenAPI keywords.
+     * https://swagger.io/docs/specification/data-models/keywords/
+     * See "Additional Keywords"
+     * Does not include all keywords listed in that links because some of them are supported by ajv https://ajv.js.org/json-schema.html#openapi-support
+     * and some are explictly added within this class.
+     */
+    const {
+      discriminator,
+      example,
+      externalDocs,
+      xml,
+      ...schemaObject
+    } = schema;
+    this.schemaObject = schemaObject;
+
     const ajvInstance = ajv(opts);
     ajvInstance.removeKeyword('writeOnly');
     ajvInstance.removeKeyword('readOnly');
@@ -17,14 +32,14 @@ export default class CompiledSchema {
       validate: (schema: any) =>
         schema ? context.schemaContext === 'request' : true,
     });
+    ajvInstance.getKeyword;
     ajvInstance.addKeyword({
       keyword: 'readOnly',
       validate: (schema: any) =>
         schema ? context.schemaContext === 'response' : true,
     });
-    this.validator = ajvInstance.compile(schema);
+    this.validator = ajvInstance.compile(schemaObject);
   }
-
   public validate(value: any) {
     const valid = this.validator(value);
     if (!valid) {
