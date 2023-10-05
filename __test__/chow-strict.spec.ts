@@ -10,7 +10,7 @@ describe('strict mode', () => {
     const doc: OpenAPIObject = {
       openapi: '3.0.1',
       info: {
-        title: 'Object Resolver Service open api spec',
+        title: 'service open api spec',
         version: '1.0.1',
       },
       components: {
