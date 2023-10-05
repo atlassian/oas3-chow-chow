@@ -10,9 +10,8 @@ export default class CompiledSchema {
   constructor(schema: SchemaObject, opts?: Ajv.Options, context?: any) {
     /**
      * Remove unsupported additional OpenAPI keywords.
-     * https://swagger.io/docs/specification/data-models/keywords/
-     * See "Additional Keywords"
-     * Does not include all keywords listed in that links because some of them are supported by ajv https://ajv.js.org/json-schema.html#openapi-support
+     * https://swagger.io/docs/specification/data-models/keywords/ See "Additional Keywords"
+     * Does not include all keywords listed in that page/section because some of them are supported by ajv https://ajv.js.org/json-schema.html#openapi-support
      * and some are explictly added within this class.
      */
     const {
