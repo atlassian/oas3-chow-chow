@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 3.0.1
+
+### Patch Changes
+
+- e81f606: handle additional open api keywords
+
 ## 3.0.0
 
 ### Major Changes
