@@ -31,7 +31,6 @@ export default class CompiledSchema {
       validate: (schema: any) =>
         schema ? context.schemaContext === 'request' : true,
     });
-    ajvInstance.getKeyword;
     ajvInstance.addKeyword({
       keyword: 'readOnly',
       validate: (schema: any) =>
