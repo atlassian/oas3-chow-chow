@@ -38,6 +38,7 @@ export default class CompiledSchema {
     });
     this.validator = ajvInstance.compile(schemaObject);
   }
+
   public validate(value: any) {
     const valid = this.validator(value);
     if (!valid) {
