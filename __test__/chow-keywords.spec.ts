@@ -38,12 +38,8 @@ const doc: (additionalKeywords: Record<string, any>) => OpenAPIObject = (
     },
   },
 });
-/**
- * OpenAPI schemas can also use keywords that are not part of JSON Schema
- * see "Additional Keywords" section in https://swagger.io/docs/specification/data-models/keywords/
- * S
- */
-describe('additional keywords', () => {
+
+describe('additional open api keywords', () => {
   it.each([
     { discriminator: '' },
     { example: '' },
