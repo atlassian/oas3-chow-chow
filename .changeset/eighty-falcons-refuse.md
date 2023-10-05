@@ -2,4 +2,4 @@
 'oas3-chow-chow': patch
 ---
 
-log all strict mode errors in ajv
+handle additional open api keywords
