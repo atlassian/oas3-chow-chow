@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 3.0.2
+
+### Patch Changes
+
+- f4b0a41: update dependency @apidevtools/json-schema-ref-parser to v11.2.0
+
 ## 3.0.1
 
 ### Patch Changes
