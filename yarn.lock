@@ -1185,10 +1185,12 @@
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/node/-/node-16.11.7.tgz#36820945061326978c42a01e56b61cd223dfdc42"
   integrity sha1-NoIJRQYTJpeMQqAeVrYc0iPf3EI=
 
-"@types/node@18.17.11":
-  version "18.17.11"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.17.11.tgz#c04054659d88bfeba94095f41ef99a8ddf4e1813"
-  integrity sha512-r3hjHPBu+3LzbGBa8DHnr/KAeTEEOrahkcL+cZc4MaBMTM+mk8LtXR+zw+nqfjuDZZzYTYgTcpHuP+BEQk069g==
+"@types/node@20.17.2":
+  version "20.17.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.17.2.tgz#3ca40ef7d776c85a1db3df23cbb5bfb3c384a92e"
+  integrity sha512-OOHK4sjXqkL7yQ7VEEHcf6+0jSvKjWqwnaCtY7AKD/VLEvRHMsxxu7eI8ErnjxHS8VwmekD4PeVCpu4qZEZSxg==
+  dependencies:
+    undici-types "~6.19.2"
 
 "@types/node@^12.7.1":
   version "12.20.10"
@@ -4464,6 +4466,11 @@ unbox-primitive@^1.0.2:
     has-bigints "^1.0.2"
     has-symbols "^1.0.3"
     which-boxed-primitive "^1.0.2"
+
+undici-types@~6.19.2:
+  version "6.19.8"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.19.8.tgz#35111c9d1437ab83a7cdc0abae2f26d88eda0a02"
+  integrity sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==
 
 universalify@^0.1.0:
   version "0.1.2"
