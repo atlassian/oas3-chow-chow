@@ -1,6 +1,6 @@
 {
   "name": "oas3-chow-chow",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "author": "<tli@atlassian.com>",

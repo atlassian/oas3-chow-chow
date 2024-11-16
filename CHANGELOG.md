@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 4.0.0
+
+### Major Changes
+
+- bc9d442: Remove support for Node 16 and add support for 20 and 22.
+
 ## 3.0.2
 
 ### Patch Changes
