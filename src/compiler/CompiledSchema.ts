@@ -36,6 +36,12 @@ export default class CompiledSchema {
       validate: (schema: any) =>
         schema ? context.schemaContext === 'response' : true,
     });
+    ajvInstance.addKeyword({
+      keyword: 'example',
+      metaSchema: {
+        type: ['object', 'array', 'string', 'number', 'boolean', 'null'],
+      },
+    });
     this.validator = ajvInstance.compile(schemaObject);
   }
 
