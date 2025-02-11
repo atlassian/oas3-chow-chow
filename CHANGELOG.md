@@ -1,5 +1,15 @@
 # oas3-chow-chow
 
+## 4.0.0
+
+### Major Changes
+
+- bc9d442: Remove support for Node 16 and add support for 20 and 22.
+
+### Patch Changes
+
+- 1262224: Prevent example keyword from causing warning logs when present in openapi spec
+
 ## 3.0.2
 
 ### Patch Changes
