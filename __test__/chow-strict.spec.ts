@@ -46,4 +46,57 @@ describe('strict mode', () => {
     );
     warnSpy.mockRestore();
   });
+
+  it('should not log warning about example keyword', async () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+    const doc: OpenAPIObject = {
+      openapi: '3.0.1',
+      info: {
+        title: 'service open api spec',
+        version: '1.0.1',
+      },
+      components: {
+        schemas: {
+          ResolveUnsupportedError: {
+            type: 'object',
+            description: 'some description',
+            properties: {
+              error: {
+                type: 'object',
+                properties: {
+                  message: {
+                    type: 'string',
+                    example: 'some example',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      paths: {
+        '/resolve': {
+          post: {
+            operationId: 'resolve',
+            responses: {
+              '404': {
+                content: {
+                  'application/json': {
+                    schema: {
+                      $ref: '#/components/schemas/ResolveUnsupportedError',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    };
+    expect(await ChowChow.create(doc)).toBeDefined();
+    expect(warnSpy).not.toHaveBeenCalledWith(
+      'strict mode: unknown keyword: "example"'
+    );
+    warnSpy.mockRestore();
+  });
 });
