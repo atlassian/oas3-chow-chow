@@ -13,17 +13,18 @@ If you are looking for framework specific middleware, you might want to look at 
 [openapi3-middleware](https://github.com/naugtur/openapi3-middleware)
 
 ## Installation
+Note: Starting from version 5, it's transferred to be under `@atlassian` scope.
 
 ```bash
-$ yarn add oas3-chow-chow
+$ yarn add @atlassian/oas3-chow-chow
 $ # Or
-$ npm i oas3-chow-chow
+$ npm i @atlassian/oas3-chow-chow
 ```
 
 ## Usage
 
 ```typescript
-import ChowChow from "oas3-chow-chow";
+import ChowChow from "@atlassian/oas3-chow-chow";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
 
