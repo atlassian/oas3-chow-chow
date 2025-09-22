@@ -1,5 +1,11 @@
 # oas3-chow-chow
 
+## 5.0.0
+
+### Major Changes
+
+- 01c070a: Migrate to atlassian scope
+
 ## 4.0.0
 
 ### Major Changes
