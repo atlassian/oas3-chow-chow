@@ -29,12 +29,12 @@ export default class CompiledSchema {
     ajvInstance.addKeyword({
       keyword: 'writeOnly',
       validate: (schema: any) =>
-        schema ? context.schemaContext === 'request' : true,
+        schema && context ? context.schemaContext === 'request' : true,
     });
     ajvInstance.addKeyword({
       keyword: 'readOnly',
       validate: (schema: any) =>
-        schema ? context.schemaContext === 'response' : true,
+        schema && context ? context.schemaContext === 'response' : true,
     });
     ajvInstance.addKeyword({
       keyword: 'example',
