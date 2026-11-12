@@ -120,8 +120,7 @@ export default class CompiledOperation {
   }
 
   public validateResponse(response: ResponseMeta): ResponseMeta {
-    const compiledResponse =
-      this.response[response.status] || this.response['default'];
+    const compiledResponse = this.findCompiledResponse(response.status);
     if (compiledResponse) {
       return { ...response, body: compiledResponse.validate(response) };
     } else {
@@ -129,5 +128,22 @@ export default class CompiledOperation {
         in: 'response',
       });
     }
+  }
+
+  private findCompiledResponse(status: number): CompiledResponse | undefined {
+    const exactMatch = this.response[status];
+    if (exactMatch) {
+      return exactMatch;
+    }
+
+    const statusStr = String(status);
+    if (/^[1-5][0-9]{2}$/.test(statusStr)) {
+      const wildcardMatch = this.response[`${statusStr[0]}XX`];
+      if (wildcardMatch) {
+        return wildcardMatch;
+      }
+    }
+
+    return this.response['default'];
   }
 }
